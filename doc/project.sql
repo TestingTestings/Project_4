@@ -1,4 +1,4 @@
-drop database if exists traffic_police;
+﻿drop database if exists traffic_police;
 create database traffic_police character set 'utf8' collate 'utf8_general_ci';
 use traffic_police;
 
@@ -8,7 +8,7 @@ create table t_user(
 	password char(32),
 	idcard char(18),--  身份证
 	regtime date,--  注册时间
-	phone int(11)
+	phone bigint(11)
 );
 
 
