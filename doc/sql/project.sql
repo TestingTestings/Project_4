@@ -1,4 +1,4 @@
-drop database if exists traffic_police;
+﻿drop database if exists traffic_police;
 create database traffic_police character set 'utf8' collate 'utf8_general_ci';
 use traffic_police;
 
@@ -9,7 +9,7 @@ create table t_user(
 	password char(32),
 	idcard char(18),--  身份证
 	regtime date,--  注册时间
-	phone int(11)
+	phone bigint(11)
 );
 
 -- 车辆表
@@ -26,7 +26,7 @@ create table t_searchCar(
 	car_id char(6),
 	time date,
 	primary key(user_id,car_id),
-  foreign key(user_id) references t_user(id),
+  	foreign key(user_id) references t_user(id),
 	foreign key(car_id) references t_car(id)
 );
 
@@ -39,8 +39,8 @@ create table t_police(
 	age int(3),
 	area text,--  片区
 	job enum('协管','警员'),
-	imei int(15),--  硬件信息
-	sim int(11),
+	imei bigint(15),--  硬件信息
+	sim bigint(11),
 	state enum('quit','normal')--  警员状态
 );
 
@@ -103,10 +103,10 @@ create table t_case(
 	punishment text,-- 处罚方式拘留等
 	infoway enum('现场执法','非现场执法'),
 	state enum('未处理','已处理','申诉'),
-  handletime DATETIME,--  处理时间
-  foreign key(police_id) references t_police(id),
-  foreign key(car_id) references t_car(id),
-  foreign key(law_id) references t_law(id)
+  	handletime DATETIME,--  处理时间
+  	foreign key(police_id) references t_police(id),
+  	foreign key(car_id) references t_car(id),
+  	foreign key(law_id) references t_law(id)
 );
 
 -- 证据
@@ -118,3 +118,5 @@ create table t_evidence(
 	type enum('photo','video','voice'),
 	foreign key(case_id) references t_case(id)
 );
+
+--超过10位的int改为bigint 9/24 林
