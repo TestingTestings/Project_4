@@ -7,7 +7,9 @@ class IndexController extends Controller {
         $this->display('index');
     }
     public function welcome(){
-
+        $title=M('menu');
+        $menu=$title->select();
+        $this->assign('menu',$menu);
         $this->display('welcome');
     }
 }
