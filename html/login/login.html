@@ -32,6 +32,9 @@
 							<div class="field">
 								<input type="password" name="password1" id="password1" placeholder="请输入密码" />
 							</div>
+							<div class="field">
+								<input type="captcha" name="captcha" id="captcha" placeholder="请输入验证码" />
+							</div>
 							<!-- <div class="field">
 								<input type="text" name="name" id="name" placeholder="Name" />
 							</div>
@@ -113,18 +116,6 @@
 								required: true,
 			                    minlength: 6,
 			                    maxlength: 12,
-			                    // remote:{
-			                    //     url: "http://localhost...",
-			                    //     data:{
-			                    //     	phone:
-			                    //     },
-			                    //     type:"get",
-			                    //     dataType:"text",
-			                    //     dataFilter: function(data){
-			                    //         console.log(data);
-			                    //         return data==1;
-                       //  			}
-                    			// }
 							},
 							password1: {
 			                    required: true,
