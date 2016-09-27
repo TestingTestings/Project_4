@@ -1,139 +1,147 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
+<head>
 
-		<title>Identity by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		
-		
-	</head>
-	<body class="is-loading">
+    <title>Identity by HTML5 UP</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css"/>
+    </noscript>
+    <style>
+        * {
+            font-family: "微软雅黑", Helvetica, sans-serif;
+        }
+    </style>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+</head>
+<body class="is-loading">
 
-				<!-- Main -->
-					<section id="main">
-						<!-- <header>
-							<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
-							<h1>Jane Doe</h1>
-							<p>Senior Psychonautics Engineer</p>
-						</header> -->
-						
-						<hr />
-						<h2>登录</h2>
-						<form id="sign_form" method="post" action="#">
-							<div class="field">
-								<input type="text" name="phone" id="phone" placeholder="请输入手机号" />
-							</div>
-							<div class="field">
-								<input type="password" name="password1" id="password1" placeholder="请输入密码" />
-							</div>
-							<div class="field">
-								<input type="captcha" name="captcha" id="captcha" placeholder="请输入验证码" />
-							</div>
-							<!-- <div class="field">
-								<input type="text" name="name" id="name" placeholder="Name" />
-							</div>
-							<div class="field">
-								<input type="email" name="email" id="email" placeholder="Email" />
-							</div>
-							<div class="field">
-								<div class="select-wrapper">
-									<select name="department" id="department">
-										<option value="">Department</option>
-										<option value="sales">Sales</option>
-										<option value="tech">Tech Support</option>
-										<option value="null">/dev/null</option>
-									</select>
-								</div>
-							</div>
-							<div class="field">
-								<textarea name="message" id="message" placeholder="Message" rows="4"></textarea>
-							</div>
-							<div class="field">
-								<input type="checkbox" id="human" name="human" /><label for="human">I'm a human</label>
-							</div>
-							<div class="field">
-								<label>But are you a robot?</label>
-								<input type="radio" id="robot_yes" name="robot" /><label for="robot_yes">Yes</label>
-								<input type="radio" id="robot_no" name="robot" /><label for="robot_no">No</label>
-							</div> -->
-							<ul class="actions">
-								<li><a href="#"  class="button" onclick="form_submit()">确认</a></li>
-							</ul>
-						</form>
-						<hr />
-						
-						<footer>
-							<ul class="icons">
-								<li><a href="#" class="fa-weixin">微信</a></li>
-								<!-- <li><a href="#" class="fa-qq">QQ</a></li> -->
-								<!-- <li><a href="#" class="fa-weibo">微博</a></li> -->
-							</ul>
-						</footer>
-					</section>
+<!-- Wrapper -->
+<div id="wrapper">
 
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="copyright">
-							<!-- <li>&copy; Jane Doe</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li> -->
-						</ul>
-					</footer>
+    <!-- Main -->
+    <section id="main">
+        <!--<header>-->
+        <!--<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>-->
+        <!--<h1>Jane Doe</h1>-->
+        <!--<p>Senior Psychonautics Engineer</p>-->
+        <!--</header>-->
 
-			</div>
+        <hr/>
+        <h2>登录</h2>
 
-		<!-- Scripts -->
-			<script>
-				if ('addEventListener' in window) {
-					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
-					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
-				}
-			</script>
-			<script src="assets/js/jquery-1.12.0.min.js"></script>
-			<script src="assets/js/jquery.validate.js"></script>
-			<script src="assets/js/messages_zh.js"></script>
-			<script>
-
-				function form_submit(){
-					var $form = $("#sign_form");
-					$form.submit();
-					return false
-				}
-
-				$(function(){
-					var $form = $("#sign_form");
-					var phone = $("#phone").val();
+        <form id="sign_form" method="post" action="#">
+            <div class="field">
+                <input type="text" name="phone" id="phone" placeholder="请输入手机号"/>
+            </div>
+            <div class="field">
+                <input type="password" name="password1" id="password1" placeholder="请输入密码"/>
+            </div>
+            <div class="field">
+                <input type="text" name="captcha" id="captcha" placeholder="请输入验证码"
+                       style="width:55%;display: inline-block"/>
+                <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0" >
+                    <!--发送验证码-->
+                    <img width="100%" height="100%" src="http://localhost/project_4/weixin/index/captcha_get_png" onclick="this.src='http://localhost/project_4/weixin/index/captcha_get_png?'+ Math.random()" />
+                </div>
+                <!--<img src="http://localhost/project_4/weixin/index/captcha_get_png" style="width:40%;display: inline-block;vertical-align: middle"/>-->
 
 
+            </div>
+            <ul class="actions">
+                <li><a href="#" class="button" onclick="form_submit()" style="background:rgb(255,153,102)">登录</a></li>
+                <li><a href="#" class="button" onclick="location.href = './index.html'">注册</a></li>
+            </ul>
+        </form>
+        <hr/>
 
-					$form.validate({
-						rules:{
-							phone:{
-								required: true,
-			                    minlength: 6,
-			                    maxlength: 12,
-							},
-							password1: {
-			                    required: true,
-			                    minlength: 6,
-			                    maxlength: 12
-			                },
-			                
-						},
-						 messages: {
-			                username:{
-			                    remote:"用户名已被使用"
-			                }
-            			}
-					})
-				})		
-			</script>
-			
+        <footer>
+            <ul class="icons">
+                <li><a href="#" class="fa-weixin">微信</a></li>
+                <!-- <li><a href="#" class="fa-qq">QQ</a></li> -->
+                <!-- <li><a href="#" class="fa-weibo">微博</a></li> -->
+            </ul>
+        </footer>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="copyright">
+            <!-- <li>&copy; Jane Doe</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li> -->
+        </ul>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script>
+    if ('addEventListener' in window) {
+        window.addEventListener('load', function () {
+            document.body.className = document.body.className.replace(/\bis-loading\b/, '');
+        });
+        document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+    }
+</script>
+<script src="assets/js/jquery-1.12.0.min.js"></script>
+<script src="assets/js/jquery.validate.js"></script>
+<script src="assets/js/messages_zh.js"></script>
+<script>
+
+    //  todo 表单提交
+    function form_submit() {
+        var $form = $("#sign_form");
+        $form.submit();
+        return false
+    }
+
+    //  todo 获取验证码图片
+    function get_captcha() {
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/captcha/1.png',
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        })
+    }
 
 
-	</body>
+    //  todo 表单验证
+    function form_check() {
+        var $form = $("#sign_form");
+
+        $form.validate({
+            rules: {
+                phone: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 12
+                },
+                password1: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 12
+                }
+            },
+            messages: {
+                username: {
+                    remote: "用户名已被使用"
+                }
+            }
+        });
+    }
+
+
+    $(function () {
+        form_check()
+    })
+</script>
+
+
+</body>
 </html>
