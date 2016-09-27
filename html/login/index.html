@@ -48,14 +48,17 @@
             <div class="field">
                 <input type="text" name="captcha" id="captcha" placeholder="请输入验证码"
                        style="width:55%;display: inline-block"/>
-                <button style="width:40%;display: inline-block" onclick="captcha_button()"> 发送验证码</button>
+                <button style="width:40%;display: inline-block;vertical-align: middle" onclick="captcha_button(event)">
+                    发送验证码
+                </button>
             </div>
             <div class="field">
 
             </div>
 
             <ul class="actions">
-                <li><a  class="button" onclick="form_submit()">确认</a></li>
+                <li><a class="button" onclick="form_submit()" style="background:rgb(255,153,102)">确认注册</a></li>
+                <li><a class="button" onclick="location.href = './login.html'" style="background:rgb(221,221,221)">返回登录</a></li>
             </ul>
         </form>
         <hr/>
@@ -63,7 +66,7 @@
         <footer>
             <ul class="icons">
                 <li><a href="#" class="fa-weixin">微信</a></li>
-                <!-- <li><a href="#" class="fa-qq">QQ</a></li> -->
+                 <li><a href="#" class="fa-close">QQ</a></li>
                 <!-- <li><a href="#" class="fa-weibo">微博</a></li> -->
             </ul>
         </footer>
@@ -92,6 +95,7 @@
 <script src="assets/js/messages_zh.js"></script>
 <script>
 
+    // 表单提交
     function form_submit() {
         var $form = $("#sign_form");
         var formData = new FormData($form[0]);
@@ -101,57 +105,68 @@
         var id_number = $("#id_number").val();
         var captcha = $("#captcha").val();
 
-        $.ajax({
-            url:"http://localhost/project_4/weixin/index/userData/confirm.json",
-            type: 'post',
-            data: {
-                phone: phone,
-                password1: password1,
-                password2: password2,
-                id_number: id_number,
-                captcha: captcha
-            },
-            dataType:'json',
-            success:function(data){
-                alert(data);
-                console.log(data);
-            },
-            error:function(data){
-                alert(data);
-                console.log(data);
+        if($form.valid()){
+            $.ajax({
+                url: "http://localhost/project_4/weixin/index/userData/confirm.json",
+                type: 'post',
+                data: {
+                    phone: phone,
+                    password1: password1,
+                    password2: password2,
+                    id_number: id_number,
+                    captcha: captcha
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+//                    跳转至主页
+//                    todo 提示
+                    location.href = "./login.html"
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+        return false
+    }
+
+    // 发送验证码
+    function captcha_button(evt) {
+        count = 60;
+        timer = setInterval(function () {
+            $(evt.target).html(count + " 秒后再次尝试");
+            $(evt.target).attr('disabled', true);
+            count -= 1;
+            if (count == 0) {
+                $(evt.target).html("发送验证码");
+                $(evt.target).attr('disabled', false);
+                clearInterval(timer)
             }
-        });
+        }, 1000);
         return false
     }
 
-    function captcha_button() {
-        alert();
-        return false
-    }
-
-    $(function () {
+    // 表单验证
+    function form_check() {
         var $form = $("#sign_form");
-        var phone = $("#phone").val();
 
         $form.validate({
             rules: {
                 phone: {
                     required: true,
-                    minlength: 6,
-                    maxlength: 12
-//                    remote: {
-//                        url: "http://localhost/project_4/weixin/index/userExist/confirm.json",
-//                        data: {
-//                            phone: phone
-//                        },
-//                        type: "get",
-//                        dataType: "json",
-//                        dataFilter: function (data) {
-//                            console.log(data);
-//                            alert(data);
-////			                             return data==1;
-//                        }
-//                    }
+                    minlength: 11,
+                    maxlength: 11,
+                    remote: {
+                        url: "http://localhost/project_4/weixin/index/userExist/phone/" + $("#phone").val() + ".json",
+                        type: "get",
+                        dataType: "json",
+                        dataFilter: function (data) {
+                            console.log(data);
+                            console.log(JSON.parse(data)['isExist']);
+                            return JSON.parse(data)['isExist'] == 0;
+                        }
+                    }
                 },
                 password1: {
                     required: true,
@@ -170,8 +185,8 @@
                 }
             },
             messages: {
-                username: {
-                    remote: "用户名已被使用"
+                phone: {
+                    remote: "该手机号已被注册"
                 },
                 password2: {
                     equalTo: "两次密码输入不相同"
@@ -181,6 +196,10 @@
                 }
             }
         })
+    }
+
+    $(function () {
+        form_check()
     })
 </script>
 
