@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="assets/css/noscript.css"/>
     </noscript>
     <style>
-        *{
+        * {
             font-family: "微软雅黑", Helvetica, sans-serif;
         }
     </style>
@@ -23,11 +23,11 @@
 
     <!-- Main -->
     <section id="main">
-        <!-- <header>
-            <span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
-            <h1>Jane Doe</h1>
-            <p>Senior Psychonautics Engineer</p>
-        </header> -->
+        <!--<header>-->
+        <!--<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>-->
+        <!--<h1>Jane Doe</h1>-->
+        <!--<p>Senior Psychonautics Engineer</p>-->
+        <!--</header>-->
 
         <hr/>
         <h2>登录</h2>
@@ -40,41 +40,19 @@
                 <input type="password" name="password1" id="password1" placeholder="请输入密码"/>
             </div>
             <div class="field">
-                <input type="text" name="captcha" id="captcha" placeholder="请输入验证码" style="width:55%;display: inline-block"/>
-                <button style="width:40%;display: inline-block;vertical-align: middle" onclick="captcha_button(event)">
-                    发送验证码
-                </button>
-            </div>
-            <!-- <div class="field">
-                <input type="text" name="name" id="name" placeholder="Name" />
-            </div>
-            <div class="field">
-                <input type="email" name="email" id="email" placeholder="Email" />
-            </div>
-            <div class="field">
-                <div class="select-wrapper">
-                    <select name="department" id="department">
-                        <option value="">Department</option>
-                        <option value="sales">Sales</option>
-                        <option value="tech">Tech Support</option>
-                        <option value="null">/dev/null</option>
-                    </select>
+                <input type="text" name="captcha" id="captcha" placeholder="请输入验证码"
+                       style="width:55%;display: inline-block"/>
+                <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0" >
+                    <!--发送验证码-->
+                    <img width="100%" height="100%" src="http://localhost/project_4/weixin/index/captcha_get_png" onclick="this.src='http://localhost/project_4/weixin/index/captcha_get_png?'+ Math.random()" />
                 </div>
+                <!--<img src="http://localhost/project_4/weixin/index/captcha_get_png" style="width:40%;display: inline-block;vertical-align: middle"/>-->
+
+
             </div>
-            <div class="field">
-                <textarea name="message" id="message" placeholder="Message" rows="4"></textarea>
-            </div>
-            <div class="field">
-                <input type="checkbox" id="human" name="human" /><label for="human">I'm a human</label>
-            </div>
-            <div class="field">
-                <label>But are you a robot?</label>
-                <input type="radio" id="robot_yes" name="robot" /><label for="robot_yes">Yes</label>
-                <input type="radio" id="robot_no" name="robot" /><label for="robot_no">No</label>
-            </div> -->
             <ul class="actions">
                 <li><a href="#" class="button" onclick="form_submit()" style="background:rgb(255,153,102)">登录</a></li>
-                <li><a href="#" class="button" onclick="form_submit()">注册</a></li>
+                <li><a href="#" class="button" onclick="location.href = './index.html'">注册</a></li>
             </ul>
         </form>
         <hr/>
@@ -111,15 +89,31 @@
 <script src="assets/js/messages_zh.js"></script>
 <script>
 
+    //  todo 表单提交
     function form_submit() {
         var $form = $("#sign_form");
         $form.submit();
         return false
     }
 
-    $(function () {
+    //  todo 获取验证码图片
+    function get_captcha() {
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/captcha/1.png',
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        })
+    }
+
+
+    //  todo 表单验证
+    function form_check() {
         var $form = $("#sign_form");
-        var phone = $("#phone").val();
 
         $form.validate({
             rules: {
@@ -139,7 +133,12 @@
                     remote: "用户名已被使用"
                 }
             }
-        })
+        });
+    }
+
+
+    $(function () {
+        form_check()
     })
 </script>
 

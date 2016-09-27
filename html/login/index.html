@@ -58,7 +58,8 @@
 
             <ul class="actions">
                 <li><a class="button" onclick="form_submit()" style="background:rgb(255,153,102)">确认注册</a></li>
-                <li><a class="button" onclick="location.href = './login.html'" style="background:rgb(221,221,221)">返回登录</a></li>
+                <li><a class="button" onclick="location.href = './login.html'"
+                       style="background:rgb(221,221,221)">返回登录</a></li>
             </ul>
         </form>
         <hr/>
@@ -66,7 +67,7 @@
         <footer>
             <ul class="icons">
                 <li><a href="#" class="fa-weixin">微信</a></li>
-                 <li><a href="#" class="fa-close">QQ</a></li>
+                <li><a href="#" class="fa-close">QQ</a></li>
                 <!-- <li><a href="#" class="fa-weibo">微博</a></li> -->
             </ul>
         </footer>
@@ -105,7 +106,7 @@
         var id_number = $("#id_number").val();
         var captcha = $("#captcha").val();
 
-        if($form.valid()){
+        if ($form.valid()) {
             $.ajax({
                 url: "http://localhost/project_4/weixin/index/userData/confirm.json",
                 type: 'post',

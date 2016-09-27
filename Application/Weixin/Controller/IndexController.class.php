@@ -8,7 +8,7 @@ class IndexController extends RestController
 {
 
     protected $allowMethod = ['get', 'post', 'put', 'delete'];
-    protected $allowType = ['html', 'json'];
+    protected $allowType = ['html', 'json', 'png'];
     protected $defaultMethod = 'get';
     protected $defaultType = 'html';
 
@@ -16,8 +16,7 @@ class IndexController extends RestController
 //    判断用户名是否存在
     public function userExist_get_json()
     {
-//         允许跨域访问
-        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
         $request['phone'] = I('phone');
         $User = M('user');
@@ -32,8 +31,7 @@ class IndexController extends RestController
 //    增加一条用户信息
     public function userData_post_json()
     {
-//         允许跨域访问
-        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
 //        将表单数据插入数据库
 //        todo 再次验证手机号是否重复
@@ -46,7 +44,23 @@ class IndexController extends RestController
         $this->response($data, 'json');
     }
 
-//    修改用户信息
+//    判断用户登录数据
+    public function userLogin_get_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+    }
+
+//    生成验证码图片
+    public function captcha_get_png()
+    {
+        $config = [
+            'fontSize' => 50,
+            'length' => 4,
+            'useNoise' => true
+        ];
+        $Verify = new \Think\Verify($config);
+        $Verify->entry();
+    }
 
 
 //    ！微信接入类 WeiXin TP 自带
