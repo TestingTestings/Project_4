@@ -10,4 +10,7 @@ return array(
     'DB_PREFIX'=>'t_',// 数据库表前缀
     'DB_CHARSET'=>'utf8',// 数据库字符集
     //define('js', '/polic/Public/Common/js/jquery/jquery-3.1.1.min.js')
+    'TMPL_ACTION_SUCCESS'=>'Public:dispatch_jump',
+    'TMPL_ACTION_ERROR'=>'Public:dispatch_jump',
+
 );

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/style.css" />
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/ckform.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/showdate.js"></script>
+    <style type="text/css">
+        body {font-size: 20px;
+             padding-bottom: 40px;
+             background-color:#e9e7ef;
+             font-size:17px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+	<table class="table table-condensed"  style="margin: 0 auto">
+		<tr>
+			<td><h3><strong >新建警员信息：</strong></h3></td>
+		</tr>
+		<tr>
+		  <td width="18%" height="30" align="center">警员编号：</td>
+		  <td width="82%" class="word_grey">{$police.id}</td>
+		</tr>
+		<tr>
+		  <td width="18%" height="30" align="center">真实姓名：</td>
+		  <td width="82%" class="word_grey">{$police.policename}</td>
+		</tr>
+		<tr>
+		   <td width="18%" height="30" align="center">年&nbsp;&nbsp;&nbsp;&nbsp;龄：</td>
+		   <td width="82%" class="word_grey">{$police.age}</td>
+		</tr>
+		<tr>
+		   <td width="18%" height="30" align="center">性&nbsp;&nbsp;&nbsp;&nbsp;别：</td>
+		   <td width="82%" class="word_grey">{$police.sex}</td>
+		</tr>
+		<tr>
+		  <td height="28" align="center">密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
+		  <td height="28">{$police.password}</td>
+		</tr>
+		<tr>
+		  <td height="28" align="center">警员职位：</td>
+		  <td height="28">{$police.job}</td>
+		</tr>
+		<tr>
+		  <td height="28" align="center">管辖片区：</td>
+		  <td height="28">{$police.area}</td>
+		</tr>
+		<tr>
+		  <td height="28" align="center">硬件编号：</td>
+		  <td height="28">{$police.imei}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center"><button type="button" class="btn btn-primary" id="change">返回修改</button></td>
+			<td height="28"><button type="button" class="btn btn-primary" id="submit">确认提交</button></td>
+		</tr>
+	</table>
+</body>
+</html>
+<script>
+	$(function(){
+		$("#change").click(function(){
+			window.location.replace('__CONTROLLER__/policeadd');
+		});
+		$("#submit").click(function(){
+			window.location.replace("__CONTROLLER__/policewrite");
+		});
+	});
+</script>
