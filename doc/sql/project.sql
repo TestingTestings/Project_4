@@ -119,4 +119,4 @@ create table t_evidence(
 	foreign key(case_id) references t_case(id)
 );
 
---超过10位的int改为bigint 9/24 林
+-- 超过10位的int改为bigint 9/24 林
