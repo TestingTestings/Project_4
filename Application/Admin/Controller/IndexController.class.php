@@ -144,9 +144,15 @@ class IndexController extends Controller {
         $data['imei']=session("police")['imei'];
       //  $data['id']=session("police")['id'];
         $data['state']='normal';
+        var_dump($data);
         $police->add($data);
         session("police",null);
-        $this->redirect('police');
+        //$this->redirect('police');
+    }
+    public function law(){
+
+
+
     }
 
 }
