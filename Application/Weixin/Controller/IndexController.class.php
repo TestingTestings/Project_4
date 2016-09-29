@@ -81,7 +81,7 @@ class IndexController extends RestController
         $response['captcha'] = I('captcha');
         $response['verify'] = $this->check_verify(I('captcha'));
 
-        if (false) {} // 验证码
+//        if (false) {} // 验证码
 
         if ($request['password'] == $data['password']) {
             $response['isConfirm'] = 1;
@@ -90,6 +90,7 @@ class IndexController extends RestController
             $response['info'] = '密码错误';
         }
 
+        cookie('userOnline', $request['phone'], 3600*5);
         $this->response($response, 'json');
 
     }
