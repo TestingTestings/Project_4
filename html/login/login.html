@@ -117,7 +117,7 @@
                         location.href = "./goto.html"
                     } else {
                         localStorage.link = JSON.stringify('./login.html');
-                        localStorage.link_info = JSON.stringify('登录失败'); // todo 服务器发送错误信息
+                        localStorage.link_info = JSON.stringify(data['info']); // todo 服务器发送错误信息
                         location.href = "./goto.html"
                     }
                 },
@@ -172,7 +172,9 @@
 
 
     $(function () {
-        form_check()
+        form_check();
+
+        // todo 已登录用户会直接跳转至主页
     })
 </script>
 
