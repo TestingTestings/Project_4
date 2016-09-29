@@ -29,6 +29,7 @@ class IndexController extends RestController
         }
     }
 
+
 //    增加一条用户信息
     public function userData_post_json()
     {
@@ -46,6 +47,7 @@ class IndexController extends RestController
         $this->response($data, 'json');
     }
 
+
 //    生成验证码图片
     public function captcha_get_png()
     {
@@ -60,6 +62,7 @@ class IndexController extends RestController
         $Verify = new \Think\Verify($config);
         $Verify->entry();
     }
+
 
 //    判断用户登录数据
     public function userLogin_put_json()
@@ -78,16 +81,21 @@ class IndexController extends RestController
         $response['captcha'] = I('captcha');
         $response['verify'] = $this->check_verify(I('captcha'));
 
-        if (false) {
-            return ;
-        }
+        if (false) {} // 验证码
+
         if ($request['password'] == $data['password']) {
             $response['isConfirm'] = 1;
-            $this->response($response, 'json');
+        }else{
+            $response['isConfirm'] = 0;
+            $response['info'] = '密码错误';
         }
+
+        $this->response($response, 'json');
+
     }
 
 
+//    验证码校验
     private function check_verify($code, $id = '')
     {
         $verify = new \Think\Verify();
@@ -95,21 +103,24 @@ class IndexController extends RestController
     }
 
 
-//    ！微信接入类 WeiXin TP 自带
-//          查询 TP 文档
-//    ！生成微信菜单
-//        信息
 
-//    数据库初始化
+    /*
+    ！微信接入类 WeiXin TP 自带
+          查询 TP 文档
+    ！生成微信菜单
+        信息
 
-//    登陆 / 注册
-//      短信接口
-//    违章处理
-//    违章处理 缴费 / 处理 / 申述
-//    个人信息
-//    *新闻读取
-//    *法规查询
+    数据库初始化
 
-//    验证码校验
+    登陆 / 注册
+      短信接口
+    违章处理
+    违章处理 缴费 / 处理 / 申述
+    个人信息
+    *新闻读取
+    *法规查询
+
+    验证码校验
+    */
 
 }
