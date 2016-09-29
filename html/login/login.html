@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
     <!--<noscript>-->
-        <!--<link rel="stylesheet" href="assets/css/noscript.css"/>-->
+    <!--<link rel="stylesheet" href="assets/css/noscript.css"/>-->
     <!--</noscript>-->
     <style>
         * {
@@ -45,7 +45,7 @@
 
                 <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
                     <img width="100%" src="http://localhost/project_4/weixin/index/captcha_get_png"
-                         onclick="this.src='http://localhost/project_4/weixin/index/captcha_get_png?'+ Math.random()"/>
+                         onclick="this.src = this.src +'?'+ Math.random()"/>
                 </div>
                 <!--<img src="http://localhost/project_4/weixin/index/captcha_get_png" style="width:40%;display: inline-block;vertical-align: middle"/>-->
 
@@ -90,7 +90,7 @@
 <script src="assets/js/messages_zh.js"></script>
 <script>
 
-    //  todo 表单提交
+    //  表单提交
     function form_submit() {
         var $form = $("#sign_form");
         var phone = $("#phone").val();
@@ -110,20 +110,27 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
-                    if(data['isConfirm']){
+                    if (data['isConfirm']) {
 //                    跳转至主页
-                    location.href = "../index.html"
+                        localStorage.link = JSON.stringify('../index.html');
+                        localStorage.link_info = JSON.stringify('登录成功');
+                        location.href = "./goto.html"
+                    } else {
+                        localStorage.link = JSON.stringify('./login.html');
+                        localStorage.link_info = JSON.stringify('登录失败'); // todo 服务器发送错误信息
+                        location.href = "./goto.html"
                     }
                 },
                 error: function (data) {
                     console.log(data);
+                    document.body.innerHTML += data.responseText;
                 }
             })
         }
         return false
     }
 
-    //  todo 获取验证码图片
+    //  获取验证码图片
     function get_captcha() {
         $.ajax({
             url: 'http://localhost/project_4/weixin/index/captcha/1.png',
@@ -137,8 +144,7 @@
         })
     }
 
-
-    //  todo 表单验证
+    //  表单验证
     function form_check() {
         var $form = $("#sign_form");
 
@@ -149,22 +155,24 @@
                     minlength: 6,
                     maxlength: 12
                 },
-                password1: {
+                password: {
                     required: true,
                     minlength: 6,
                     maxlength: 12
+                },
+                captcha: {
+                    required: true
                 }
             },
             messages: {
-                username: {
-                    remote: "用户名已被使用"
-                }
+
             }
         });
     }
 
 
     $(function () {
+        form_check()
     })
 </script>
 
