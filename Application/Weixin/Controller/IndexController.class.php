@@ -81,13 +81,17 @@ class IndexController extends RestController
         $response['captcha'] = I('captcha');
         $response['verify'] = $this->check_verify(I('captcha'));
 
-        if (false) {
-            return;
-        }
+        if (false) {} // 验证码
+
         if ($request['password'] == $data['password']) {
             $response['isConfirm'] = 1;
-            $this->response($response, 'json');
+        }else{
+            $response['isConfirm'] = 0;
+            $response['info'] = '密码错误';
         }
+
+        $this->response($response, 'json');
+
     }
 
 
