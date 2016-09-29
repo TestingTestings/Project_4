@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <title>Identity by HTML5 UP</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <!--<noscript>-->
+    <!--<link rel="stylesheet" href="assets/css/noscript.css"/>-->
+    <!--</noscript>-->
+    <style>
+        * {
+            font-family: "微软雅黑", Helvetica, sans-serif;
+        }
+    </style>
+
+</head>
+<body class="is-loading">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Main -->
+    <section id="main">
+        <!--<header>-->
+        <!--<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>-->
+        <!--<h1>Jane Doe</h1>-->
+        <!--<p>Senior Psychonautics Engineer</p>-->
+        <!--</header>-->
+
+        <hr/>
+        <h2>登录</h2>
+
+        <form id="sign_form" method="post" action="#">
+            <div class="field">
+                <input type="text" name="phone" id="phone" placeholder="请输入手机号"/>
+            </div>
+            <div class="field">
+                <input type="password" name="password" id="password" placeholder="请输入密码"/>
+            </div>
+            <div class="field">
+                <input type="text" name="captcha" id="captcha" placeholder="请输入验证码"
+                       style="width:55%;display: inline-block"/>
+
+                <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
+                    <img width="100%" src="http://localhost/project_4/weixin/index/captcha_get_png"
+                         onclick="this.src = this.src +'?'+ Math.random()"/>
+                </div>
+                <!--<img src="http://localhost/project_4/weixin/index/captcha_get_png" style="width:40%;display: inline-block;vertical-align: middle"/>-->
+
+
+            </div>
+            <ul class="actions">
+                <li><a href="#" class="button" onclick="form_submit()" style="background:rgb(255,153,102)">登录</a></li>
+                <li><a href="#" class="button" onclick="location.href = './index.html'">注册</a></li>
+            </ul>
+        </form>
+        <hr/>
+
+        <footer>
+            <ul class="icons">
+                <li><a href="#" class="fa-weixin">微信</a></li>
+                <!-- <li><a href="#" class="fa-qq">QQ</a></li> -->
+                <!-- <li><a href="#" class="fa-weibo">微博</a></li> -->
+            </ul>
+        </footer>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="copyright">
+            <!-- <li>&copy; Jane Doe</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li> -->
+        </ul>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script>
+    if ('addEventListener' in window) {
+        window.addEventListener('load', function () {
+            document.body.className = document.body.className.replace(/\bis-loading\b/, '');
+        });
+        document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+    }
+</script>
+<script src="assets/js/jquery-1.12.0.min.js"></script>
+<script src="assets/js/jquery.validate.js"></script>
+<script src="assets/js/messages_zh.js"></script>
+<script>
+
+    //  表单提交
+    function form_submit() {
+        var $form = $("#sign_form");
+        var phone = $("#phone").val();
+        var password = $("#password").val();
+        var captcha = $("#captcha").val();
+
+        if ($form.valid()) {
+            $.ajax({
+//                url: "http://localhost/project_4/weixin/index/userLogin/phone/" + phone + ".json",
+                url: "http://localhost/project_4/weixin/index/userLogin_put_json",
+                type: 'put',
+                data: {
+                    phone: phone,
+                    password: password,
+                    captcha: captcha
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if (data['isConfirm']) {
+//                    跳转至主页
+                        localStorage.link = JSON.stringify('../index.html');
+                        localStorage.link_info = JSON.stringify('登录成功');
+                        location.href = "./goto.html"
+                    } else {
+                        localStorage.link = JSON.stringify('./login.html');
+                        localStorage.link_info = JSON.stringify(data['info']); // todo 服务器发送错误信息
+                        location.href = "./goto.html"
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    document.body.innerHTML += data.responseText;
+                }
+            })
+        }
+        return false
+    }
+
+    //  获取验证码图片
+    function get_captcha() {
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/captcha/1.png',
+            type: 'get',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        })
+    }
+
+    //  表单验证
+    function form_check() {
+        var $form = $("#sign_form");
+
+        $form.validate({
+            rules: {
+                phone: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 12
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 12
+                },
+                captcha: {
+                    required: true
+                }
+            },
+            messages: {
+
+            }
+        });
+    }
+
+
+    $(function () {
+        form_check();
+
+        // todo 已登录用户会直接跳转至主页
+    })
+</script>
+
+
+</body>
+</html>

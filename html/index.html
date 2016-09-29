@@ -6,12 +6,17 @@
 -->
 <html>
 	<head>
-		<title></title>
+		<title>交通安全综合服务管理平台</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<style>
+			input {
+				border:none;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="page-wrapper">
@@ -21,13 +26,13 @@
 						<div class="12u">
 
 							<header id="header">
-								<h1><a href="#" id="logo">标题</a></h1>
+								<h1><a href="#" id="logo">交通安全综合服务管理平台</a></h1>
 								<nav id="nav">
-									<a href="index.html" class="current-page-item">主页</a>
-									<a href="twocolumn1.html">Two Column #1</a>
-									<a href="twocolumn2.html">Two Column #2</a>
-									<a href="onecolumn.html">One Column</a>
-									<a href="threecolumn.html">Three Column</a>
+									<!-- <a href="index.html" class="current-page-item">主页</a> -->
+									<!-- <a href="twocolumn1.html">新闻</a> -->
+									<a href="onecolumn.html">查询历史</a>
+									<a href="threecolumn.html">关于</a>
+									<a href="twocolumn2.html"><button>登录</button></a>
 								</nav>
 							</header>
 
@@ -35,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="banner-wrapper">
+			<!-- <div id="banner-wrapper">
 				<div class="container">
 
 					<div id="banner">
@@ -44,25 +49,24 @@
 					</div>
 
 				</div>
-			</div>
+			</div> -->
 			<div id="main">
 				<div class="container">
 					<div class="row main-row">
 						<div class="4u 12u(mobile)">
 
 							<section>
-								<h2>Welcome to Minimaxing!</h2>
-								<p>This is <strong>Minimaxing</strong>, a fully responsive HTML5 site template designed by <a href="http://twitter.com/ajlkn">AJ</a> and released for free by <a href="http://html5up.net">HTML5 UP</a>. It features
-								a simple, lightweight design, solid HTML5 and CSS3 code, and full responsive support for desktop, tablet, and mobile displays.</p>
+								<h2>交通安全综合服务管理</h2>
+								<p><strong></strong><a href="http://twitter.com/ajlkn"></a><a href="http://html5up.net"></a><strong> 互联网交通安全综合服务管理平台 </strong>采用网页、语音、短信、移动终端APP四种方式，为广大交通参与者提供交管动态、安全宣传、警示教育，以及交通管理信息查询、告知、业务预约/受理/办理、道路通行等便民利民服务。</p>
 								<footer class="controls">
-									<a href="http://html5up.net" class="button">More cool designs ...</a>
+									<a href="http://html5up.net" class="button">更多内容...</a>
 								</footer>
 							</section>
 
 						</div>
 						<div class="4u 12u(mobile)">
 
-							<section>
+							<!-- <section>
 								<h2>Who are you guys?</h2>
 								<ul class="small-image-list">
 									<li>
@@ -76,25 +80,40 @@
 										<p>Vitae magna eget odio amet mollis justo facilisis amet quis. Sed sagittis consequat.</p>
 									</li>
 								</ul>
+							</section> -->
+							<section>
+								<h2>信息公告</h2>
+								<ul class="link-list">
+									<li><a href="#">驾驶证逾期未换证公告</a><span style="float:right;">2016/08</span></li>
+									<li><a href="#">驾驶证停止使用公告</a><span style="float:right;">2016/08</span></li>
+									<li><a href="#">校车驾驶资格作废公告</a><span style="float:right;">2016/08</span></li>
+									<li><a href="#">机动车行驶证未收回作废公告</a><span style="float:right;">2016/08</span></li>
+									<li><a href="#">逾期提交身体条件证明公告</a><span style="float:right;">2016/08</span></li>
+								</ul>
 							</section>
 
 						</div>
 						<div class="4u 12u(mobile)">
 
 							<section>
-								<h2>How about some links?</h2>
+								<h2>机动车违法查询</h2>
 								<div>
 									<div class="row">
-										<div class="6u 12u(mobile)">
+										<div class="12u 12u(mobile)">
 											<ul class="link-list">
-												<li><a href="#">Sed neque nisi consequat</a></li>
-												<li><a href="#">Dapibus sed mattis blandit</a></li>
-												<li><a href="#">Quis accumsan lorem</a></li>
-												<li><a href="#">Suspendisse varius ipsum</a></li>
-												<li><a href="#">Eget et amet consequat</a></li>
+												<form>
+													<li><input type="text" name="" placeholder="输入车牌号"  /></li>
+													<li><input type="text" name="" placeholder="输入车架号前六位"  /></li>
+													<li><select>
+														<option>小型汽车</option>
+														<option>大型汽车</option>
+													</select></li>
+													<li><input type="text" name="" placeholder="输入验证码" /></li>
+													<li><input type="submit"></li>
+												</form>
 											</ul>
 										</div>
-										<div class="6u 12u(mobile)">
+										<!-- <div class="6u 12u(mobile)">
 											<ul class="link-list">
 												<li><a href="#">Quis accumsan lorem</a></li>
 												<li><a href="#">Sed neque nisi consequat</a></li>
@@ -102,14 +121,14 @@
 												<li><a href="#">Dapibus sed mattis blandit</a></li>
 												<li><a href="#">Vitae magna sed dolore</a></li>
 											</ul>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</section>
 
 						</div>
 					</div>
-					<div class="row main-row">
+					<!-- <div class="row main-row">
 						<div class="6u 12u(mobile)">
 
 							<section>
@@ -169,7 +188,7 @@
 							</article>
 
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div id="footer-wrapper">

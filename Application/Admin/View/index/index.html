@@ -15,11 +15,11 @@
 
 	<div class="container">
 		<h1>交警执法后台管理系统</h1>
-		<form class="form">
-			<input type="text" placeholder="Username">
-			<input type="password" placeholder="Password"><br>
-			<button type="button" id="login-button" onclick="window.location.href='__CONTROLLER__/welcome';"><strong>登陆</strong></button>
-			
+		<form class="form" action="__CONTROLLER__/login" method="post">
+			<input type="text" placeholder="Username" name="username">
+			<input type="password" placeholder="Password" name="psd">
+			<input type="text" name="code" style="width:80px;display: inline-block;vertical-align: top"> <img src="__CONTROLLER__/verify" onclick="this.src='__CONTROLLER__/verify?'+Math.random();"><br>
+			<button type="submit" id="login-button"><strong>登陆</strong></button>
 		</form>
 	</div>
 	

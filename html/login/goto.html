@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <title>Identity by HTML5 UP</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <!--<noscript>-->
+    <!--<link rel="stylesheet" href="assets/css/noscript.css"/>-->
+    <!--</noscript>-->
+    <style>
+        * {
+            font-family: "微软雅黑", Helvetica, sans-serif;
+        }
+    </style>
+
+</head>
+<body class="is-loading">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Main -->
+    <section id="main">
+        <!--<header>-->
+        <!--<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>-->
+        <!--<h1>Jane Doe</h1>-->
+        <!--<p>Senior Psychonautics Engineer</p>-->
+        <!--</header>-->
+
+        <hr/>
+        <h2><span id="link_info">无效操作</span>，<span id="link_count"></span> 秒后跳转页面...</h2>
+        <hr/>
+
+
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="copyright">
+            <!-- <li>&copy; Jane Doe</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li> -->
+        </ul>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script>
+    if ('addEventListener' in window) {
+        window.addEventListener('load', function () {
+            document.body.className = document.body.className.replace(/\bis-loading\b/, '');
+        });
+        document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+    }
+</script>
+<script src="assets/js/jquery-1.12.0.min.js"></script>
+<script>
+
+
+    function jump_link(link, info, count){
+        $("#link_info").text(info);
+
+        timer = setInterval(function () { // 3 秒跳转倒计时
+            $("#link_count").text(count);
+            count -= 1;
+            if (count < 0) {
+                location.href = link;
+                localStorage.removeItem('link');
+                localStorage.removeItem('link_info');
+                clearInterval(timer);
+            }
+        }, 1000);
+    }
+    $(function () {
+
+        //php--->txt--->
+        // 静态的html
+        // 法律：名称、颁布、介绍、目录---->具体的章节----->
+        //交通法、机动车、驾驶证、
+        //搜索：1、基本信息：名称、颁布、介绍、目录
+        //     2、全文搜索：扣分
+
+        //导入：来源---->COPY下来------>有固定格式的EXCEL------>数据库
+        //自动方式
+
+        //数据库：法律---->目录----->具体的章节内容
+        //
+
+        // 获取 goto
+        // 获取 goto info
+        // 清除 goto 和 goto_info
+        // 跳转页面
+
+        console.log(localStorage.link);
+        if (localStorage.link) { // 获取 指向链接
+            link = JSON.parse(localStorage.link);
+            info = JSON.parse(localStorage.link_info); // 获取 跳转提示信息
+            jump_link(link, info, 3);
+        } else {
+            // 直接通过 url 访问时提示无效操作
+            jump_link('./login.html', '无效操作', 3);
+        }
+
+
+    })
+</script>
+</body>
+</html>
