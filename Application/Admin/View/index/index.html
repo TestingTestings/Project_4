@@ -7,6 +7,32 @@
 <title>交警执法后台管理系统</title>
 
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/styles.css">
+<script src="__PUBLIC__/Common/js/jquery/jquery-3.1.1.min.js"></script>
+<script src="__PUBLIC__/Common/js/jquery/jquery.validate.js"></script>
+<script src="__PUBLIC__/Common/js/jquery/messages_zh.js"></script>
+<script>
+	$(function(){
+		$("#login").validate({
+			rules: {
+				username:{
+					required: true
+				},
+				psd: {
+					required: true
+				},
+				code: {
+					required: true
+				}
+			}
+		});
+	})
+</script>
+<style>
+	label.error{
+		color: red;
+	}
+
+</style>
 </head>
 <body>
 
@@ -15,10 +41,11 @@
 
 	<div class="container">
 		<h1>交警执法后台管理系统</h1>
-		<form class="form" action="__CONTROLLER__/login" method="post">
-			<input type="text" placeholder="Username" name="username">
-			<input type="password" placeholder="Password" name="psd">
+		<form class="form" action="__CONTROLLER__/login" method="post" id="login">
+			<input type="text" placeholder="Username" name="username"><label for="username" class="error" style="position: absolute;top: 65px;left:255px"></label>
+			<input type="password" placeholder="Password" name="psd"><label for="psd" class="error" style="position: absolute;top: 140px;left:255px"></label>
 			<input type="text" name="code" style="width:80px;display: inline-block;vertical-align: top"> <img src="__CONTROLLER__/verify" onclick="this.src='__CONTROLLER__/verify?'+Math.random();"><br>
+			<label for="code" class="error" style="position: absolute;top: 217px"></label>
 			<button type="submit" id="login-button"><strong>登陆</strong></button>
 		</form>
 	</div>
@@ -30,8 +57,5 @@
 	</ul>
 	
 </div>
-
-
-
 </body>
 </html>
