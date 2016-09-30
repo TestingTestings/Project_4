@@ -90,6 +90,14 @@
 <script src="assets/js/messages_zh.js"></script>
 <script>
 
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+
     //  表单提交
     function form_submit() {
         var $form = $("#sign_form");
@@ -117,7 +125,7 @@
                         location.href = "./goto.html"
                     } else {
                         localStorage.link = JSON.stringify('./login.html');
-                        localStorage.link_info = JSON.stringify(data['info']); // todo 服务器发送错误信息
+                        localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
                         location.href = "./goto.html"
                     }
                 },
@@ -170,11 +178,24 @@
         });
     }
 
+    // 判断用户是否已经登录
+    function user_login() {
+        if (getCookie('userOnline')) { // 获取 cookie.userOnline
+            cookie = getCookie('userOnline');
+            console.log(cookie);
+            location.href = '../index.html';
+        } else {
+        }
+    }
+
 
     $(function () {
-        form_check();
 
-        // todo 已登录用户会直接跳转至主页
+        // 表单验证
+        form_check();
+        // 已登录用户会直接跳转至主页
+        user_login();
+
     })
 </script>
 

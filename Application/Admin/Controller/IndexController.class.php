@@ -142,11 +142,15 @@ class IndexController extends Controller {
         $data['age']=session("police")['age'];
         $data['job']=session("police")['job'];
         $data['imei']=session("police")['imei'];
-      //  $data['id']=session("police")['id'];
         $data['state']='normal';
         $police->add($data);
         session("police",null);
         $this->redirect('police');
+    }
+    public function law(){
+
+
+
     }
 
 }
@@ -155,3 +159,4 @@ function check_verify($code){
     $verify = new \Think\Verify();
     return $verify->check($code);
 }
+?>
