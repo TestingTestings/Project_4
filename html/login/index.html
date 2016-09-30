@@ -48,8 +48,8 @@
             <div class="field">
                 <input type="text" name="captcha" id="captcha" placeholder="请输入验证码"
                        style="width:55%;display: inline-block"/>
-                <button style="width:40%;display: inline-block;vertical-align: middle" onclick="captcha_button(event)">
-                    发送验证码
+                <button style="width:40%;display: inline-block;vertical-align: middle" onclick="return false">
+                    <a onclick="captcha_button(event)">发送验证码</a>
                 </button>
             </div>
             <div class="field">
@@ -132,16 +132,21 @@
     }
 
     // 发送验证码
+//    todo 发送验证码 点击后会刷新页面
     function captcha_button(evt) {
+        alert();
         count = 60;
         timer = setInterval(function () {
             $(evt.target).html(count + " 秒后再次尝试");
+            // todo button 失效
             $(evt.target).attr('disabled', true);
             count -= 1;
             if (count == 0) {
                 $(evt.target).html("发送验证码");
+                // todo button 复原
                 $(evt.target).attr('disabled', false);
-                clearInterval(timer)
+                return false;
+                clearInterval(timer);
             }
         }, 1000);
         return false
