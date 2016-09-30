@@ -79,20 +79,25 @@ class IndexController extends RestController
         $response['password2'] = md5(I('password'));
         $response['password'] = $data['password'];
         $response['captcha'] = I('captcha');
-        $response['verify'] = $this->check_verify(I('captcha'));
+        $response['verify'] = $this->check_verify(I('captcha')); // todo 校验验证码失效
 
-//        if (false) {} // 验证码
+//       todo 验证码
 
-        if ($request['password'] == $data['password']) {
-            $response['isConfirm'] = 1;
-        }else{
+        if (!$data['password']) { // 考虑账号不存在的情况
+            $response['isConfirm'] = 0;
+            $response['info'] = '账号不存在';
+        } elseif ($request['password'] != $data['password']) {
             $response['isConfirm'] = 0;
             $response['info'] = '密码错误';
+        } elseif ($request['password'] == $data['password']){
+            $response['isConfirm'] = 1;
+        } else{
+            $response['isConfirm'] = 0;
+            $response['info'] = '未知错误';
         }
 
-        cookie('userOnline', $request['phone'], 3600*5);
+        cookie('userOnline', $request['phone'], 3600 * 5);
         $this->response($response, 'json');
-
     }
 
 
@@ -102,7 +107,6 @@ class IndexController extends RestController
         $verify = new \Think\Verify();
         return $verify->check($code, $id);
     }
-
 
 
     /*
