@@ -35,7 +35,7 @@
                             <a href="onecolumn.html">查询历史</a>
                             <a href="threecolumn.html">关于</a>
                             <a href="#" id="user_operation" onclick="user_operate(event)">登录</a>
-                            <a href="#" id="user_info" >15880166508</a>
+                            <a href="#" id="user_info">15880166508</a>
                         </nav>
                     </header>
 
@@ -109,14 +109,18 @@
                                 <div class="12u 12u(mobile)">
                                     <ul class="link-list">
                                         <form>
-                                            <li><input type="text" name="" placeholder="输入车牌号"/></li>
-                                            <li><input type="text" name="" placeholder="输入车架号前六位"/></li>
-                                            <li><select>
-                                                <option>小型汽车</option>
-                                                <option>大型汽车</option>
+                                            <li><input type="text" name="id" id="id" placeholder="输入车牌号"/></li>
+                                            <li><input type="text" name="vin" id="vin" placeholder="输入车架号前六位"/></li>
+                                            <li><select name="type" id="type">
+                                                <option value='小轿车'>小型汽车</option>
+                                                <option value='客车'>大型汽车</option>
+                                                <option value='货车'>大型汽车</option>
+                                                <option value='三轮车'>大型汽车</option>
+                                                <option value='拖拉机'>大型汽车</option>
                                             </select></li>
-                                            <li><input type="text" name="" placeholder="输入验证码"/></li>
-                                            <li><input type="submit"></li>
+                                            <li><input type="text" name="captcha" id="captcha" placeholder="输入验证码"/>
+                                            </li>
+                                            <li><input type="button" onclick="form_submit()" value="查询"></li>
                                         </form>
                                     </ul>
                                 </div>
@@ -242,22 +246,45 @@
     }
 
     // 首页显示用户信息
-    function show_user(info){
-        $("#user_info").text(info);
+    function show_user(info) {
+        $("#user_info").text(info).show();
     }
 
     // 隐藏用户信息
-    function hide_user(){
+    function hide_user() {
         $("#user_info").text("").hide();
     }
 
     // todo 提交车辆违法表单
-    function form_submit(){
+    function form_submit() {
 
+        var id = $('#id').val();
+        var vin = $('#vin').val();
+        var type = $('#type').val();
+        var captcha = $('#captcha').val();
+
+//         todo 检查输入不为空
+        if (id && vin && type && captcha) {
+            $.ajax({
+                url: 'http://localhost/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/1.json',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+
+
+
+        return false
     }
 
     // todo 车辆违法表单验证
-    function form_check(){
+    function form_check() {
 
     }
 
@@ -269,7 +296,8 @@
 <script src="assets/js/skel.min.js"></script>
 <script src="assets/js/skel-viewport.min.js"></script>
 <script src="assets/js/util.js"></script>
-<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<!--[if lte IE 8]>
+<script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 
 </body>
