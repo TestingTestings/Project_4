@@ -35,6 +35,7 @@
                             <a href="onecolumn.html">查询历史</a>
                             <a href="threecolumn.html">关于</a>
                             <a href="#" id="user_operation" onclick="user_operate(event)">登录</a>
+                            <a href="#" id="user_info" >15880166508</a>
                         </nav>
                     </header>
 
@@ -192,14 +193,12 @@
 <script>
 
 
-
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires+";path=/"; // cookie 的跨域解决方案
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/"; // cookie 的跨域解决方案
     }
-
 
     function getCookie(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -220,34 +219,44 @@
             cookie = getCookie('userOnline');
             console.log(cookie);
             $('#user_operation').text('注销'); // 切换 登录和注销
+            show_user(cookie);
+
         } else {
             $('#user_operation').text('登录');
+            hide_user();
         }
     }
 
     // 用户登录/注销
     function user_operate(evt) {
-
         if ($(evt.target).text() == '登录') { // 点击登录 跳转至登录页
             location.href = "./login/login.html";
         } else if ($(evt.target).text() == '注销') { // 点击注销
             // 删除 userOnline
             delCookie('userOnline');
             // 刷新页面
-            location.href = location.href;
+            location.href += "";
         }
     }
 
+    // 首页显示用户信息
+    function show_user(info){
+        $("#user_info").text(info);
+    }
+
+    // 隐藏用户信息
+    function hide_user(){
+        $("#user_info").text("").hide();
+    }
 
     $(function () {
-        user_online()
+        user_online();
     })
 </script>
 <script src="assets/js/skel.min.js"></script>
 <script src="assets/js/skel-viewport.min.js"></script>
 <script src="assets/js/util.js"></script>
-<!--[if lte IE 8]>
-<script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 
 </body>
