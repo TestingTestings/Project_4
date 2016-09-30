@@ -105,8 +105,13 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-        $request[''] = I('phone');
-        $request[''] = I('password');
+        $request['id'] = I('id');
+        $request['captcha'] = I('captcha');
+        $request['vin'] = I('vin');
+        $request['type'] = I('type');
+
+        $this->response($request, 'json');
+
 
     }
 
