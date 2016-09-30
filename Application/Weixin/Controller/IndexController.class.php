@@ -10,7 +10,7 @@ class IndexController extends RestController
     protected $allowMethod = ['get', 'post', 'put', 'delete'];
     protected $allowType = ['html', 'json', 'png'];
     protected $defaultMethod = 'get';
-    protected $defaultType = 'html';
+    protected $defaultType = 'json';
 
 
 //    判断用户名是否存在
@@ -89,9 +89,9 @@ class IndexController extends RestController
         } elseif ($request['password'] != $data['password']) {
             $response['isConfirm'] = 0;
             $response['info'] = '密码错误';
-        } elseif ($request['password'] == $data['password']){
+        } elseif ($request['password'] == $data['password']) {
             $response['isConfirm'] = 1;
-        } else{
+        } else {
             $response['isConfirm'] = 0;
             $response['info'] = '未知错误';
         }
@@ -99,6 +99,18 @@ class IndexController extends RestController
         cookie('userOnline', $request['phone'], 3600 * 5);
         $this->response($response, 'json');
     }
+
+//    todo 用户查询违法车辆
+    function carInfo_get_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+
+        $request[''] = I('phone');
+        $request[''] = I('password');
+
+    }
+
+//    todo 用户查询历史
 
 
 //    验证码校验
