@@ -3,6 +3,8 @@ namespace Weixin\Controller;
 
 use Think\Controller;
 use Think\Controller\RestController;
+use Weixin\Common\Captcha;
+
 
 class IndexController extends RestController
 {
@@ -53,14 +55,23 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-        $config = [
-            'fontSize' => 50,
-            'length' => 4,
-            'useNoise' => true
-        ];
+//          TP 自带验证码
+//        $config = [
+//            'fontSize' => 50,
+//            'length' => 4,
+//            'useNoise' => true
+//        ];
+//
+//        $Verify = new \Think\Verify($config);
+//        $Verify->entry();
 
-        $Verify = new \Think\Verify($config);
-        $Verify->entry();
+//        验证码
+
+        $captcha = new Captcha();
+        $captcha->create();
+        session('captcha', $captcha->__tostring());
+
+
     }
 
 
@@ -79,11 +90,13 @@ class IndexController extends RestController
         $response['password2'] = md5(I('password'));
         $response['password'] = $data['password'];
         $response['captcha'] = I('captcha');
-        $response['verify'] = $this->check_verify(I('captcha')); // todo 校验验证码失效
+//        $response['verify'] = $this->check_verify(I('captcha')); // todo 校验验证码失效
 
 //       todo 验证码
-
-        if (!$data['password']) { // 考虑账号不存在的情况
+        if (I('captcha') != session('captcha')) {
+            $response['isConfirm'] = 0;
+            $response['info'] = '验证码错误';
+        } elseif (!$data['password']) { // 考虑账号不存在的情况
             $response['isConfirm'] = 0;
             $response['info'] = '账号不存在';
         } elseif ($request['password'] != $data['password']) {
@@ -105,10 +118,12 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
+        session('sdf', 213);
         $request['id'] = I('id');
         $request['captcha'] = I('captcha');
         $request['vin'] = I('vin');
         $request['type'] = I('type');
+        $request['session'] = session('sdf');
 
         $this->response($request, 'json');
 
@@ -116,6 +131,16 @@ class IndexController extends RestController
     }
 
 //    todo 用户查询历史
+
+
+    function test()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+        $request['session'] = session('sdf');
+        $request['captcha'] = session('captcha');
+
+        $this->response($request, 'json');
+    }
 
 
 //    验证码校验
