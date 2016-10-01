@@ -257,6 +257,7 @@
 
     // todo 提交车辆违法表单
     function form_submit() {
+        alert();
 
         var id = $('#id').val();
         var vin = $('#vin').val();
@@ -279,7 +280,6 @@
         }
 
 
-
         return false
     }
 
@@ -288,9 +288,24 @@
 
     }
 
+    function test() {
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/test',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    }
+
 
     $(function () {
         user_online();
+        test()
     })
 </script>
 <script src="assets/js/skel.min.js"></script>
