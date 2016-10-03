@@ -125,10 +125,16 @@ class IndexController extends RestController
         $request['type'] = I('type');
         $request['session'] = session('sdf');
 
+        $data['id'] = $request['id'];
+        $request['car'] = M('car')->where($data)->select();
+        // todo
+
+
         $this->response($request, 'json');
 
 
     }
+
 
 //    todo 用户查询历史
 
