@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/style.css" />
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/jquery2.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/jquery2.sorted.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/ckform.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/common.js"></script>
+
+    <style type="text/css">
+        body {font-size: 20px;
+		font-size: 20px;
+            padding-bottom: 40px;
+            background-color:#e9e7ef;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body >
+<form class="form-inline definewidth m20" action="police_case" method="get">
+    <font color="#777777"><strong>案件查询：</strong></font>
+    <input type="text" name="search" id="menuname" class="abc input-default" placeholder="输入要查询的案件信息" value="{$search}">&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary">查询</button>
+</form>
+<table class="table table-bordered table-hover definewidth m10">
+    <thead>
+    <tr>
+        <th>案件编号</th>
+        <th>违章内容</th>
+        <th>发生地点</th>
+        <th>违章时间</th>
+        <th>案件状态</th>
+        <th>查看详情</th>
+    </tr>
+    </thead>
+        <volist name="police" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.content}</td>
+                <td>{$vo.place}</td>
+                <td>{$vo.happentime}</td>
+                <td>{$vo.state}</td>
+                <td><a href="__CONTROLLER__/case_detail?id={$vo.id}">案件详情</a></td>
+            </tr>
+        </volist>
+</table>
+{$page}
+</body>
+</html>
+<script>
+    $(function(){
+       $("div").css({
+           'text-align':'center',
+           'margin-top':'20px'
+       })
+    });
+</script>

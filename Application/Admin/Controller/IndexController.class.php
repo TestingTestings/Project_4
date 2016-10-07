@@ -51,28 +51,36 @@ class IndexController extends Controller {
     }
     //警员管理
     public function police(){
-        $search=I('get.search');
-        $police=M("police");
+        $this->search('police');
+    }
+    //搜索模块化
+    public function search($sheel,$condition){//查询的表，加入的筛选条件
+        $search=I('get.search');//获得搜索栏信息
+        $police=M($sheel);
         if(!empty($search))
         {
-            $where['id']   = array('like', '%'.$search.'%');
-            $where['name'] = array('like', '%'.$search.'%');
-            $where['age'] = array('like', '%'.$search.'%');
-            $where['area'] = array('like', '%'.$search.'%');
-            $where['_logic']  = 'or';
-            $map['_complex']  = $where;
-            $count=$police->where($map)->count();//查询条数
+            if(!isset($condition))//判断是否有筛选条件
+            {
+                $condition="";
+            }
+            $map=search_where($sheel,$search);//调用搜索函数生成搜索数组
+            $count=$police->where($condition)->where($map)->count();//查询条数
             $Page= new \Think\Page($count,7);//创建分页
-            $res= $police->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
-            foreach($map as $key=>$val) {
+            $res= $police->where($condition)->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
+            foreach($map as $key=>$val) {//带入搜索值翻页
                 $Page->parameter .= "$key=".urlencode($val)."&";
             }
         }else
         {
-            $count=$police->count();//查询条数
+            if(!isset($condition))
+            {
+                $condition="";
+            }
+            $count=$police->where($condition)->count();//查询条数
             $Page= new \Think\Page($count,7);//创建分页
-            $res= $police->limit($Page->firstRow.','.$Page->listRows)->select();
+            $res= $police->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
         }
+        //翻页栏构造
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
         $Page->setConfig('theme','%HEADER%%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%');
@@ -81,7 +89,7 @@ class IndexController extends Controller {
         $this->assign("police",$res);
         $this->assign("page",$show);
         $this->assign("search",$search);
-        $this->display('police');
+        $this->display($sheel);
     }
     //违章管理
     public function peccancy(){
@@ -131,7 +139,7 @@ class IndexController extends Controller {
         $this->assign("police",$police);
         $this->display("detail");
     }
-    //
+    //警员信息写入
     public function policewrite(){
         $police=M("police");
         $data['id']=session("police")['id'];
@@ -147,16 +155,59 @@ class IndexController extends Controller {
         session("police",null);
         $this->redirect('police');
     }
+    //法规
     public function law(){
+        $this->search('law');
+    }
+    //案件查询入口
+    public function police_case(){
+        $this->search('case');
+    }
+    //案件处理入口
+    public function police_appeal(){
+        $this->search('case',"state='申诉'");
+    }
+    //案件详情数据读取
+    public function case_detail(){
+        $case_id=I('get.id');
+        $detail=M('case');
+        $one_case=$detail->where("id='{$case_id}'")->select();
+        $police_id=$one_case[0]['police_id'];
+        $car_id=$one_case[0]['car_id'];
+        $police=M('police');
+        $car=M('car');
+        $one_police=$police->where("id={$police_id}")->select();
+        $one_car=$car->where("id='{$car_id}'")->select();
 
-
-
+        $this->assign('detail',$one_case[0]);
+        $this->assign('police',$one_police[0]);
+        $this->assign('car',$one_car[0]);
+        $this->display();
     }
 
 }
-
+//验证码生成
 function check_verify($code){
     $verify = new \Think\Verify();
     return $verify->check($code);
+}
+//搜索函数构造索引数组
+function search_where($sheel,$search){
+    if($sheel=='police') {
+        $where['id'] = array('like', '%' . $search . '%');
+        $where['name'] = array('like', '%' . $search . '%');
+        $where['age'] = array('like', '%' . $search . '%');
+        $where['area'] = array('like', '%' . $search . '%');
+        $where['_logic'] = 'or';
+        $map['_complex'] = $where;
+    }else if($sheel=='case')
+    {
+        $where['id'] = array('like', '%' . $search . '%');
+        $where['content'] = array('like', '%'.$search . '%');
+        $where['place'] = array('like', '%' . $search . '%');
+        $where['_logic'] = 'or';
+        $map['_complex'] = $where;
+    }
+    return $map;
 }
 ?>
