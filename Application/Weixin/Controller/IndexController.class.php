@@ -41,12 +41,16 @@ class IndexController extends RestController
 //        todo 再次验证手机号是否重复
         $data['phone'] = I('post.phone');
         $data['password'] = md5(I('post.password2'));
-        $data['idcard'] = I('post.idcard');
+        $data['idcard'] = I('post.id_number');
         $data['regtime'] = date('Y-m-d');
-
+//
         $User = M('user');
         $User->data($data)->add();
+
+
         $this->response($data, 'json');
+
+        // todo 添加到查询历史中
     }
 
 
@@ -55,7 +59,7 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-//          TP 自带验证码
+//          TP 验证码
 //        $config = [
 //            'fontSize' => 50,
 //            'length' => 4,
@@ -65,7 +69,7 @@ class IndexController extends RestController
 //        $Verify = new \Think\Verify($config);
 //        $Verify->entry();
 
-//        验证码
+//        PR 验证码
 
         $captcha = new Captcha();
         $captcha->create();
@@ -90,10 +94,9 @@ class IndexController extends RestController
         $response['password2'] = md5(I('password'));
         $response['password'] = $data['password'];
         $response['captcha'] = I('captcha');
-//        $response['verify'] = $this->check_verify(I('captcha')); // todo 校验验证码失效
 
-//       todo 验证码
-        if (I('captcha') != session('captcha')) {
+//       验证码
+        if (strtoupper(I('captcha')) != session('captcha')) {
             $response['isConfirm'] = 0;
             $response['info'] = '验证码错误';
         } elseif (!$data['password']) { // 考虑账号不存在的情况
@@ -104,12 +107,11 @@ class IndexController extends RestController
             $response['info'] = '密码错误';
         } elseif ($request['password'] == $data['password']) {
             $response['isConfirm'] = 1;
+            cookie('userOnline', $request['phone'], 3600 * 5);
         } else {
             $response['isConfirm'] = 0;
             $response['info'] = '未知错误';
         }
-
-        cookie('userOnline', $request['phone'], 3600 * 5);
         $this->response($response, 'json');
     }
 
@@ -118,21 +120,39 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-        session('sdf', 213);
-        $request['id'] = I('id');
+        $request['id'] =  strtoupper(I('id'));
         $request['captcha'] = I('captcha');
         $request['vin'] = I('vin');
         $request['type'] = I('type');
-        $request['session'] = session('sdf');
 
         $data['id'] = $request['id'];
-        $request['car'] = M('car')->where($data)->select();
-        // todo
+        $data['vin'] = $request['vin'];
+
+        $data['car'] = M('car')->where($data)->select();
 
 
-        $this->response($request, 'json');
+        if (strtoupper($request['captcha']) != session('captcha')) { // 验证码
+            $response['isConfirm'] = 0;
+            $response['info'] = '验证码错误';
+        } elseif (count($data['car']) == 0) { // 不匹配
+            $response['isConfirm'] = 0;
+            $response['info'] = '车牌号与车架号不匹配';
+        } else { // todo 返回数据
 
+            // todo 查询相对应的违法记录
 
+            $data = [];
+            $data['car_id'] = $request['id'];
+
+//            $response['result'] =  M('case')->where($data)->select();
+            $response['result'] =  M('case')->select();
+//            $response['result'] = $response['car'][0];
+
+            $response['isConfirm'] = 1;
+            $response['info'] = '正在查询';
+        }
+
+        $this->response($response, 'json');
     }
 
 

@@ -107,22 +107,40 @@
                         <div>
                             <div class="row">
                                 <div class="12u 12u(mobile)">
-                                    <ul class="link-list">
-                                        <form>
-                                            <li><input type="text" name="id" id="id" placeholder="输入车牌号"/></li>
-                                            <li><input type="text" name="vin" id="vin" placeholder="输入车架号前六位"/></li>
-                                            <li><select name="type" id="type">
-                                                <option value='小轿车'>小型汽车</option>
-                                                <option value='客车'>大型汽车</option>
-                                                <option value='货车'>大型汽车</option>
-                                                <option value='三轮车'>大型汽车</option>
-                                                <option value='拖拉机'>大型汽车</option>
-                                            </select></li>
-                                            <li><input type="text" name="captcha" id="captcha" placeholder="输入验证码"/>
+                                    <form id="car_form">
+                                        <ul class="link-list">
+                                            <li>
+                                                <select name="id_ahead" id="id_ahead">
+                                                    <option value='闽'>闽</option>
+                                                </select>
+                                                <input type="text" name="id" id="id" placeholder="输入车牌号"/>
+
                                             </li>
-                                            <li><input type="button" onclick="form_submit()" value="查询"></li>
-                                        </form>
-                                    </ul>
+                                            <li>
+                                                <input type="text" name="vin" id="vin" placeholder="输入车架号前六位"/>
+                                            </li>
+                                            <li>
+                                                <select name="type" id="type">
+                                                    <option value='小轿车'>小型汽车</option>
+                                                    <option value='客车'>大型汽车</option>
+                                                    <option value='货车'>大型汽车</option>
+                                                    <option value='三轮车'>大型汽车</option>
+                                                    <option value='拖拉机'>大型汽车</option>
+                                                </select>
+                                            </li>
+                                            <li>
+                                                <input type="text" name="captcha" id="captcha"
+                                                       placeholder="输入验证码"/>
+                                                <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
+                                                    <img width="100%" src="http://localhost/project_4/weixin/index/captcha_get_png"
+                                                         onclick="this.src = this.src +'?'+ Math.random()"/>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <input type="button" onclick="form_submit()" value="查询">
+                                            </li>
+                                        </ul>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -255,39 +273,78 @@
         $("#user_info").text("").hide();
     }
 
+
     // todo 提交车辆违法表单
     function form_submit() {
-        alert();
 
-        var id = $('#id').val();
+        var $form = $("#car_form");
+        var id = $('#id_ahead').val()+$('#id').val();
         var vin = $('#vin').val();
         var type = $('#type').val();
         var captcha = $('#captcha').val();
 
-//         todo 检查输入不为空
-        if (id && vin && type && captcha) {
+//         检查输入不为空
+//         错误提示
+//         todo 跳转结果页面
+        if ($form.valid()) {
             $.ajax({
                 url: 'http://localhost/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/1.json',
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
+                    console.log(data);
+                    localStorage.data = JSON.stringify(data);
+
+                    if (data['isConfirm']) {
+//                    跳转至查询结果页
+//                        todo 页面跳转
+                        localStorage.data = JSON.stringify(data);
+                        location.href = "./result.html"
+                    } else {
+//                     返回主页
+                        localStorage.link = JSON.stringify('../index.html');
+                        localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
+                        location.href = "./login/goto.html"
+                    }
                 },
                 error: function (data) {
-                    console.log(data)
+                    console.log(data);
+                    document.body.innerHTML += data.responseText;
                 }
             });
         }
-
-
         return false
     }
 
     // todo 车辆违法表单验证
     function form_check() {
+        var $form = $("#car_form");
 
+        $form.validate({
+            rules: {
+                id: {
+                    required: true
+                },
+                vin: {
+                    required: true
+                },
+                type: {
+                    required: true
+                },
+                captcha: {
+                    required: true
+                }
+            },
+            messages: {
+            }
+        })
     }
 
+
+
+
+
+    // 测试
     function test() {
         $.ajax({
             url: 'http://localhost/project_4/weixin/index/test',
@@ -305,6 +362,7 @@
 
     $(function () {
         user_online();
+        form_check();
         test()
     })
 </script>
