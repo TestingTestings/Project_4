@@ -120,8 +120,7 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-//        $request['id'] = I('id');
-        $request['id'] = '闽A0001';
+        $request['id'] =  strtoupper(I('id'));
         $request['captcha'] = I('captcha');
         $request['vin'] = I('vin');
         $request['type'] = I('type');
@@ -129,20 +128,28 @@ class IndexController extends RestController
         $data['id'] = $request['id'];
         $data['vin'] = $request['vin'];
 
-        $response['car'] = M('car')->where($data)->select();
-        // todo 查询相对应的违法记录
+        $data['car'] = M('car')->where($data)->select();
 
 
-        if (strtoupper($request['captcha']) != session('captcha')) {
+        if (strtoupper($request['captcha']) != session('captcha')) { // 验证码
             $response['isConfirm'] = 0;
             $response['info'] = '验证码错误';
-        } elseif (count($response['car']) == 0) {
+        } elseif (count($data['car']) == 0) { // 不匹配
             $response['isConfirm'] = 0;
             $response['info'] = '车牌号与车架号不匹配';
-        } else{ // todo 返回数据
+        } else { // todo 返回数据
+
+            // todo 查询相对应的违法记录
+
+            $data = [];
+            $data['car_id'] = $request['id'];
+
+//            $response['result'] =  M('case')->where($data)->select();
+            $response['result'] =  M('case')->select();
+//            $response['result'] = $response['car'][0];
+
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
-            $response['result'] = $response['car'][0];
         }
 
         $this->response($response, 'json');
