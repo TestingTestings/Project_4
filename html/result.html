@@ -169,7 +169,7 @@
                         <h2>查询结果</h2>
 
                         <div class="table-container">
-                            <table class="gridtable">
+                            <table class="gridtable" id="result_form">
                                 <tr>
                                     <th>案件名称</th>
                                     <th>驾驶人</th>
@@ -281,6 +281,24 @@
 <script src="assets/js/main.js"></script>
 <script>
     // todo 从 localstorage 读取数据
+    $(function(){
+        var data = JSON.parse(localStorage.data);
+        console.log(data.result);
+
+        $("#result_form").html();
+
+//        <tr>
+//        <td>梁乐机动车驾驶人违反道路通行规定案</td>
+//        <td>梁乐</td>
+//        <td>大型汽车</td>
+//        <td>粤K20813</td>
+//        <td>罚款150元</td>
+//        <td>2016年05月13日</td>
+//        <td>
+//        <button>查看详情</button>
+//        </td>
+//        </tr>
+    })
 </script>
 
 </body>
