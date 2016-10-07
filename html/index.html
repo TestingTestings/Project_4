@@ -293,9 +293,12 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);
+                    localStorage.data = JSON.stringify(data);
+
                     if (data['isConfirm']) {
 //                    跳转至查询结果页
 //                        todo 页面跳转
+                        localStorage.data = JSON.stringify(data);
                         location.href = "./result.html"
                     } else {
 //                     返回主页
