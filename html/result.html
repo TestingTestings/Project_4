@@ -280,25 +280,70 @@
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
 <script>
+
     // todo 从 localstorage 读取数据
-    $(function(){
+    function read_local() {
         var data = JSON.parse(localStorage.data);
+        var $result_form = $("#result_form");
+
         console.log(data.result);
+        console.log(data.car);
 
-        $("#result_form").html();
+        $result_form.children().children("tr:gt(0)").remove(); // 移除初始数据
 
-//        <tr>
-//        <td>梁乐机动车驾驶人违反道路通行规定案</td>
-//        <td>梁乐</td>
-//        <td>大型汽车</td>
-//        <td>粤K20813</td>
-//        <td>罚款150元</td>
-//        <td>2016年05月13日</td>
-//        <td>
-//        <button>查看详情</button>
-//        </td>
-//        </tr>
-    })
+//         循环输出表格
+//      todo 数据调整
+        for (var i in data.result) {
+            var $row = $('\
+                <tr>\
+                    <td>' + data.result[i].infoway + '</td>\
+                    <td>' + data.result[i].state + '</td>\
+                    <td>' + data.car.type + '</td>\
+                    <td>' + data.result[i]['car_id'] + '</td>\
+                    <td>罚款150元'+data.result[i]['cost']+'</td>\
+                    <td>' + data.result[i]['happentime'] + '</td>\
+                    <td>\
+                        <button data-case_id="'+ data.result[i]['id'] +'"  onclick="case_detail(event)">查看详情</button>\
+                    </td>\
+                </tr>\
+            ');
+            $result_form.append($row);
+        }
+    }
+
+
+    // todo 跳转详情页
+    // todo 案件id 存入 local
+    function case_detail(event){
+        var data = JSON.parse(localStorage.data);
+        localStorage.case_id = $(event.target).attr('data-case_id');
+        location.href = './detail.html';
+    }
+
+
+
+
+    // 判断结果为空
+    function result_empty(){
+
+        var data = JSON.parse(localStorage.data);
+        var $result_form = $("#result_form");
+
+        console.log(data.result.length);
+        if(data.result.length < 1 || !data){
+            $result_form.children().remove();
+            $result_form.append('<h1>未查找到违章记录 <a href="./index.html"> 返回主页</a></h1>');
+            // 提示无数据 返回查询链接
+        }
+    }
+
+    // todo 判断无效操作
+    // todo 读取完毕后删除数据
+
+    $(function () {
+        read_local();
+        result_empty();
+    });
 </script>
 
 </body>
