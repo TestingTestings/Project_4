@@ -189,9 +189,41 @@ class IndexController extends Controller {
         $one_car=$car->where("id='{$car_id}'")->select();
 
         $this->assign('detail',$one_case[0]);
+        session("case_detail",$one_case[0]);
         $this->assign('police',$one_police[0]);
         $this->assign('car',$one_car[0]);
         $this->display();
+    }
+    //案件处理
+    public function case_appeal(){
+        $case_detail=session("case_detail");
+        session("case_detail",'');
+        $id=$case_detail['id'];
+        $this->assign("case_detail",$case_detail);
+        $casehandle=M('casehandle');
+        $res=$casehandle->where("id=$id and state2='未处理'")->select();
+        $this->assign("content",$res);
+        $this->display('case_appeal');
+    }
+    //案件写入
+    public function case_deal($id,$content,$punishment,$cost,$appeal){
+        if($appeal=='ok') {
+            $case = M("case");
+            $case->content = $content;
+            $case->punishment = $punishment;
+            $case->cost = $cost;
+            $case->state='已处理';
+//        $case->paaeal=$appeal;
+            $case->where("id=$id")->save();
+        }
+        else if($appeal=='no'){
+            $case = M("case");
+            $case->state='未处理';
+//        $case->paaeal=$appeal;
+            $case->where("id=$id")->save();
+        }
+
+
     }
 
 }

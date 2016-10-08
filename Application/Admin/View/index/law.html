@@ -38,6 +38,7 @@
         <button type="submit" class="btn btn-primary">查询</button>
     </form>
     <table class="table table-bordered table-hover definewidth m10">
+        <tr style="font-size: 33px"><td style="text-align: center;">中华人民共和国交通安全法</td></tr>
         <volist name="police" id="vo">
             <if condition="$vo.part eq '0'"><tr style="font-size:25px "><td><b>{$vo.section}</b> &nbsp;&nbsp;{$vo.content}</td></tr>
                 <elseif condition="$vo.strip eq '0'" /><tr><td>&nbsp;&nbsp;&nbsp;{$vo.part}</td></tr>

@@ -74,6 +74,10 @@
 			<td width="60%" class="word_grey">{$detail.punishment}</td>
 		</tr>
 		<tr>
+			<td width="40%" height="30" align="center">处罚金额：</td>
+			<td width="60%" class="word_grey">{$detail.cost}</td>
+		</tr>
+		<tr>
 			<td width="40%" height="30" align="center">执法方式：</td>
 			<td width="60%" class="word_grey">{$detail.infoway}</td>
 		</tr>
@@ -140,7 +144,7 @@
 			window.location.replace("__CONTROLLER__/policewrite");
 		});
 		$("#submit").click(function(){
-			window.location.replace("__CONTROLLER__/policewrite");
+			window.location.replace("__CONTROLLER__/case_appeal");
 		});
 	});
 </script>
