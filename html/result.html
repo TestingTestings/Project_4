@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<!--
+	Minimaxing by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>One Column - Minimaxing by HTML5 UP</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--[if lte IE 8]>
+    <script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="assets/css/ie9.css"/><![endif]-->
+    <style>
+
+        table {
+
+            margin: 20px auto;
+        }
+
+        table a {
+            color: #333333;
+            cursor: pointer;
+        }
+
+        table.gridtable {
+            font-size: 15px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+        }
+
+        table.gridtable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #cecece;
+        }
+
+        table.gridtable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+
+        button {
+            border: none;
+            /* background: #c0392b; */
+            background: #5c5fdc;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            margin: 3px 2px;
+            border-radius: 2px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 0;
+            width: 100%;
+        }
+
+        table tr td, table tr th {
+            border: 1px solid #999;
+            padding: .5em 1em;
+            white-space: nowrap;
+        }
+
+        .table-first tr th, .table-first tr td {
+            background: #F4F4F4;
+            font-weight: bold;
+        }
+
+        .table-container table tr td, .table-container tr th {
+            border: 0;
+            border-bottom: 1px solid #999;
+            border-right: 1px solid #999;
+            text-align: center;
+        }
+
+        .table-container table {
+            border: 1px solid #999;
+            border-left: 0;
+        }
+
+        .table-two {
+            position: relative;
+        }
+
+        /*左边内容是表头名的宽度，根据实际情况而定,你也可以使用百分比*/
+        .table-first {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 102px; /*width:20%;*/
+        }
+
+        /*距离左边表头的内容宽度*/
+        .table-second {
+            padding-left: 102px; /*width:20%*/
+        }
+
+        /*超出部分出现滚动条*/
+        .table-container {
+            width: 100%;
+            overflow-y: auto;
+            _overflow: auto;
+            margin: 0 0 10px;
+        }
+
+        /*IOS滚动条*/
+        .table-container::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 3px solid #fff;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+    </style>
+</head>
+<body>
+<div id="page-wrapper">
+    <div id="header-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="12u">
+
+                    <header id="header">
+                        <h1><a href="#" id="logo">交通安全综合服务管理平台</a></h1>
+                        <nav id="nav">
+                            <!-- <a href="index.html" class="current-page-item">主页</a> -->
+                            <!-- <a href="twocolumn1.html">新闻</a> -->
+                            <a href="onecolumn.html">查询历史</a>
+                            <a href="threecolumn.html">关于</a>
+                            <a href="#" id="user_operation" onclick="user_operate(event)">登录</a>
+                            <a href="#" id="user_info"></a>
+                        </nav>
+                    </header>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="container">
+            <div class="row main-row">
+                <div class="12u">
+
+                    <section>
+                        <h2>查询结果</h2>
+
+                        <div class="table-container">
+                            <table class="gridtable" id="result_form">
+                                <tr>
+                                    <th>案件名称</th>
+                                    <th>驾驶人</th>
+                                    <th>号牌种类</th>
+                                    <th>号牌号码</th>
+                                    <th>处罚结果</th>
+                                    <th>处罚日期</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr>
+                                    <td>梁乐机动车驾驶人违反道路通行规定案</td>
+                                    <td>梁乐</td>
+                                    <td>大型汽车</td>
+                                    <td>粤K20813</td>
+                                    <td>罚款150元</td>
+                                    <td>2016年05月13日</td>
+                                    <td>
+                                        <button>查看详情</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>梁乐机动车驾驶人违反道路通行规定案</td>
+                                    <td>梁乐</td>
+                                    <td>大型汽车</td>
+                                    <td>粤K20813</td>
+                                    <td>罚款150元</td>
+                                    <td>2016年05月13日</td>
+                                    <td>
+                                        <button>查看详情</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--<p>This is the second generic interior page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ante ante, viverra a ornare sed, convallis sed est. Proin felis sapien, adipiscing quis eleifend vel, sodales vitae sapien. Donec vel lacus leo, eu convallis metus. Cras egestas feugiat tortor, vitae interdum augue aliquam a. Sed nec augue id orci egestas commodo in eget magna. Nunc eleifend diam non odio laoreet placerat gravida nulla bibendum. Phasellus tempus imperdiet suscipit.</p>-->
+                        <!--<p>Mauris risus nulla, pulvinar vitae sagittis a, pharetra nec tellus. Suspendisse varius enim ac felis mattis aliquam. Aenean et justo quis ipsum gravida lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia bibendum cursus. Nullam nec pellentesque lacus. In porta erat in tortor rhoncus quis accumsan magna pretium. Nulla posuere magna eget mauris lacinia in mollis sem fermentum. Donec mollis adipiscing mauris, ut posuere enim rhoncus ut. Nunc commodo vestibulum orci vel placerat. Cras sed risus libero. Donec ac lacus vitae lectus mattis commodo id vitae libero. Etiam lorem odio, volutpat nec pulvinar sit amet, tincidunt ut lacus. Pellentesque consequat arcu vel nisi lobortis in pellentesque orci sollicitudin. Cras gravida lacus turpis, consectetur porttitor lectus. Cras malesuada tortor id neque porta ut semper quam iaculis.</p>-->
+                        <!--<p>Nulla ut tortor quam, a luctus nunc. Nulla condimentum diam porttitor arcu placerat tincidunt. Nunc non augue ipsum. Nulla facilisi. Phasellus feugiat augue in ipsum egestas semper. Suspendisse blandit, nisl ullamcorper blandit sollicitudin, sem leo auctor lectus, et volutpat mauris elit et odio. Ut elementum risus in metus mollis tristique vulputate nulla interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae orci dui, ut facilisis dui.</p>-->
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="8u 12u(mobile)">
+
+                    <section>
+                        <h2>相关链接</h2>
+
+                        <div>
+                            <div class="row">
+                                <div class="6u 12u(mobile)">
+                                    <ul class="link-list">
+                                        <li><a href="http://www.mps.gov.cn/n16/index.html">中华人民共和国公安部</a></li>
+                                        <li><a href="http://www.mps.gov.cn/n16/n85753/">公安部交通管理局</a></li>
+                                        <li><a href="http://www.tmri.cn/">公安部交通管理科学研究所</a></li>
+                                        <li><a href="http://www.122.cn/">交通安全宣传网</a></li>
+                                        <!--<li><a href="#">Eget et amet consequat</a></li>-->
+                                    </ul>
+                                </div>
+                                <div class="6u 12u(mobile)">
+                                    <ul class="link-list">
+                                        <li><a href="http://gab.122.gov.cn/views/cljy.html">车检计算器</a></li>
+                                        <li><a href="http://fj.122.gov.cn/veh1/control/Tmriplate.exe">选号控件下载</a></li>
+                                        <li><a href="http://www.firefox.com.cn/">火狐浏览器</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+                <div class="4u 12u(mobile)">
+                    <section>
+                        <h2></h2>
+
+                        <p>单位名称：福建省公安厅交警总队<br/>
+                            联系地址：福州市杨桥中路120号<br/>
+                            邮政编码：350001<br/>
+                            联系邮箱：fj122govcn@sohu.com</p>
+                        <footer class="controls">
+                            <a href="http://fj.122.gov.cn/m/showLxdz/3" class="button">平台业务咨询和技术支持</a>
+                        </footer>
+                    </section>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="12u">
+
+                    <div id="copyright">
+                        &copy; Untitled. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/skel-viewport.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+<script>
+    // todo 从 localstorage 读取数据
+    $(function(){
+        var data = JSON.parse(localStorage.data);
+        console.log(data.result);
+
+        $("#result_form").html();
+
+//        <tr>
+//        <td>梁乐机动车驾驶人违反道路通行规定案</td>
+//        <td>梁乐</td>
+//        <td>大型汽车</td>
+//        <td>粤K20813</td>
+//        <td>罚款150元</td>
+//        <td>2016年05月13日</td>
+//        <td>
+//        <button>查看详情</button>
+//        </td>
+//        </tr>
+    })
+</script>
+
+</body>
+</html>

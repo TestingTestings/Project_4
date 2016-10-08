@@ -36,25 +36,31 @@
         }
     </style>
     <script>
-    	$(function(){
-    		$('#add_button').click(function (){
-    			$('#add_div').show();
-    		})
-    	})
+	$(function(){
+		$('div').css({
+			'margin':'0 auto',
+			'width':'500px',
+			'fontSize':'25px',
+			'textAlign':'center'
+		})
+	})
+</script>
     </script>
 </head>
 <body>
+<h1 style="text-align:center">新闻信息</h1>
 <form class="form-inline definewidth m20" action="__CONTROLLER__/news_search" method="get">
      <select  name='select'>
      	<option><font color="#777777"><strong>标题</strong></font></option>
      	<option><font color="#777777"><strong>内容</strong></font></option>
-     	<!--   <option><font color="#777777"><strong>日期</strong></font></option>
+   	   	<option><font color="#777777"><strong>日期</strong></font></option>
      	<option><font color="#777777"><strong>有效期</strong></font></option>
-     	-->
      </select>  
-    <input type="text" name="search" id="menuname"class="abc input-default" placeholder="" value="">&nbsp;&nbsp; 
-    <button type="submit" class="btn btn-primary">查询</button> 
-    <a href='__CONTROLLER__/add_news'><button type="button" class="btn btn-primary" id='add_button'>添加</button></a>
+    <input type="text" name="search" id="menuname"class="abc input-default" 
+    placeholder="" value="">&nbsp;&nbsp; 
+    <button type="submit" class="btn btn-primary" style="width:100px">查询</button> 
+    <a href='__CONTROLLER__/add_news'><button type="button" 
+    class="btn btn-primary" id='add_button' style="width:100px">添加</button></a>
 </form>
 <table class="table table-bordered table-hover definewidth m10">
     <thead>
@@ -66,20 +72,23 @@
 		<th>有效期</th>
 		<th>操作</th>
 		<th>查看详情</th>
+		<th>微信推送</th>
      </tr>
     </thead>
     <volist name='newslists' id='p'>	
 			<tr>
 				<td>{$p.id}</td>
-				<td>{$p.title}</td>
-				<td>{$p.content}</td>
+				<td style="width:250px">{$p.title|substr=0,27}</td>
+				<td style="width:450px">{$p.content|substr=0,57}</td>
 				<td>{$p.time}</td>
 				<td>{$p.valid}</td>
-				<td><a>修改</a></td>
-				<td>{$p.url}</td>	
+				<td><a href='__CONTROLLER__/change?id={$p.id}'>修改</a></td>
+				<td><a href='__CONTROLLER__/newsdetail?id={$p.id}'>新闻预览</a></td>
+				<td><a href='__MODULE__/Wei/weixin_xinwen?id={$p.id}'>微信推送</a></td>	
 			</tr>	
 	</volist>	 
 </table>
 <p>{$page}</p>
+
 </body>
 </html>

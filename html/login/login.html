@@ -138,20 +138,6 @@
         return false
     }
 
-    //  获取验证码图片
-    function get_captcha() {
-        $.ajax({
-            url: 'http://localhost/project_4/weixin/index/captcha/1.png',
-            type: 'get',
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        })
-    }
-
     //  表单验证
     function form_check() {
         var $form = $("#sign_form");

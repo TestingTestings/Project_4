@@ -132,21 +132,17 @@
     }
 
     // 发送验证码
-//    todo 发送验证码 点击后会刷新页面
     function captcha_button(evt) {
-        alert();
         count = 60;
         timer = setInterval(function () {
             $(evt.target).html(count + " 秒后再次尝试");
-            // todo button 失效
-            $(evt.target).attr('disabled', true);
+            $(evt.target).parent().attr('disabled', true);
             count -= 1;
             if (count == 0) {
                 $(evt.target).html("发送验证码");
-                // todo button 复原
-                $(evt.target).attr('disabled', false);
-                return false;
+                $(evt.target).parent().attr('disabled', false);
                 clearInterval(timer);
+                return false;
             }
         }, 1000);
         return false
@@ -155,7 +151,6 @@
     // 表单验证
     function form_check() {
         var $form = $("#sign_form");
-
         $form.validate({
             rules: {
                 phone: {

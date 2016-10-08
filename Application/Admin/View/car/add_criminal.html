@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/bootstrap-responsive.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/style.css" />
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/Admin/js/bootstrap.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/ckform.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/showdate.js"></script>
+<style type="text/css">
+    body {font-size: 20px;
+         padding-bottom: 40px;
+         background-color:#e9e7ef;
+         font-size:17px;
+    }
+    .sidebar-nav {
+        padding: 9px 0;
+    }
+
+    @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+            float: none;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+
+
+</style>
+<script type="text/javascript">
+    $(function(){
+	
+	})
+function preview(file){  
+ 	var prevDiv1 = document.getElementById('preview');  
+	 if (file.files && file.files[0]){  
+	 var reader = new FileReader();  
+	 reader.onload = function(evt){  
+	 	prevDiv1.innerHTML = '<img style="width:100px;height:100px;" src="' + evt.target.result + '" />';  
+		}    
+	 reader.readAsDataURL(file.files[0]);  
+	}    
+}
+</script>
+</head>
+<h1 style="text-align:center">通缉犯添加</h1>
+<form action="add_criminalAction" method="post" style="margin:0 auto" enctype="multipart/form-data">
+<table class="table table-bordered table-hover definewidth m10" style="margin-left:3%;margin-top:2%;width:33%;margin:0 auto">
+    <tr>
+        <td width="20%" class="tableleft">姓名</td>
+        <td><input type="text" name="name" style="height: 41px; width: 200px"/></td>
+     
+    </tr>
+    <tr>
+        <td class="tableleft">罪状</td>
+        <td><input type="text" name="action" style="height: 100px; width: 300px"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">状态</td>
+        <td>	
+        	<select  name='state' class="tableleft" style="height: 41px; width: 300px" ">
+	    	<option><font color="#777777"><strong>escape</strong></font></option>
+	    	<option><font color="#777777"><strong>catch</strong></font></option>
+    	</select> 
+        </td>
+         
+    </tr>  
+    <tr>
+        <td class="tableleft">人物头像</td>  
+        <td class="tableleft" style="width: 196px; ">
+        	<input type="file" name="head" id="GoodsPicture" onchange="preview(this)" />
+        </td>
+        
+    </tr> 
+    <tr>
+        <td class="tableleft">图片预览</td>
+		<td style="height:100px">
+			<div id="preview">
+				<!--  <img style="width:100px;height:100px;"/>-->
+			</div>
+		</td>
+    </tr>  
+    <tr>
+        <td class="tableleft"></td>
+        <td style="text-align:center">
+			<button style="margin-left:5px;"type="submit" 
+			class="btn btn-primary" type="button">添加</button>&nbsp;&nbsp;
+			<a href="criminal.html"><button type="button" class="btn btn-success" 
+			name="backid" id="backid">返回列表</button></a>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+function jump(){
+ window.location.href="placardQuery.html";
+}
+
+</script>

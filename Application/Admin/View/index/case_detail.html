@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/style.css" />
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/ckform.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/Js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/showdate.js"></script>
+    <style type="text/css">
+        body {font-size: 20px;
+             padding-bottom: 40px;
+             background-color:#e9e7ef;
+             font-size:17px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+		.half{
+			width: 400px;
+			float: left;
+			margin-left: 100px;
+			margin-top: 60px;
+		}
+    </style>
+</head>
+<body>
+<div style="width:100px;height:30px;position: absolute;top:10px;left: 100px;"><button type="button" class="btn btn-primary" id="change">返回</button></div>
+<if condition="$detail.state eq '申诉'"> <div style="width:100px;height:30px;position: absolute;top:10px;left: 200px;"><button type="button" class="btn btn-primary" id="submit">处理申诉</button></div>
+	<else />
+</if>
+
+
+<div class="half">
+	<table class="table table-condensed"  style="margin: 0 auto">
+		<tr>
+			<th colspan="2"><h3><strong >违章基本信息信息：</strong></h3></th>
+		</tr>
+		<tr>
+		  <td width="40%" height="30" align="center">案件编号：</td>
+		  <td width="60%" class="word_grey">{$detail.id}</td>
+		</tr>
+		<tr>
+		  <td width="40%" height="30" align="center">发生地点：</td>
+		  <td width="60%" class="word_grey">{$detail.place}</td>
+		</tr>
+		<tr>
+		   <td width="40%" height="30" align="center">违章时间：</td>
+		   <td width="60%" class="word_grey">{$detail.happentime}</td>
+		</tr>
+		<tr>
+		   <td width="40%" height="30" align="center">案件状态：</td>
+		   <td width="60%" class="word_grey">{$detail.state}</td>
+		</tr>
+		<tr>
+			<td width="40%" height="30" align="center">违章内容：</td>
+			<td width="60%" class="word_grey">{$detail.content}</td>
+		</tr>
+		<tr>
+			<td width="40%" height="30" align="center">处罚方式：</td>
+			<td width="60%" class="word_grey">{$detail.punishment}</td>
+		</tr>
+		<tr>
+			<td width="40%" height="30" align="center">执法方式：</td>
+			<td width="60%" class="word_grey">{$detail.infoway}</td>
+		</tr>
+		<tr>
+			<td width="40%" height="30" align="center">处理时间：</td>
+			<td width="60%" class="word_grey">{$detail.handletime}</td>
+		</tr>
+		<tr>
+			<th colspan="2"><h3><strong >车辆信息：</strong></h3></th>
+		</tr>
+		<tr>
+			<td height="28" align="center">车牌号：</td>
+			<td height="28">{$car.id}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">车架号：</td>
+			<td height="28">{$car.vin}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">车辆类型：</td>
+			<td height="28">{$car.type}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">颜色：</td>
+			<td height="28">{$car.color}</td>
+		</tr>
+	</table>
+</div>
+<div class="half">
+	<table class="table table-condensed"  style="margin: 0 auto">
+		<tr>
+			<th colspan="2"><h3><strong >负责交警信息：</strong></h3></th>
+		</tr>
+		<tr>
+			<td height="28" align="center">警员姓名：</td>
+			<td height="28">{$police.name}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">警员编号：</td>
+			<td height="28">{$police.id}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">警员姓别：</td>
+			<td height="28">{$police.sex}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">管辖片区：</td>
+			<td height="28">{$police.area}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">硬件编号：</td>
+			<td height="28">{$police.imei}</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>
+<script>
+	$(function(){
+		$("#change").click(function(){
+			window.location.replace('__CONTROLLER__/policeadd');
+		});
+		$("#submit").click(function(){
+			window.location.replace("__CONTROLLER__/policewrite");
+		});
+	});
+</script>

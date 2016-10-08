@@ -15,8 +15,6 @@
     <script type="text/javascript" src="__PUBLIC__/Admin/js/bootstrap.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Admin/js/ckform.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Admin/js/common.js"></script>
-
-
     <style type="text/css">
         body {font-size: 20px;
             padding-bottom: 40px;
@@ -37,8 +35,19 @@
 
 
     </style>
+	<script>
+		$(function(){
+			$('div').css({
+				'margin':'0 auto',
+				'width':'500px',
+				'fontSize':'25px',
+				'textAlign':'center'
+			})
+		})
+	</script>
 </head>
 <body>
+<h1 style="text-align:center">车辆信息</h1>
 <form class="form-inline definewidth m20" action="__CONTROLLER__/car_search" method="get">
      <select  name='select'>
      	<option><font color="#777777"><strong>车牌号</strong></font></option>
