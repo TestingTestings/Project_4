@@ -128,7 +128,7 @@
                         <h2>车辆违章详情</h2>
 
                         <div class="table-container">
-                            <table class="gridtable">
+                            <table class="gridtable" id="detail_table">
                                 <tr>
                                     <th>决定书编号</th>
                                     <td id="id">3503221405506126</td>
@@ -152,13 +152,11 @@
                                 <tr>
                                     <th>处罚事实</th>
                                     <td id="detail">
-                                        戴玉辉于2016年02月28日15时12分，在福昆线实施驾驶中型以上载客汽车在高速公路、城市快速路以外的道路上行驶超过规定时速20%以上未达到50%的违法行为。
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>地点</th>
                                     <td id="place">
-                                        戴玉辉于2016年02月28日15时12分，在福昆线实施驾驶中型以上载客汽车在高速公路、城市快速路以外的道路上行驶超过规定时速20%以上未达到50%的违法行为。
                                     </td>
                                 </tr>
                                 <tr>
@@ -277,10 +275,19 @@
 <script src="assets/js/main.js"></script>
 <script>
 
-    // todo 识别无效操作 处理
+    // 识别无效操作 处理
+    function illegal_operation(){
+        if(!localStorage.case_id){
+            $("#detail_table").children().children().remove();
+            $("#detail_table").append('<h1>无效操作 <a href="index.html">返回主页</a></h1>')
+        }
+    }
 
     // 读取数据
     function read_data() {
+        if(!localStorage.case_id){
+            return null
+        }
         // 读取数据
         var data = JSON.parse(localStorage.data);
         var case_id = JSON.parse(localStorage.case_id);
@@ -291,7 +298,7 @@
         for (var i in data.result) {
             if (data.result[i]['id'] == case_id) {
                 var result = data.result[i];
-                // todo 删除 localstorage.case_id 避免无效操作
+                localStorage.removeItem('case_id'); // 删除 localstorage.case_id 避免无效操作
                 break;
             }
         }
@@ -309,10 +316,16 @@
         $("#law").text(result.law_content);
         $("#punish_police").text(result.police_name);
         $("#police_job").text(result.police_job);
+        $("#place").text(result.place);
     }
 
+
+    // todo 跳转到申诉页面
+    // todo 跳转到缴交罚款链接
+
     $(function () {
-        read_data()
+        illegal_operation();
+        read_data();
     })
 </script>
 
