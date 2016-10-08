@@ -300,7 +300,7 @@
                     <td>' + data.result[i].state + '</td>\
                     <td>' + data.car.type + '</td>\
                     <td>' + data.result[i]['car_id'] + '</td>\
-                    <td>罚款150元'+data.result[i]['cost']+'</td>\
+                    <td>罚款'+data.result[i]['cost']+'元</td>\
                     <td>' + data.result[i]['happentime'] + '</td>\
                     <td>\
                         <button data-case_id="'+ data.result[i]['id'] +'"  onclick="case_detail(event)">查看详情</button>\
@@ -311,17 +311,13 @@
         }
     }
 
-
-    // todo 跳转详情页
-    // todo 案件id 存入 local
+    // 跳转详情页
+    // 案件id 存入 local
     function case_detail(event){
         var data = JSON.parse(localStorage.data);
         localStorage.case_id = $(event.target).attr('data-case_id');
         location.href = './detail.html';
     }
-
-
-
 
     // 判断结果为空
     function result_empty(){
@@ -337,7 +333,7 @@
         }
     }
 
-    // todo 判断无效操作
+    // todo 判断无效操作？
     // todo 读取完毕后删除数据
 
     $(function () {

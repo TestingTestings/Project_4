@@ -285,7 +285,7 @@
 
 //         检查输入不为空
 //         错误提示
-//         todo 跳转结果页面
+//         跳转结果页面
         if ($form.valid()) {
             $.ajax({
                 url: 'http://localhost/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/1.json',
@@ -297,7 +297,6 @@
 
                     if (data['isConfirm']) {
 //                    跳转至查询结果页
-//                        todo 页面跳转
                         localStorage.data = JSON.stringify(data);
                         location.href = "./result.html"
                     } else {
@@ -361,7 +360,7 @@
     $(function () {
         user_online();
         form_check();
-//        test()
+        test()
     })
 </script>
 <script src="assets/js/skel.min.js"></script>

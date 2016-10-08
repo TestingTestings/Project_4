@@ -3,6 +3,7 @@ namespace Weixin\Controller;
 
 use Think\Controller;
 use Think\Controller\RestController;
+use Think\Model;
 use Weixin\Common\Captcha;
 
 
@@ -138,15 +139,21 @@ class IndexController extends RestController
         } elseif (count($response['car']) == 0) { // 车架号匹配
             $response['isConfirm'] = 0;
             $response['info'] = '车牌号与车架号不匹配';
-        } else { // todo 返回数据
+        } else { // 返回数据
 
             // todo 查询相对应的违法记录
+            // 重置验证码
+            session('captcha', 'you_never_guess');
 
             $data = [];
             $data['car_id'] = $request['id'];
 
-//            $response['result'] =  M('case')->where($data)->select();
-            $response['result'] = M('case')->select();
+            // 多表查询 警员信息 法律法规
+            // todo ->field()
+            $Model = new Model();
+            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='".$data['car_id']."'";
+            $response['result'] = $Model->query($sql);
+//            $response['result'] = M('case')->where($data)->select();
 
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
@@ -166,9 +173,14 @@ class IndexController extends RestController
     function test()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
-        $request['captcha'] = session('captcha');
+//        $response['captcha'] = session('captcha');
 
-        $this->response($request, 'json');
+
+        $Model = new Model();
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='闽A0001'";
+        $response['result'] = $Model->query($sql);
+
+        $this->response($response, 'json');
     }
 
 
