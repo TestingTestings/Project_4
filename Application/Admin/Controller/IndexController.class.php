@@ -53,20 +53,25 @@ class IndexController extends Controller {
     public function police(){
         $this->search('police');
     }
+
+    //用户管理入口
+    public function user(){
+        $this->search('user');
+    }
     //搜索模块化
-    public function search($sheel,$condition){//查询的表，加入的筛选条件
+    private function search($sheel,$condition,$num=7){//查询的表，加入的筛选条件
         $search=I('get.search');//获得搜索栏信息
         $police=M($sheel);
         if(!empty($search))
         {
             if(!isset($condition))//判断是否有筛选条件
             {
-                $condition="";
+                $condition['_logic'] = 'and';
             }
             $map=search_where($sheel,$search);//调用搜索函数生成搜索数组
             $count=$police->where($condition)->where($map)->count();//查询条数
-            $Page= new \Think\Page($count,7);//创建分页
-            $res= $police->where($condition)->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
+            $Page= new \Think\Page($count,$num);//创建分页
+            $res= $police->where($map)->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
             foreach($map as $key=>$val) {//带入搜索值翻页
                 $Page->parameter .= "$key=".urlencode($val)."&";
             }
@@ -77,7 +82,7 @@ class IndexController extends Controller {
                 $condition="";
             }
             $count=$police->where($condition)->count();//查询条数
-            $Page= new \Think\Page($count,7);//创建分页
+            $Page= new \Think\Page($count,$num);//创建分页
             $res= $police->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
         }
         //翻页栏构造
@@ -157,7 +162,7 @@ class IndexController extends Controller {
     }
     //法规
     public function law(){
-        $this->search('law');
+        $this->search('law','',20);
     }
     //案件查询入口
     public function police_case(){
@@ -166,6 +171,10 @@ class IndexController extends Controller {
     //案件处理入口
     public function police_appeal(){
         $this->search('case',"state='申诉'");
+    }
+    //案件修正
+    public function police_change(){
+        $this->search('case',"state='修正'");
     }
     //案件详情数据读取
     public function case_detail(){
@@ -205,6 +214,15 @@ function search_where($sheel,$search){
         $where['id'] = array('like', '%' . $search . '%');
         $where['content'] = array('like', '%'.$search . '%');
         $where['place'] = array('like', '%' . $search . '%');
+        $where['_logic'] = 'or';
+        $map['_complex'] = $where;
+    }
+    else if($sheel=='user')
+    {
+        $where['id'] = array('like', '%' . $search . '%');
+        $where['name'] = array('like', '%'.$search . '%');
+        $where['idcard'] = array('like', '%' . $search . '%');
+        $where['phone'] = array('like', '%' . $search . '%');
         $where['_logic'] = 'or';
         $map['_complex'] = $where;
     }
