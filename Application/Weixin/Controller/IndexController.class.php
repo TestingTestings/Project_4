@@ -65,7 +65,6 @@ class IndexController extends RestController
 //            'length' => 4,
 //            'useNoise' => true
 //        ];
-//
 //        $Verify = new \Think\Verify($config);
 //        $Verify->entry();
 
@@ -74,8 +73,6 @@ class IndexController extends RestController
         $captcha = new Captcha();
         $captcha->create();
         session('captcha', $captcha->__tostring());
-
-
     }
 
 
@@ -91,36 +88,40 @@ class IndexController extends RestController
         $data['phone'] = $request['phone'];
         $data['password'] = M('user')->where($data)->getField('password');
 
-        $response['password2'] = md5(I('password'));
-        $response['password'] = $data['password'];
-        $response['captcha'] = I('captcha');
+        $response['isConfirm'] = 0;
 
-//       验证码
-        if (strtoupper(I('captcha')) != session('captcha')) {
-            $response['isConfirm'] = 0;
+        if (strtoupper(I('captcha')) != session('captcha')) { // 验证码校验
             $response['info'] = '验证码错误';
         } elseif (!$data['password']) { // 考虑账号不存在的情况
-            $response['isConfirm'] = 0;
             $response['info'] = '账号不存在';
         } elseif ($request['password'] != $data['password']) {
-            $response['isConfirm'] = 0;
             $response['info'] = '密码错误';
-        } elseif ($request['password'] == $data['password']) {
+        } elseif ($request['password'] == $data['password']) { // 登录成功
+            $response['info'] = '登录成功';
             $response['isConfirm'] = 1;
             cookie('userOnline', $request['phone'], 3600 * 5);
         } else {
-            $response['isConfirm'] = 0;
             $response['info'] = '未知错误';
         }
+
+        // todo 重置验证码 session 值 避免返回重复利用 用随机值覆盖
+        session('captcha', 'you_never_guess');
+
+
+//        $response['password2'] = md5(I('password'));
+//        $response['password'] = $data['password'];
+//        $response['captcha'] = I('captcha');
+
         $this->response($response, 'json');
     }
+
 
 //    todo 用户查询违法车辆
     function carInfo_get_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-        $request['id'] =  strtoupper(I('id'));
+        $request['id'] = strtoupper(I('id'));
         $request['captcha'] = I('captcha');
         $request['vin'] = I('vin');
         $request['type'] = I('type');
@@ -128,13 +129,13 @@ class IndexController extends RestController
         $data['id'] = $request['id'];
         $data['vin'] = $request['vin'];
 
-        $data['car'] = M('car')->where($data)->select();
+        $response['car'] = M('car')->where($data)->select()[0];
 
 
-        if (strtoupper($request['captcha']) != session('captcha')) { // 验证码
+        if (strtoupper($request['captcha']) != session('captcha')) { // 验证码校验
             $response['isConfirm'] = 0;
             $response['info'] = '验证码错误';
-        } elseif (count($data['car']) == 0) { // 不匹配
+        } elseif (count($response['car']) == 0) { // 车架号匹配
             $response['isConfirm'] = 0;
             $response['info'] = '车牌号与车架号不匹配';
         } else { // todo 返回数据
@@ -145,8 +146,7 @@ class IndexController extends RestController
             $data['car_id'] = $request['id'];
 
 //            $response['result'] =  M('case')->where($data)->select();
-            $response['result'] =  M('case')->select();
-//            $response['result'] = $response['car'][0];
+            $response['result'] = M('case')->select();
 
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
@@ -157,12 +157,15 @@ class IndexController extends RestController
 
 
 //    todo 用户查询历史
+    function searchHistory_get_json()
+    {
+
+    }
 
 
     function test()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
-        $request['session'] = session('sdf');
         $request['captcha'] = session('captcha');
 
         $this->response($request, 'json');
