@@ -271,7 +271,17 @@
                 case_id:case_id
             },
             success: function (data) {
-                console.log(data);
+                // todo 跳转页面
+                if(data['isConfirm']){
+                    console.log(data.info);
+                    localStorage.link = JSON.stringify('../result.html');
+                    localStorage.link_info = JSON.stringify('申诉成功'); // 接受服务器发送错误信息
+                    location.href = "./login/goto.html"
+                }else{
+                    localStorage.link = JSON.stringify('../complaint.html');
+                    localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
+                    location.href = "./login/goto.html"
+                }
             },
             error: function (data) {
                 console.log(data)
