@@ -32,7 +32,6 @@
             border-width: 1px;
             border-color: #666666;
             border-collapse: collapse;
-            width: 100%;
         }
 
         table.gridtable th {
@@ -68,31 +67,73 @@
             border: 0;
         }
 
-        /*table{border-collapse:collapse; border-spacing:0; border:0;width:100%;}*/
-        /*table tr td, table tr th{border:1px solid #999; padding:.5em 1em; white-space:nowrap;}*/
-        /*.table-first tr th, .table-first tr td{background:#F4F4F4; font-weight:bold;}*/
-        /*.table-container table tr td, .table-container tr th{border:0; border-bottom:1px solid #999; border-right:1px solid #999;}*/
-        /*.table-container table{border:1px solid #999; border-left:0;}*/
-        /*.table-two{position:relative;}*/
-        /*!*左边内容是表头名的宽度，根据实际情况而定,你也可以使用百分比*!*/
-        /*.table-first{position:absolute; left:0; top:0; width:102px;!*width:20%;*!}*/
-        /*!*距离左边表头的内容宽度*!*/
-        /*.table-second{padding-left:102px;!*width:20%*!}*/
-        /*!*超出部分出现滚动条*!*/
-        /*.table-container{width:100%; overflow-y:auto; _overflow:auto;margin: 0 0 10px;}*/
-        /*!*IOS滚动条*!*/
-        /*.table-container::-webkit-scrollbar*/
-        /*{*/
-        /*-webkit-appearance: none;*/
-        /*width: 14px;*/
-        /*height: 14px;*/
-        /*}*/
-        /*.table-container::-webkit-scrollbar-thumb*/
-        /*{*/
-        /*border-radius: 8px;*/
-        /*border: 3px solid #fff;*/
-        /*background-color: rgba(0, 0, 0, .3);*/
-        /*}*/
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 0;
+            width: 100%;
+        }
+
+        table tr td, table tr th {
+            border: 1px solid #999;
+            padding: .5em 1em;
+            white-space: nowrap;
+        }
+
+        .table-first tr th, .table-first tr td {
+            background: #F4F4F4;
+            font-weight: bold;
+        }
+
+        .table-container table tr td, .table-container tr th {
+            border: 0;
+            border-bottom: 1px solid #999;
+            border-right: 1px solid #999;
+            text-align: center;
+        }
+
+        .table-container table {
+            border: 1px solid #999;
+            border-left: 0;
+        }
+
+        .table-two {
+            position: relative;
+        }
+
+        /*左边内容是表头名的宽度，根据实际情况而定,你也可以使用百分比*/
+        .table-first {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 102px; /*width:20%;*/
+        }
+
+        /*距离左边表头的内容宽度*/
+        .table-second {
+            padding-left: 102px; /*width:20%*/
+        }
+
+        /*超出部分出现滚动条*/
+        .table-container {
+            width: 100%;
+            overflow-y: auto;
+            _overflow: auto;
+            margin: 0 0 10px;
+        }
+
+        /*IOS滚动条*/
+        .table-container::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 3px solid #fff;
+            background-color: rgba(0, 0, 0, .3);
+        }
 
     </style>
 </head>
@@ -125,38 +166,46 @@
                 <div class="12u">
 
                     <section>
-                        <h2>申述</h2>
+                        <h2>查询历史</h2>
 
                         <div class="table-container">
-                            <form id="complaint_form">
-
-                                <table class="gridtable" id="complaint_table">
-                                    <tr>
-                                        <th>案件编号</th>
-                                        <td id="id"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>发生地点</th>
-                                        <td id="place"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>发生时间</th>
-                                        <td id="happentime"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>申述内容</th>
-                                        <td id="content"><textarea style="resize: none;width: 100%"></textarea></td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>处理</th>
-                                        <td id="deal">
-                                            <button disabled="true"><span onclick="form_submit()">提交</span></button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-
+                            <table class="gridtable" id="result_form">
+                                <tr>
+                                    <!--<th>案件名称</th>-->
+                                    <th>案件号</th>
+                                    <th>执法方式</th>
+                                    <th>处理状态</th>
+                                    <!--<th>驾驶人</th>-->
+                                    <th>号牌种类</th>
+                                    <th>号牌号码</th>
+                                    <th>处罚方式</th>
+                                    <th>罚款金额</th>
+                                    <th>处罚日期</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr>
+                                    <td>梁乐机动车驾驶人违反道路通行规定案</td>
+                                    <td>梁乐</td>
+                                    <td>大型汽车</td>
+                                    <td>粤K20813</td>
+                                    <td>罚款150元</td>
+                                    <td>2016年05月13日</td>
+                                    <td>
+                                        <button>查看详情</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>梁乐机动车驾驶人违反道路通行规定案</td>
+                                    <td>梁乐</td>
+                                    <td>大型汽车</td>
+                                    <td>粤K20813</td>
+                                    <td>罚款150元</td>
+                                    <td>2016年05月13日</td>
+                                    <td>
+                                        <button>查看详情</button>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <!--<p>This is the second generic interior page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ante ante, viverra a ornare sed, convallis sed est. Proin felis sapien, adipiscing quis eleifend vel, sodales vitae sapien. Donec vel lacus leo, eu convallis metus. Cras egestas feugiat tortor, vitae interdum augue aliquam a. Sed nec augue id orci egestas commodo in eget magna. Nunc eleifend diam non odio laoreet placerat gravida nulla bibendum. Phasellus tempus imperdiet suscipit.</p>-->
                         <!--<p>Mauris risus nulla, pulvinar vitae sagittis a, pharetra nec tellus. Suspendisse varius enim ac felis mattis aliquam. Aenean et justo quis ipsum gravida lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia bibendum cursus. Nullam nec pellentesque lacus. In porta erat in tortor rhoncus quis accumsan magna pretium. Nulla posuere magna eget mauris lacinia in mollis sem fermentum. Donec mollis adipiscing mauris, ut posuere enim rhoncus ut. Nunc commodo vestibulum orci vel placerat. Cras sed risus libero. Donec ac lacus vitae lectus mattis commodo id vitae libero. Etiam lorem odio, volutpat nec pulvinar sit amet, tincidunt ut lacus. Pellentesque consequat arcu vel nisi lobortis in pellentesque orci sollicitudin. Cras gravida lacus turpis, consectetur porttitor lectus. Cras malesuada tortor id neque porta ut semper quam iaculis.</p>-->
@@ -236,63 +285,18 @@
 <script src="assets/js/main.js"></script>
 <script>
 
-    // 读取 case_id
-    function read_id() {
-        var $table = $("#complaint_table");
-        if (!localStorage.case_id && !localStorage.data) {
-            $table.children().children().remove();
-            $table.append('<h1>无效操作 <a href="./index.html">返回主页</a></h1>');
-            return false
-        }
-
-        // 提交按钮
-        $('#deal').children('button').attr('data_case_id', localStorage.case_id);
-
-        // todo 删除case_id
-    }
-
-    // todo-3 读取数据
-
-    // todo 提交申述表单
-    function form_submit() {
-        var content = $("#content").children().val();
-        var case_id = $('#deal').children('button').attr('data_case_id');
-//        var case_id = '123aa';
-
-        console.log(case_id);
+    // todo 检查用户是否登录
+    // todo 未登录提示错误信息
+    // todo 已登录 ajax 查询历史查询表
 
 
-        $.ajax({
-            url: 'http://localhost/project_4/weixin/index/complaint/1.json',
-            type: 'post',
-            dataType: 'json',
-            data:{
-                content:content,
-                case_id:case_id
-            },
-            success: function (data) {
-                // todo 跳转页面
-                if(data['isConfirm']){
-                    console.log(data.info);
-                    localStorage.link = JSON.stringify('../result.html');
-                    localStorage.link_info = JSON.stringify('申诉成功'); // 接受服务器发送错误信息
-                    location.href = "./login/goto.html"
-                }else{
-                    localStorage.link = JSON.stringify('../complaint.html');
-                    localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
-                    location.href = "./login/goto.html"
-                }
-            },
-            error: function (data) {
-                console.log(data)
-            }
-        });
 
-    }
+
 
     $(function () {
-        read_id()
-    })
+
+
+    });
 </script>
 
 </body>

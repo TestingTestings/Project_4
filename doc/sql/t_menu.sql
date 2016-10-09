@@ -47,4 +47,4 @@ INSERT INTO `t_menu` VALUES
 ('13', '4', '通报查询', 'normal', ''),
 ('14', '7', '违章查看', 'normal', '/project_4/index.php/Admin/Index/police_case'),
 ('15', '7', '申诉处理', 'normal', '/project_4/index.php/Admin/Index/police_appeal'),
-('16', '7', '修正处理', 'normal', '');
+('16', '7', '修正处理', 'normal', '/project_4/index.php/Admin/Index/police_change');

@@ -3,6 +3,7 @@ namespace Weixin\Controller;
 
 use Think\Controller;
 use Think\Controller\RestController;
+use Think\Model;
 use Weixin\Common\Captcha;
 
 
@@ -32,7 +33,7 @@ class IndexController extends RestController
     }
 
 
-//    增加一条用户信息
+//    增加一条用户数据
     public function userData_post_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
@@ -65,7 +66,6 @@ class IndexController extends RestController
 //            'length' => 4,
 //            'useNoise' => true
 //        ];
-//
 //        $Verify = new \Think\Verify($config);
 //        $Verify->entry();
 
@@ -74,8 +74,6 @@ class IndexController extends RestController
         $captcha = new Captcha();
         $captcha->create();
         session('captcha', $captcha->__tostring());
-
-
     }
 
 
@@ -91,36 +89,40 @@ class IndexController extends RestController
         $data['phone'] = $request['phone'];
         $data['password'] = M('user')->where($data)->getField('password');
 
-        $response['password2'] = md5(I('password'));
-        $response['password'] = $data['password'];
-        $response['captcha'] = I('captcha');
+        $response['isConfirm'] = 0;
 
-//       验证码
-        if (strtoupper(I('captcha')) != session('captcha')) {
-            $response['isConfirm'] = 0;
+        if (strtoupper(I('captcha')) != session('captcha')) { // 验证码校验
             $response['info'] = '验证码错误';
         } elseif (!$data['password']) { // 考虑账号不存在的情况
-            $response['isConfirm'] = 0;
             $response['info'] = '账号不存在';
         } elseif ($request['password'] != $data['password']) {
-            $response['isConfirm'] = 0;
             $response['info'] = '密码错误';
-        } elseif ($request['password'] == $data['password']) {
+        } elseif ($request['password'] == $data['password']) { // 登录成功
+            $response['info'] = '登录成功';
             $response['isConfirm'] = 1;
             cookie('userOnline', $request['phone'], 3600 * 5);
         } else {
-            $response['isConfirm'] = 0;
             $response['info'] = '未知错误';
         }
+
+        // todo 重置验证码 session 值 避免返回重复利用 用随机值覆盖
+        session('captcha', 'you_never_guess');
+
+
+//        $response['password2'] = md5(I('password'));
+//        $response['password'] = $data['password'];
+//        $response['captcha'] = I('captcha');
+
         $this->response($response, 'json');
     }
+
 
 //    todo 用户查询违法车辆
     function carInfo_get_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-        $request['id'] =  strtoupper(I('id'));
+        $request['id'] = strtoupper(I('id'));
         $request['captcha'] = I('captcha');
         $request['vin'] = I('vin');
         $request['type'] = I('type');
@@ -128,25 +130,31 @@ class IndexController extends RestController
         $data['id'] = $request['id'];
         $data['vin'] = $request['vin'];
 
-        $data['car'] = M('car')->where($data)->select();
+        $response['car'] = M('car')->where($data)->select()[0];
 
 
-        if (strtoupper($request['captcha']) != session('captcha')) { // 验证码
+        if (strtoupper($request['captcha']) != session('captcha')) { // 验证码校验
             $response['isConfirm'] = 0;
             $response['info'] = '验证码错误';
-        } elseif (count($data['car']) == 0) { // 不匹配
+        } elseif (count($response['car']) == 0) { // 车架号匹配
             $response['isConfirm'] = 0;
             $response['info'] = '车牌号与车架号不匹配';
-        } else { // todo 返回数据
+        } else { // 返回数据
 
-            // todo 查询相对应的违法记录
+            // 重置验证码
+            session('captcha', 'you_never_guess');
+
+            // 查询相对应的违法记录
 
             $data = [];
             $data['car_id'] = $request['id'];
 
-//            $response['result'] =  M('case')->where($data)->select();
-            $response['result'] =  M('case')->select();
-//            $response['result'] = $response['car'][0];
+            // 多表查询 警员信息 法律法规
+            // todo ->field()
+            $Model = new Model();
+            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.state <> '修正' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+            $response['result'] = $Model->query($sql);
+//            $response['result'] = M('case')->where($data)->select();
 
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
@@ -156,16 +164,64 @@ class IndexController extends RestController
     }
 
 
+//    todo 用户申诉
+    function complaint_post_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
+
+        $Casehandle = M('casehandle');
+
+        $data['case_id'] = I('case_id');
+        $response['state'] = $Casehandle->field('state')->where($data)->select()[0]['state']; // 处理状态查询
+
+//        if ($response['state'] == '申诉') {  // todo 重复申诉
+        if (0) {  // todo 重复申诉
+            $response['info'] = '不能对已申诉案件重复申诉';
+            $response['isConfirm'] = 0;
+        } elseif (!I('content')) { // 内容不为空
+            $response['info'] = '申诉内容不能为空';
+            $response['isConfirm'] = 0;
+        } elseif ($data['case_id']) {
+
+            // 修改正表的状态 申诉 事务 todo 在phpstorm 中执行 DDL
+            // 插入申述内容
+            $data['case_id'] = I('case_id');
+            $data['content'] = I('content');
+            $data['state'] = '申诉';
+            $data['happentime'] = date('Y-m-d H:i:s', time());
+            $Casehandle->data($data)->add();
+
+            $response['isConfirm'] = 1;
+        } else {
+            $response['info'] = '未知错误';
+            $response['isConfirm'] = 0;
+        }
+
+
+        $this->response($response, 'json');
+    }
+
+
 //    todo 用户查询历史
+    function searchHistory_get_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+
+    }
 
 
     function test()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
-        $request['session'] = session('sdf');
-        $request['captcha'] = session('captcha');
+//        $response['captcha'] = session('captcha');
 
-        $this->response($request, 'json');
+
+        $Model = new Model();
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='闽A0001'";
+        $response['result'] = $Model->query($sql);
+
+        $this->response($response, 'json');
     }
 
 

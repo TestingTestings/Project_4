@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/style.css" />
+    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/jquery2.js"></script>-->
+    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/bootstrap.js"></script>-->
+    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/ckform.js"></script>-->
+    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/common.js"></script>-->
+    <script src="__PUBLIC__/Common/js/jquery/jquery-3.1.1.min.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/jquerypicture.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/Common/js/jquery/jquery.validate.js"></script>
+    <script src="__PUBLIC__/Common/js/jquery/messages_zh.js"></script>
+    
+    <style type="text/css">
+        body {font-size: 20px;
+            padding-bottom: 40px;
+            background-color:#e9e7ef;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+         label.error{
+             position: relative;
+             left:220px;
+             top: -20px;
+             line-height: 0px;
+             color: red;
+             z-index: 50;
+         }
+    </style>
+    <script>
+        $(function(){
+            $("#add").validate({
+                rules: {
+                    content:{
+                        required: true
+                    },
+                    punishment:{
+                        required:true
+                    },
+                    cost: {
+                        required: true
+                    },
+                    appeal: {
+                        required: true
+                    }
+                },
+                messages:{
+                    appeal:'请选择处理结果'
+                }
+            });
+            $("#ok").click(function(){
+                $(".case_appeal").attr("readonly",true);
+            });
+            $("#no").click(function(){
+                $(".case_appeal").attr("readonly",true);
+            });
+            $("#change").click(function(){
+                $(".case_appeal").attr("readonly",false);
+            });
+        })
+    </script>
+</head>
+<body>
+<br>
+ <font color="#777777"><strong>修改资料：</strong></font>
+<form action="__CONTROLLER__/case_deal" method="post" class="definewidth m20" id="add">
+<table class="table table-bordered table-hover m10" style="margin-left:10px;margin-top:3px;">
+   <br>
+    <tr>
+        <td class="tableleft">案件编号</td>
+        <td><input type="text" value="{$case_detail.id}" name="id" readonly="true"/></td>
+        <td class="tableleft">案件地点</td>
+        <td><input type="text" value="{$case_detail.place}" readonly="true"/></td>
+    </tr>
+	<tr>
+        <td class="tableleft">发生时间</td>
+        <td><input type="text" value="{$case_detail.happentime}" readonly="true"/></td>
+        <td class="tableleft">案情描述</td>
+        <td><input type="text" name="content" value="{$case_detail.content}" class="case_appeal" readonly="true"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">处罚类型</td>
+        <td><input type="text" name="punishment" value="{$case_detail.punishment}" class="case_appeal" readonly="true"/></td>
+        <td class="tableleft">罚款金额</td>
+        <td><input type="number" name="cost" value="{$case_detail.cost}" readonly="true" class="case_appeal"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft" colspan="4" >申诉内容</td>
+    </tr>
+    <volist name="content" id="vo">
+        <tr><td>{$vo.content}</td></tr>
+        <input type="hidden" name="detail_id" value="{$vo.id}">
+    </volist>
+
+</table>
+<div style="text-align: center">驳回 <input type="radio" value="no" name="appeal" id="no"> &nbsp;&nbsp;&nbsp; 销毁 <input type="radio" value="ok" name="appeal" id="ok">
+    &nbsp;&nbsp;&nbsp;<if condition="$case_detail.state eq '修正'"> 修正 <input type="radio" value="change" name="appeal" id="change"></if></div>
+<label class="error" for="appeal" style="position: absolute;top: 355px;left: 770px;"></label>
+<br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-primary">提交</button>
+</form>
+</body>
+</html>
+
+
+		
+
+

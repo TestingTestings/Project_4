@@ -53,20 +53,25 @@ class IndexController extends Controller {
     public function police(){
         $this->search('police');
     }
+
+    //用户管理入口
+    public function user(){
+        $this->search('user');
+    }
     //搜索模块化
-    public function search($sheel,$condition){//查询的表，加入的筛选条件
+    private function search($sheel,$condition,$num=7){//查询的表，加入的筛选条件
         $search=I('get.search');//获得搜索栏信息
         $police=M($sheel);
         if(!empty($search))
         {
             if(!isset($condition))//判断是否有筛选条件
             {
-                $condition="";
+                $condition['_logic'] = 'and';
             }
             $map=search_where($sheel,$search);//调用搜索函数生成搜索数组
             $count=$police->where($condition)->where($map)->count();//查询条数
-            $Page= new \Think\Page($count,7);//创建分页
-            $res= $police->where($condition)->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
+            $Page= new \Think\Page($count,$num);//创建分页
+            $res= $police->where($map)->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
             foreach($map as $key=>$val) {//带入搜索值翻页
                 $Page->parameter .= "$key=".urlencode($val)."&";
             }
@@ -77,7 +82,7 @@ class IndexController extends Controller {
                 $condition="";
             }
             $count=$police->where($condition)->count();//查询条数
-            $Page= new \Think\Page($count,7);//创建分页
+            $Page= new \Think\Page($count,$num);//创建分页
             $res= $police->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
         }
         //翻页栏构造
@@ -157,15 +162,19 @@ class IndexController extends Controller {
     }
     //法规
     public function law(){
-        $this->search('law');
+        $this->search('law','',20);
     }
     //案件查询入口
     public function police_case(){
-        $this->search('case');
+        $this->search("case");
     }
     //案件处理入口
     public function police_appeal(){
         $this->search('case',"state='申诉'");
+    }
+    //案件修正
+    public function police_change(){
+        $this->search('case',"state='修正'");
     }
     //案件详情数据读取
     public function case_detail(){
@@ -180,9 +189,46 @@ class IndexController extends Controller {
         $one_car=$car->where("id='{$car_id}'")->select();
 
         $this->assign('detail',$one_case[0]);
+        session("case_detail",$one_case[0]);
         $this->assign('police',$one_police[0]);
         $this->assign('car',$one_car[0]);
         $this->display();
+    }
+    //案件处理
+    public function case_appeal(){
+        $case_detail=session("case_detail");
+        session("case_detail",'');
+        $id=$case_detail['id'];
+        $this->assign("case_detail",$case_detail);
+        $casehandle=M('casehandle');
+        $res=$casehandle->where("case_id=$id and state2='未处理'")->select();
+        $this->assign("content",$res);
+        $this->display('case_appeal');
+    }
+    //案件写入
+    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id){
+        $case = M("case");
+        $handle=M("casehandle");
+        if($appeal=='change') {
+            $case->content = $content;
+            $case->punishment = $punishment;
+            $case->cost = $cost;
+            $case->state='未处理';
+        }
+        else if($appeal=='no'){
+            $case->state='未处理';
+        }
+        else if($appeal=='ok'){
+            $case->state='销毁';
+        }
+        $handle->state2='已处理';
+        $handle->handletime=date('Y-m-d  H:i:s',time());
+        $case->where("id=$id")->save();
+        $handle->where("id=$detail_id")->save();
+
+        $this->success('处理成功','police_case',1);
+
+
     }
 
 }
@@ -205,6 +251,15 @@ function search_where($sheel,$search){
         $where['id'] = array('like', '%' . $search . '%');
         $where['content'] = array('like', '%'.$search . '%');
         $where['place'] = array('like', '%' . $search . '%');
+        $where['_logic'] = 'or';
+        $map['_complex'] = $where;
+    }
+    else if($sheel=='user')
+    {
+        $where['id'] = array('like', '%' . $search . '%');
+        $where['name'] = array('like', '%'.$search . '%');
+        $where['idcard'] = array('like', '%' . $search . '%');
+        $where['phone'] = array('like', '%' . $search . '%');
         $where['_logic'] = 'or';
         $map['_complex'] = $where;
     }
