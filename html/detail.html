@@ -131,7 +131,7 @@
                             <table class="gridtable" id="detail_table">
                                 <tr>
                                     <th>案件号</th>
-                                    <td id="id">3503221405506126</td>
+                                    <td id="id"></td>
                                 </tr>
                                 <!--<tr>-->
                                 <!--<th>案件名称</th>-->
@@ -143,11 +143,11 @@
                                 <!--</tr>-->
                                 <tr>
                                     <th>号牌种类</th>
-                                    <td id="type">大型汽车</td>
+                                    <td id="type"></td>
                                 </tr>
                                 <tr>
                                     <th>号牌号码</th>
-                                    <td id="car_number">闽BY5676</td>
+                                    <td id="car_number"></td>
                                 </tr>
                                 <tr>
                                     <th>处罚事实</th>
@@ -161,11 +161,11 @@
                                 </tr>
                                 <tr>
                                     <th>处罚类别</th>
-                                    <td id="punish_type">罚款</td>
+                                    <td id="punish_type"></td>
                                 </tr>
                                 <tr>
                                     <th>处罚结果</th>
-                                    <td id="punish_result">罚款100元</td>
+                                    <td id="punish_result"></td>
                                 </tr>
                                 <!--<tr>-->
                                 <!--<th>记分</th>-->
@@ -173,36 +173,36 @@
                                 <!--</tr>-->
                                 <tr>
                                     <th>处罚依据</th>
-                                    <td id="law">《福建省实施〈中华人民共和国道路交通安全法〉办法》第67条第14项</td>
+                                    <td id="law"></td>
                                 </tr>
-                                <tr>
-                                    <th>处罚部门</th>
-                                    <td id="punish_division">仙游县公安局交通警察大队</td>
-                                </tr>
+                                <!--<tr>-->
+                                    <!--<th>处罚部门</th>-->
+                                    <!--<td id="punish_division"></td>-->
+                                <!--</tr>-->
                                 <tr>
                                     <th>处罚者</th>
-                                    <td id="punish_police">仙游县公安局交通警察大队</td>
+                                    <td id="punish_police"></td>
                                 </tr>
                                 <tr>
                                     <th>处罚者身份</th>
-                                    <td id="police_job">仙游县公安局交通警察大队</td>
+                                    <td id="police_job"></td>
                                 </tr>
                                 <tr>
                                     <th>处罚行政区</th>
-                                    <td id="punish_area">福建省莆田市仙游县</td>
+                                    <td id="punish_area"></td>
                                 </tr>
                                 <tr>
-                                    <th>处罚日期</th>
-                                    <td id="punish_date">2016年06月24日</td>
+                                    <th>处罚时间</th>
+                                    <td id="punish_date"></td>
                                 </tr>
                                 <tr>
                                     <th>处理状态</th>
-                                    <td id="state">2016年06月24日</td>
+                                    <td id="state"></td>
                                 </tr>
                                 <tr>
                                     <th>违章处理</th>
                                     <td id="deal">
-                                        <button onclick="case_complaint(event)">申诉</button>
+                                        <button id="button_com" onclick="case_complaint(event)">申诉</button>
                                         <button>接受处罚</button>
                                     </td>
                                 </tr>
@@ -333,15 +333,20 @@
     }
 
 
-    // todo-1 跳转到申诉页面
     // todo-1 跳转到缴交罚款链接
     // todo-2 查询历史
 
-    // todo-1 根据处理状态调整申诉按钮
+    // 根据处理状态调整申诉按钮
+    function complaint_button(){
+        if($("#state").text()=='申诉'){
+            $('#button_com').hide();
+        }
+    }
 
     $(function () {
         illegal_operation();
         read_data();
+        complaint_button();
     })
 </script>
 
