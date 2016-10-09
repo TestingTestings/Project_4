@@ -171,11 +171,15 @@
                         <div class="table-container">
                             <table class="gridtable" id="result_form">
                                 <tr>
-                                    <th>案件名称</th>
-                                    <th>驾驶人</th>
+                                    <!--<th>案件名称</th>-->
+                                    <th>案件号</th>
+                                    <th>执法方式</th>
+                                    <th>处理状态</th>
+                                    <!--<th>驾驶人</th>-->
                                     <th>号牌种类</th>
                                     <th>号牌号码</th>
-                                    <th>处罚结果</th>
+                                    <th>处罚方式</th>
+                                    <th>罚款金额</th>
                                     <th>处罚日期</th>
                                     <th>操作</th>
                                 </tr>
@@ -296,11 +300,13 @@
         for (var i in data.result) {
             var $row = $('\
                 <tr>\
+                    <td>' + data.result[i].id + '</td>\
                     <td>' + data.result[i].infoway + '</td>\
                     <td>' + data.result[i].state + '</td>\
                     <td>' + data.car.type + '</td>\
                     <td>' + data.result[i]['car_id'] + '</td>\
-                    <td>罚款'+data.result[i]['cost']+'元</td>\
+                    <td>'+data.result[i]['punishment']+'</td>\
+                    <td>'+(data.result[i]['cost']?data.result[i]['cost']:0)+'元</td>\
                     <td>' + data.result[i]['happentime'] + '</td>\
                     <td>\
                         <button data-case_id="'+ data.result[i]['id'] +'"  onclick="case_detail(event)">查看详情</button>\
