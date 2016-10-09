@@ -209,6 +209,7 @@ class IndexController extends Controller {
     public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id){
         $case = M("case");
         $handle=M("casehandle");
+        $case->startTrans();
         if($appeal=='change') {
             $case->content = $content;
             $case->punishment = $punishment;
@@ -223,12 +224,14 @@ class IndexController extends Controller {
         }
         $handle->state2='已处理';
         $handle->handletime=date('Y-m-d  H:i:s',time());
-        $case->where("id=$id")->save();
-        $handle->where("id=$detail_id")->save();
-
-        $this->success('处理成功','police_case',1);
-
-
+        $res1=$case->where("id=$id")->save();
+        $res2=$handle->where("id=$detail_id")->save();
+        if($res1 && $res2){
+            $case->commit();//成功则提交
+            $this->success('处理成功','police_case',1);
+        }else{
+            $case->rollback();//不成功，则回滚
+        }
     }
 
 }
