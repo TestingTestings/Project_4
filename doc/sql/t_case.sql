@@ -15,7 +15,7 @@ CREATE TABLE `t_case` (
   `law_id` int(5),
   `punishment` text,
   `infoway` enum('现场执法','非现场执法'),
-  `state` enum('未处理','已处理','申诉','修正'),
+  `state` enum('未处理','已处理','申诉','修正','销毁'),
   `handletime` datetime,
   foreign key(police_id) references t_police(id),
   foreign key(car_id) references t_car(id),

@@ -166,7 +166,7 @@ class IndexController extends Controller {
     }
     //案件查询入口
     public function police_case(){
-        $this->search('case');
+        $this->search("case");
     }
     //案件处理入口
     public function police_appeal(){
@@ -201,28 +201,30 @@ class IndexController extends Controller {
         $id=$case_detail['id'];
         $this->assign("case_detail",$case_detail);
         $casehandle=M('casehandle');
-        $res=$casehandle->where("id=$id and state2='未处理'")->select();
+        $res=$casehandle->where("case_id=$id and state2='未处理'")->select();
         $this->assign("content",$res);
         $this->display('case_appeal');
     }
     //案件写入
-    public function case_deal($id,$content,$punishment,$cost,$appeal){
-        if($appeal=='ok') {
-            $case = M("case");
+    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id){
+        $case = M("case");
+        $handle=M("casehandle");
+        if($appeal=='change') {
             $case->content = $content;
             $case->punishment = $punishment;
             $case->cost = $cost;
-            $case->state='已处理';
-//        $case->paaeal=$appeal;
-            $case->where("id=$id")->save();
+            $case->state='未处理';
         }
         else if($appeal=='no'){
-            $case = M("case");
             $case->state='未处理';
-//        $case->paaeal=$appeal;
-            $case->where("id=$id")->save();
         }
-
+        else if($appeal=='ok')
+        {
+            $case->state='销毁';
+        }
+        $handle->state2='已处理';
+        $case->where("id=$id")->save();
+        $handle->where("id=$detail_id")->save();
 
     }
 

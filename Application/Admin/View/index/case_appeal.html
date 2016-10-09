@@ -61,6 +61,15 @@
                     appeal:'请选择处理结果'
                 }
             });
+            $("#ok").click(function(){
+                $(".case_appeal").attr("readonly",true);
+            });
+            $("#no").click(function(){
+                $(".case_appeal").attr("readonly",true);
+            });
+            $("#change").click(function(){
+                $(".case_appeal").attr("readonly",false);
+            });
         })
     </script>
 </head>
@@ -80,22 +89,25 @@
         <td class="tableleft">发生时间</td>
         <td><input type="text" value="{$case_detail.happentime}" readonly="true"/></td>
         <td class="tableleft">案情描述</td>
-        <td><input type="text" name="content" value="{$case_detail.content}" /></td>
+        <td><input type="text" name="content" value="{$case_detail.content}" class="case_appeal" readonly="true"/></td>
     </tr>
     <tr>
         <td class="tableleft">处罚类型</td>
-        <td><input type="text" name="punishment" value="{$case_detail.punishment}"/></td>
+        <td><input type="text" name="punishment" value="{$case_detail.punishment}" class="case_appeal" readonly="true"/></td>
         <td class="tableleft">罚款金额</td>
-        <td><input type="number" name="cost" value="{$case_detail.cost}"/></td>
+        <td><input type="number" name="cost" value="{$case_detail.cost}" readonly="true" class="case_appeal"/></td>
     </tr>
     <tr>
-        <td class="tableleft" colspan="4">申诉内容</td>
+        <td class="tableleft" colspan="4" >申诉内容</td>
     </tr>
     <volist name="content" id="vo">
         <tr><td>{$vo.content}</td></tr>
+        <input type="hidden" name="detail_id" value="{$vo.id}">
     </volist>
+
 </table>
-<div style="text-align: center">驳回 <input type="radio" value="no" name="appeal"> &nbsp;&nbsp;&nbsp; 通过 <input type="radio" value="ok" name="appeal"></div>
+<div style="text-align: center">驳回 <input type="radio" value="no" name="appeal" id="no"> &nbsp;&nbsp;&nbsp; 销毁 <input type="radio" value="ok" name="appeal" id="ok">
+    &nbsp;&nbsp;&nbsp; 修正 <input type="radio" value="change" name="appeal" id="change"></div>
 <label class="error" for="appeal" style="position: absolute;top: 355px;left: 770px;"></label>
 <br>
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-primary">提交</button>

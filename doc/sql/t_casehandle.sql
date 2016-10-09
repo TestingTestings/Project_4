@@ -9,7 +9,7 @@ CREATE TABLE `t_casehandle` (
   `state` enum('申诉','修正'),
   `happentime` datetime,
   `handletime` datetime,
-  `state2` enum('未处理','已处理'),
+  `state2` enum('未处理','已处理') default '未处理',
   foreign key(case_id) references t_case(id),
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
