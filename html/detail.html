@@ -130,7 +130,7 @@
                         <div class="table-container">
                             <table class="gridtable" id="detail_table">
                                 <tr>
-                                    <th>决定书编号</th>
+                                    <th>案件号</th>
                                     <td id="id">3503221405506126</td>
                                 </tr>
                                 <!--<tr>-->
@@ -196,9 +196,13 @@
                                     <td id="punish_date">2016年06月24日</td>
                                 </tr>
                                 <tr>
+                                    <th>处理状态</th>
+                                    <td id="state">2016年06月24日</td>
+                                </tr>
+                                <tr>
                                     <th>违章处理</th>
                                     <td id="deal">
-                                        <button>申诉</button>
+                                        <button onclick="case_complaint(event)">申诉</button>
                                         <button>接受处罚</button>
                                     </td>
                                 </tr>
@@ -317,11 +321,23 @@
         $("#punish_police").text(result.police_name);
         $("#police_job").text(result.police_job);
         $("#place").text(result.place);
+        $("#state").text(result.state);
+
+        $("#deal").attr('data-case_id', case_id);
+    }
+
+    // 跳转申诉页面
+    function case_complaint(evt){
+        localStorage.case_id = $(evt.target).parent().attr('data-case_id');
+        location.href='./complaint.html'
     }
 
 
-    // todo 跳转到申诉页面
-    // todo 跳转到缴交罚款链接
+    // todo-1 跳转到申诉页面
+    // todo-1 跳转到缴交罚款链接
+    // todo-2 查询历史
+
+    // todo-1 根据处理状态调整申诉按钮
 
     $(function () {
         illegal_operation();
