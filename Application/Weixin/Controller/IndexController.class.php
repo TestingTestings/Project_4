@@ -33,7 +33,7 @@ class IndexController extends RestController
     }
 
 
-//    增加一条用户信息
+//    增加一条用户数据
     public function userData_post_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
@@ -141,9 +141,10 @@ class IndexController extends RestController
             $response['info'] = '车牌号与车架号不匹配';
         } else { // 返回数据
 
-            // todo 查询相对应的违法记录
             // 重置验证码
             session('captcha', 'you_never_guess');
+
+            // 查询相对应的违法记录
 
             $data = [];
             $data['car_id'] = $request['id'];
@@ -151,7 +152,7 @@ class IndexController extends RestController
             // 多表查询 警员信息 法律法规
             // todo ->field()
             $Model = new Model();
-            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='".$data['car_id']."'";
+            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
             $response['result'] = $Model->query($sql);
 //            $response['result'] = M('case')->where($data)->select();
 
@@ -163,9 +164,40 @@ class IndexController extends RestController
     }
 
 
+//    todo 用户申诉
+    function complaint_post_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT"); // 允许的跨域请求方式
+
+        $Casehandle = M('casehandle');
+
+        $data['case_id'] = I('case_id');
+
+        // todo 避免重复申述
+        $response['state2'] = $Casehandle->field('state2')->where($data)->select()[0]['state2'];
+        if($response['state2'] == '申述'){
+            //todo isConfirm
+            //todo goto.html
+            $response['info'] = '不能对已申诉案件重复申诉';
+        }
+        else{
+            $data['content'] = I('content');
+            $data['state'] = '申诉';
+            $data['happentime'] = date('Y-m-d H:i:s', time());
+
+            // 插入申述内容
+            $Casehandle->data($data)->add();
+        }
+
+
+        $this->response($response, 'json');
+    }
+
 //    todo 用户查询历史
     function searchHistory_get_json()
     {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
     }
 
