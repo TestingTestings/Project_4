@@ -273,8 +273,7 @@
         $("#user_info").text("").hide();
     }
 
-
-    // todo 提交车辆违法表单
+    // 提交车辆违法表单
     function form_submit() {
 
         var $form = $("#car_form");
@@ -303,7 +302,7 @@
 //                     返回主页
                         localStorage.link = JSON.stringify('../index.html');
                         localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
-                        location.href = "./login/goto.html"
+                        location.href = "./login/goto.html";
                     }
                 },
                 error: function (data) {
@@ -315,7 +314,7 @@
         return false
     }
 
-    // todo 车辆违法表单验证
+    // 车辆违法表单验证
     function form_check() {
         var $form = $("#car_form");
 
@@ -355,7 +354,11 @@
     }
 
 
-    // todo 点击查询时删除localstorage 中的查询结果
+    // todo-3 点击查询时删除localstorage 中的查询结果
+
+
+    // todo-1 每次查询添加到用户查询历史
+    // todo-1 添加前判断用户是否登录
 
     $(function () {
         user_online();
