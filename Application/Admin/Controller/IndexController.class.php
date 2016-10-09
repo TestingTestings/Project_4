@@ -218,13 +218,16 @@ class IndexController extends Controller {
         else if($appeal=='no'){
             $case->state='未处理';
         }
-        else if($appeal=='ok')
-        {
+        else if($appeal=='ok'){
             $case->state='销毁';
         }
         $handle->state2='已处理';
+        $handle->handletime=date('Y-m-d  H:i:s',time());
         $case->where("id=$id")->save();
         $handle->where("id=$detail_id")->save();
+
+        $this->success('处理成功','police_case',1);
+
 
     }
 

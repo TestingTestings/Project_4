@@ -107,7 +107,7 @@
 
 </table>
 <div style="text-align: center">驳回 <input type="radio" value="no" name="appeal" id="no"> &nbsp;&nbsp;&nbsp; 销毁 <input type="radio" value="ok" name="appeal" id="ok">
-    &nbsp;&nbsp;&nbsp; 修正 <input type="radio" value="change" name="appeal" id="change"></div>
+    &nbsp;&nbsp;&nbsp;<if condition="$case_detail.state eq '修正'"> 修正 <input type="radio" value="change" name="appeal" id="change"></if></div>
 <label class="error" for="appeal" style="position: absolute;top: 355px;left: 770px;"></label>
 <br>
 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-primary">提交</button>

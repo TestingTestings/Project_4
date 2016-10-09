@@ -40,7 +40,7 @@
 <body>
 <div style="width:100px;height:30px;position: absolute;top:10px;left: 100px;"><button type="button" class="btn btn-primary" id="back">返回</button></div>
 <if condition="$detail.state eq '申诉'"> <div style="width:100px;height:30px;position: absolute;top:10px;left: 200px;"><button type="button" class="btn btn-primary" id="submit">处理申诉</button></div>
-	<elseif condition="$detail.state eq '修正'" /><div style="width:100px;height:30px;position: absolute;top:10px;left: 200px;"><button type="button" class="btn btn-primary" id="change">处理申诉</button></div>
+	<elseif condition="$detail.state eq '修正'" /><div style="width:100px;height:30px;position: absolute;top:10px;left: 200px;"><button type="button" class="btn btn-primary" id="change">处理修正</button></div>
 </if>
 
 
@@ -141,7 +141,7 @@
 			history.go(-1);
 		});
 		$("#change").click(function(){
-			window.location.replace("__CONTROLLER__/policewrite");
+			window.location.replace("__CONTROLLER__/case_appeal");
 		});
 		$("#submit").click(function(){
 			window.location.replace("__CONTROLLER__/case_appeal");
