@@ -230,7 +230,6 @@ class CarController extends Controller {
         }
         
         $show = $Page->show();// 分页显示输出
-        //         $list=$car->where($sea)->select();
         $list = $criminal->limit($Page->firstRow.','.$Page->listRows)->order('id DESC')->where($sea)->select();
         $this->assign('page',$show);// 赋值分页输出
         $this->assign('criminallists',$list);
@@ -241,21 +240,18 @@ class CarController extends Controller {
         $id=$_GET['id'];
         $state=$_GET['state'];
         $criminal=D('criminal');
-        if ($state=='escape'){
-            $data['state'] = 'catch';
+        if ($state=='在逃'){
+            $data['state'] = '抓获';
             if ($criminal->where('id=%d',array($id))->save($data)){
                 $this->success('成功缉拿','criminal'); 
             }else {  
             }
-        }elseif ($state=='catch'){
+        }elseif ($state=='抓获'){
             
-            $data['state'] = 'escape';
+            $data['state'] = '在逃';
             if ($criminal->where('id=%d',array($id))->save($data)){
                 $this->success('逃亡中,请派兵捉拿','criminal');
             }
-//             $data['state'] = 'escape';
-//             $criminal->where('id=%d',array($id))->save($data);
-//             $this->display('criminal');
         }
     }
     //通缉犯添加
@@ -285,7 +281,7 @@ class CarController extends Controller {
         $name=$_POST['name'];
         $action=$_POST['action'];
         $state=$_POST['state'];
-        $img_url='/forth/Project_4/Public/Common/head_img/'.$info['head']['savepath'].$info['head']['savename'];
+        $img_url='/Project_4/Public/Common/head_img/'.$info['head']['savepath'].$info['head']['savename'];
         $data['head']=$img_url;
         $data['name']=$name;
         $data['action']=$action;

@@ -36,14 +36,14 @@ CREATE TABLE `t_police` (
 -- ----------------------------
 -- Records of t_police
 -- ----------------------------
-INSERT INTO `t_police` VALUES ('1', '小民', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', '862095022736364', null, 'normal');
+INSERT INTO `t_police` VALUES ('1', '小郭', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', '862095022736364', null, 'normal');
 INSERT INTO `t_police` VALUES ('2', '小丽', '25d55ad283aa400af464c76d713c07ad', '女', '22', '福建省鼓楼区', '协管', '862095022736364', null, 'quit');
 INSERT INTO `t_police` VALUES ('3', '小红', '25d55ad283aa400af464c76d713c07ad', '女', '22', '福建省闽侯县', '警员', '862095022736364', null, 'normal');
 INSERT INTO `t_police` VALUES ('4', '小倩', '25d55ad283aa400af464c76d713c07ad', '女', '22', '福建省台江区', '警员', '862095022736364', null, 'normal');
 INSERT INTO `t_police` VALUES ('5', '小明', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', '862095022736364', null, 'normal');
-INSERT INTO `t_police` VALUES ('6', '小王', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省晋安区', '警员', null, null, 'normal');
-INSERT INTO `t_police` VALUES ('7', '小郑', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省鼓楼区', '协管', null, null, 'normal');
-INSERT INTO `t_police` VALUES ('8', '小强', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', null, null, 'quit');
-INSERT INTO `t_police` VALUES ('9', '天天', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', null, null, 'normal');
-INSERT INTO `t_police` VALUES ('10', '小天', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', null, null, 'normal');
-INSERT INTO `t_police` VALUES ('11', '小白', '25d55ad283aa400af464c76d713c07ad', '女', '22', '福建省仓山区', '协管', null, null, 'normal');
+INSERT INTO `t_police` VALUES ('6', '小林', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省晋安区', '警员', '860485032067466', null, 'normal');
+INSERT INTO `t_police` VALUES ('7', '小郑', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省鼓楼区', '协管', '860485032067466', null, 'normal');
+INSERT INTO `t_police` VALUES ('8', '小胡', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', '357989056596201', null, 'quit');
+INSERT INTO `t_police` VALUES ('9', '天天', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', '357989056596201', null, 'normal');
+INSERT INTO `t_police` VALUES ('10', '小天', '25d55ad283aa400af464c76d713c07ad', '男', '22', '福建省仓山区', '警员', '357989056596201', null, 'normal');
+INSERT INTO `t_police` VALUES ('11', '小郑', '25d55ad283aa400af464c76d713c07ad', '女', '22', '福建省仓山区', '协管', '867031021921025', null, 'normal');

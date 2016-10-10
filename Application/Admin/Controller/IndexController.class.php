@@ -233,7 +233,7 @@ class IndexController extends Controller {
             $this->success('处理成功','police_case',1);
         }else{
             $case->rollback();//不成功，则回滚
-        }
+            $this->success('处理失败,数据异常','police_case',3);        }
     }
 
 }
