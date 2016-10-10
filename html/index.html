@@ -215,6 +215,9 @@
 <script src="assets/js/log.js"></script>
 <script>
 
+    // todo-? 非法用户可能通过修改 cookie 的方式来实现非法登陆
+    // todo-! 利用随机值对 cookie 加密
+
     // 提交车辆违法表单
     function form_submit() {
 
@@ -223,13 +226,21 @@
         var vin = $('#vin').val();
         var type = $('#type').val();
         var captcha = $('#captcha').val();
+        var user;
+
+        // todo 用户名
+        if (getCookie('userOnline')) { // 获取 cookie.userOnline
+            user = Number(getCookie('userOnline'));
+        }else{
+            user = 0;
+        }
 
 //         检查输入不为空
 //         错误提示
 //         跳转结果页面
         if ($form.valid()) {
             $.ajax({
-                url: 'http://localhost/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/1.json',
+                url: 'http://localhost/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/user/' + user + '/1.json',
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
