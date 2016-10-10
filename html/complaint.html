@@ -251,6 +251,9 @@
     }
 
     // todo-3 读取数据
+    function read_data(){
+
+    }
 
     // todo 提交申述表单
     function form_submit() {
@@ -270,7 +273,7 @@
                 case_id:case_id
             },
             success: function (data) {
-                // todo 跳转页面
+                // 跳转页面
                 if(data['isConfirm']){
                     console.log(data.info);
                     localStorage.link = JSON.stringify('../result.html');

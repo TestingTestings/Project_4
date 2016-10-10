@@ -51,7 +51,6 @@ class IndexController extends RestController
 
         $this->response($data, 'json');
 
-        // todo 添加到查询历史中
     }
 
 
@@ -105,7 +104,7 @@ class IndexController extends RestController
             $response['info'] = '未知错误';
         }
 
-        // todo 重置验证码 session 值 避免返回重复利用 用随机值覆盖
+        // 重置验证码 session 值 避免返回重复利用 用随机值覆盖
         session('captcha', 'you_never_guess');
 
 
@@ -132,20 +131,22 @@ class IndexController extends RestController
 
         $response['car'] = M('car')->where($data)->select()[0];
 
-
         if (strtoupper($request['captcha']) != session('captcha')) { // 验证码校验
+
             $response['isConfirm'] = 0;
             $response['info'] = '验证码错误';
+
         } elseif (count($response['car']) == 0) { // 车架号匹配
+
             $response['isConfirm'] = 0;
             $response['info'] = '车牌号与车架号不匹配';
+
         } else { // 返回数据
 
             // 重置验证码
             session('captcha', 'you_never_guess');
 
             // 查询相对应的违法记录
-
             $data = [];
             $data['car_id'] = $request['id'];
 
@@ -154,10 +155,31 @@ class IndexController extends RestController
             $Model = new Model();
             $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.state <> '修正' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
             $response['result'] = $Model->query($sql);
-//            $response['result'] = M('case')->where($data)->select();
-
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
+
+            // 添加到查询历史
+            // todo 拆分成方法
+            if (I('user') != 0) {
+                // 新建查询历史表
+
+                if (count(M('history')->where($data)->select()) == 0) {
+                    $data = [];
+                    $data['car_id'] = $request['id'];
+                    $data['user'] = I('user');
+                    M('history')->data($data)->add();
+
+                } else { // 已有查询时只更新查询时间
+
+                    $data = [];
+                    $data['car_id'] = $request['id'];
+                    $data['user'] = I('user');
+                    $update = [];
+                    $update['time'] = date('Y-m-d H:i:s', time());
+                    M('history')->where($data)->data($update)->save();
+                }
+
+            }
         }
 
         $this->response($response, 'json');
@@ -184,7 +206,7 @@ class IndexController extends RestController
             $response['isConfirm'] = 0;
         } elseif ($data['case_id']) {
 
-            // 修改正表的状态 申诉 事务 todo 在phpstorm 中执行 DDL
+            // 修改正表的状态 使用触发器 todo 在phpstorm 中执行 DDL
             // 插入申述内容
             $data['case_id'] = I('case_id');
             $data['content'] = I('content');
@@ -207,7 +229,14 @@ class IndexController extends RestController
     function searchHistory_get_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
 
+        $data = [];
+        $data['user'] = I('user');
+        $rs['history'] = M('history')->where($data)->select();
+        // todo-3 查詢车架号
+
+        $this->response($rs, 'json');
     }
 
 
