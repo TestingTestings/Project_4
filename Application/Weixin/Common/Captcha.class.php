@@ -29,7 +29,7 @@ Class Captcha {
 			$textcolor = imagecolorallocate($this -> img,  mt_rand(50, 100),  mt_rand(50, 100),  mt_rand(50, 100));
 
 			$ch = $this -> charset[mt_rand(0, strlen($this -> charset)-1)];
-			// todo 大小写宽容
+			// 大小写宽容
 			$this -> code .= strtoupper($ch);
 //			imagettftext($this -> img, 20, mt_rand(-50,50),  5+20*$i, 20, $textcolor, './SIMLI.TTF', $ch);
 
