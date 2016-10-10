@@ -104,10 +104,6 @@
 			<td height="28" align="center">颜色：</td>
 			<td height="28">{$car.color}</td>
 		</tr>
-	</table>
-</div>
-<div class="half">
-	<table class="table table-condensed"  style="margin: 0 auto">
 		<tr>
 			<th colspan="2"><h3><strong >负责交警信息：</strong></h3></th>
 		</tr>
@@ -132,6 +128,19 @@
 			<td height="28">{$police.imei}</td>
 		</tr>
 	</table>
+</div>
+<div class="half">
+	<table class="table table-condensed"  style="margin: 0 auto">
+		<tr>
+			<th colspan="2"><h3><strong >违法证据：</strong></h3></th>
+		</tr>
+	</table>
+	<volist name="evidence" id="vo">
+		<if condition="$vo.type eq 'jpg'"><p>现场照片</p><img src="/project_4/{$vo.url}"><br/>
+			<elseif condition="$vo.type eq 'mp3'" /><p>现场录音</p><audio src="/project_4/{$vo.url}" controls="controls"></audio><br/>
+			<elseif condition="$vo.type eq 'mp4'" /><p>现场视频</p><video src="/project_4/{$vo.url}" controls="controls"></video><br/>
+		</if>
+	</volist>
 </div>
 </body>
 </html>
