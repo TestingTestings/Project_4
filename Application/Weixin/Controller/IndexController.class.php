@@ -39,7 +39,7 @@ class IndexController extends RestController
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
 //        将表单数据插入数据库
-//        todo 再次验证手机号是否重复
+//        todo-5 再次验证手机号是否重复
         $data['phone'] = I('post.phone');
         $data['password'] = md5(I('post.password2'));
         $data['idcard'] = I('post.id_number');
@@ -116,7 +116,7 @@ class IndexController extends RestController
     }
 
 
-//    todo 用户查询违法车辆
+//    用户查询违法车辆
     function carInfo_get_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
@@ -151,7 +151,7 @@ class IndexController extends RestController
             $data['car_id'] = $request['id'];
 
             // 多表查询 警员信息 法律法规
-            // todo ->field()
+            // todo-5 ->field()
             $Model = new Model();
             $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.state <> '修正' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
             $response['result'] = $Model->query($sql);
@@ -159,7 +159,7 @@ class IndexController extends RestController
             $response['info'] = '正在查询';
 
             // 添加到查询历史
-            // todo 拆分成方法
+            // todo-5 拆分成方法
             if (I('user') != 0) {
                 // 新建查询历史表
 
@@ -178,7 +178,6 @@ class IndexController extends RestController
                     $update['time'] = date('Y-m-d H:i:s', time());
                     M('history')->where($data)->data($update)->save();
                 }
-
             }
         }
 
@@ -186,7 +185,7 @@ class IndexController extends RestController
     }
 
 
-//    todo 用户申诉
+//    用户申诉
     function complaint_post_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
@@ -197,8 +196,8 @@ class IndexController extends RestController
         $data['case_id'] = I('case_id');
         $response['state'] = $Casehandle->field('state')->where($data)->select()[0]['state']; // 处理状态查询
 
-//        if ($response['state'] == '申诉') {  // todo 重复申诉
-        if (0) {  // todo 重复申诉
+//        if ($response['state'] == '申诉') {  // todo-1 重复申诉
+        if (0) {  // todo-1 重复申诉
             $response['info'] = '不能对已申诉案件重复申诉';
             $response['isConfirm'] = 0;
         } elseif (!I('content')) { // 内容不为空
@@ -206,7 +205,7 @@ class IndexController extends RestController
             $response['isConfirm'] = 0;
         } elseif ($data['case_id']) {
 
-            // 修改正表的状态 使用触发器 todo 在phpstorm 中执行 DDL
+            // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
             // 插入申述内容
             $data['case_id'] = I('case_id');
             $data['content'] = I('content');
@@ -225,18 +224,42 @@ class IndexController extends RestController
     }
 
 
-//    todo 用户查询历史
+//    用户查询历史
     function searchHistory_get_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
 
-        $data = [];
-        $data['user'] = I('user');
-        $rs['history'] = M('history')->where($data)->select();
-        // todo-3 查詢车架号
+//        $data = [];
+//        $data['user'] = I('user');
+//        $rs['history'] = M('history')->where($data)->select();
+        // todo-1 查詢车架号
+
+        $Model = new Model();
+        $sql = "select a.*, b.vin from t_history as a, t_car as b where a.user=" . I('user') . " and a.car_id=b.id";
+        $rs['history'] = $Model->query($sql);
+
 
         $this->response($rs, 'json');
+    }
+
+//    todo-1 用户查询历史跳转结果页面
+    function historyInfo_get_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+
+        // 查询相对应的违法记录
+        $data['car_id'] = strtoupper(I('id'));
+
+        // 多表查询 警员信息 法律法规
+        $Model = new Model();
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.state <> '修正' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+        $response['result'] = $Model->query($sql);
+
+        $response['isConfirm'] = 1;
+        $response['info'] = '正在查询';
+
+        $this->response($response, 'json');
     }
 
 
