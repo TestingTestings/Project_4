@@ -31,7 +31,7 @@
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
-                            <a href="#" id="search_history">查询历史</a>
+                            <a href="./history.html" id="search_history">查询历史</a>
                             <!--<a href="threecolumn.html">关于</a>-->
                             <a href="./login/login.html"  id="user_operation" onclick="user_operate(event)">登录</a>
                             <a href="#" id="user_info"></a>
@@ -215,8 +215,8 @@
 <script src="assets/js/log.js"></script>
 <script>
 
-    // todo-? 非法用户可能通过修改 cookie 的方式来实现非法登陆
-    // todo-! 利用随机值对 cookie 加密
+    // todo-4 非法用户可能通过修改 cookie 的方式来实现非法登陆
+    // todo-4 利用随机值对 cookie 加密
 
     // 提交车辆违法表单
     function form_submit() {
@@ -228,7 +228,6 @@
         var captcha = $('#captcha').val();
         var user;
 
-        // todo 用户名
         if (getCookie('userOnline')) { // 获取 cookie.userOnline
             user = Number(getCookie('userOnline'));
         }else{
@@ -310,8 +309,6 @@
     // todo-3 点击查询时删除localstorage 中的查询结果
 
 
-    // todo-1 每次查询添加到用户查询历史
-    // todo-1 添加前判断用户是否登录
 
     $(function () {
         user_online();

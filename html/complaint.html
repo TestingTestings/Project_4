@@ -107,7 +107,7 @@
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
-                            <a href="#" id="search_history">查询历史</a>
+                            <a href="./history.html" id="search_history">查询历史</a>
                             <!--<a href="threecolumn.html">关于</a>-->
                             <a href="./login/login.html"  id="user_operation" onclick="user_operate(event)">登录</a>
                             <a href="#" id="user_info"></a>
@@ -247,7 +247,7 @@
         // 提交按钮
         $('#deal').children('button').attr('data_case_id', localStorage.case_id);
 
-        // todo 删除case_id
+        // todo-5 删除case_id
     }
 
     // todo-3 读取数据
@@ -255,7 +255,7 @@
 
     }
 
-    // todo 提交申述表单
+    // 提交申述表单
     function form_submit() {
         var content = $("#content").children().val();
         var case_id = $('#deal').children('button').attr('data_case_id');

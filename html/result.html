@@ -148,7 +148,7 @@
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
-                            <a href="#" id="search_history">查询历史</a>
+                            <a href="./history.html" id="search_history">查询历史</a>
                             <!--<a href="threecolumn.html">关于</a>-->
                             <a href="./login/login.html" id="user_operation" onclick="user_operate(event)">登录</a>
                             <a href="#" id="user_info"></a>
@@ -284,13 +284,13 @@
 <script src="assets/js/log.js"></script>
 <script>
 
-    // todo 从 localstorage 读取数据
+    // 从 localstorage 读取数据
     function read_local() {
         var data = JSON.parse(localStorage.data);
         var $result_form = $("#result_form");
 
         console.log(data.result);
-        console.log(data.car);
+        console.log(data.car); // todo-2 用 result 内容代替 car
 
         $result_form.children().children("tr:gt(0)").remove(); // 移除初始数据
 
@@ -301,7 +301,7 @@
                     <td>' + data.result[i].id + '</td>\
                     <td>' + data.result[i].infoway + '</td>\
                     <td>' + data.result[i].state + '</td>\
-                    <td>' + data.car.type + '</td>\
+                    <td>' + data.result[i].car_id + '</td>\
                     <td>' + data.result[i]['car_id'] + '</td>\
                     <td>' + data.result[i]['punishment'] + '</td>\
                     <td>' + (data.result[i]['cost'] ? data.result[i]['cost'] : 0) + '元</td>\
@@ -337,8 +337,8 @@
         }
     }
 
-    // todo 判断无效操作？
-    // todo 读取完毕后删除数据？
+    // todo-6 判断无效操作？
+    // todo-6 读取完毕后删除数据？
 
     $(function () {
         user_online();
