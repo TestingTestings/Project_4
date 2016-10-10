@@ -60,7 +60,9 @@
                 <td>{$vo.area}</td>
                 <td>{$vo.job}</td>
                 <td>{$vo.imei}</td>
-                <td>{$vo.state}</td>
+                <if condition="$vo.state eq 'normal'"><td>在职</td>
+                <elseif condition="$vo.state eq 'quit'"/><td>离职</td>
+                </if>
             </tr>
         </volist>
 </table>
