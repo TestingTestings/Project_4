@@ -21,7 +21,7 @@ CREATE TABLE `t_case` (
   foreign key(car_id) references t_car(id),
   foreign key(law_id) references t_law(id),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_case

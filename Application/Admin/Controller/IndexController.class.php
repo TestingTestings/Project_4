@@ -28,6 +28,7 @@ class IndexController extends Controller {
             if($res['password']==md5($psd))
             {
                 session('user',$username);//创建session作为登录凭据
+                session("power",$res['power']);
                 $this->success('登陆成功','welcome',1);
             }
             else{
@@ -51,6 +52,7 @@ class IndexController extends Controller {
     }
     //警员管理
     public function police(){
+        $this->assign("power",session('power'));
         $this->search('police');
     }
 
@@ -178,32 +180,43 @@ class IndexController extends Controller {
     }
     //案件详情数据读取
     public function case_detail(){
-        $case_id=I('get.id');
+        $case_id=I('get.id');//获得案件id
         $detail=M('case');
-        $one_case=$detail->where("id='{$case_id}'")->select();
+        $one_case=$detail->where("id='{$case_id}'")->select();//新建案件模型
+        //通过案件数据得到警员id及车辆id
         $police_id=$one_case[0]['police_id'];
         $car_id=$one_case[0]['car_id'];
+        //新建警员及车辆模型
         $police=M('police');
         $car=M('car');
         $one_police=$police->where("id={$police_id}")->select();
         $one_car=$car->where("id='{$car_id}'")->select();
+        //新建证据模型
         $evidence=M("evidence");
         $pictur=$evidence->where("case_id=$case_id")->select();
+        //数据传入
         $this->assign("evidence",$pictur);
         $this->assign('detail',$one_case[0]);
-        session("case_detail",$one_case[0]);
         $this->assign('police',$one_police[0]);
         $this->assign('car',$one_car[0]);
+
+        session("evidence",$pictur);
+        session("case_detail",$one_case[0]);
         $this->display();
     }
     //案件处理
     public function case_appeal(){
+        //通过session得到案件数据
         $case_detail=session("case_detail");
-        session("case_detail",'');
+        session("case_detail",'');//session清空
         $id=$case_detail['id'];
-        $this->assign("case_detail",$case_detail);
+        $evidence=session("evidence");
+        session("evidence",'');//session清空
+        //得到案件副表
         $casehandle=M('casehandle');
         $res=$casehandle->where("case_id=$id and state2='未处理'")->select();
+        //传入数据
+        $this->assign("case_detail",$case_detail);
         $this->assign("content",$res);
         $this->display('case_appeal');
     }
@@ -233,7 +246,8 @@ class IndexController extends Controller {
             $this->success('处理成功','police_case',1);
         }else{
             $case->rollback();//不成功，则回滚
-            $this->success('处理失败,数据异常','police_case',3);        }
+            $this->success('处理失败,数据异常','police_case',3);
+        }
     }
 
 }

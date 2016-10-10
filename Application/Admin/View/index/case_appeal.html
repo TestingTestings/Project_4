@@ -100,9 +100,18 @@
     <tr>
         <td class="tableleft" colspan="4" >申诉内容</td>
     </tr>
-    <volist name="content" id="vo">
+    <volist name="content" id="vo" key="i">
         <tr><td>{$vo.content}</td></tr>
         <input type="hidden" name="detail_id" value="{$vo.id}">
+    </volist>
+    <volist name="evidence" id="vo2" key="j">
+        <if condition="$vo2.type eq 'jpg'"><p>现场照片</p><img src="/project_4/{$vo2.url}"><br/>
+            <elseif condition="$vo2.type eq 'mp3'" />
+            <if condition="$vo2.state eq 'normal'"><p>现场录音</p><audio src="/project_4/{$vo2.url}" controls="controls"></audio><br/>
+            <!--<elseif condition="$vo2.state eq 'change'" /> -->
+            </if>
+            <elseif condition="$vo2.type eq 'mp4'" /><p>现场视频</p><video src="/project_4/{$vo2.url}" controls="controls"></video><br/>
+        </if>
     </volist>
 
 </table>

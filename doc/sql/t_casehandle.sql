@@ -12,7 +12,7 @@ CREATE TABLE `t_casehandle` (
   `state2` enum('未处理','已处理') default '未处理',
   foreign key(case_id) references t_case(id),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_casehandle

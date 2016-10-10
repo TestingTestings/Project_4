@@ -35,8 +35,8 @@
 <form class="form-inline definewidth m20" action="police" method="get">
     <font color="#777777"><strong>警员信息：</strong></font>
     <input type="text" name="search" id="menuname" class="abc input-default" placeholder="输入要查询的警员信息" value="{$search}">&nbsp;&nbsp;
-    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp; 
-	<button type="button"  id="addnew"><a href="__CONTROLLER__/policeadd">添加警员</a></button>
+    <button type="submit" class="btn btn-primary">查询{$user.power}</button>&nbsp;&nbsp;
+	<if condition="$power eq 'super'"><button type="button"  id="addnew"><a href="__CONTROLLER__/policeadd">添加警员</a></button></if>
 </form>
 <table class="table table-bordered table-hover definewidth m10">
     <thead>

@@ -26,7 +26,7 @@ CREATE TABLE `t_news` (
   `time` date DEFAULT NULL,
   `valid` date DEFAULT NULL,
   `url` text DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_news

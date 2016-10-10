@@ -28,7 +28,7 @@ CREATE TABLE `t_user` (
   `phone` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
