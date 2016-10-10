@@ -189,7 +189,7 @@ class IndexController extends Controller {
         $one_car=$car->where("id='{$car_id}'")->select();
         $evidence=M("evidence");
         $pictur=$evidence->where("case_id=$case_id")->select();
-        $this->assign("evidence",$pictur[0]['url']);
+        $this->assign("evidence",$pictur);
         $this->assign('detail',$one_case[0]);
         session("case_detail",$one_case[0]);
         $this->assign('police',$one_police[0]);
