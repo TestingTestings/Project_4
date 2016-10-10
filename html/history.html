@@ -150,7 +150,7 @@
                             <!-- <a href="twocolumn1.html">新闻</a> -->
                             <a href="#" id="search_history">查询历史</a>
                             <!--<a href="threecolumn.html">关于</a>-->
-                            <a href="./login/login.html"  id="user_operation" onclick="user_operate(event)">登录</a>
+                            <a href="./login/login.html" id="user_operation" onclick="user_operate(event)">登录</a>
                             <a href="#" id="user_info"></a>
                         </nav>
                     </header>
@@ -169,40 +169,12 @@
                         <div class="table-container">
                             <table class="gridtable" id="result_form">
                                 <tr>
-                                    <!--<th>案件名称</th>-->
-                                    <th>案件号</th>
-                                    <th>执法方式</th>
-                                    <th>处理状态</th>
-                                    <!--<th>驾驶人</th>-->
-                                    <th>号牌种类</th>
-                                    <th>号牌号码</th>
-                                    <th>处罚方式</th>
-                                    <th>罚款金额</th>
-                                    <th>处罚日期</th>
+                                    <th>车牌号</th>
+                                    <!--<th>车架号</th>-->
+                                    <th>查询时间</th>
                                     <th>操作</th>
                                 </tr>
-                                <tr>
-                                    <td>梁乐机动车驾驶人违反道路通行规定案</td>
-                                    <td>梁乐</td>
-                                    <td>大型汽车</td>
-                                    <td>粤K20813</td>
-                                    <td>罚款150元</td>
-                                    <td>2016年05月13日</td>
-                                    <td>
-                                        <button>查看详情</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>梁乐机动车驾驶人违反道路通行规定案</td>
-                                    <td>梁乐</td>
-                                    <td>大型汽车</td>
-                                    <td>粤K20813</td>
-                                    <td>罚款150元</td>
-                                    <td>2016年05月13日</td>
-                                    <td>
-                                        <button>查看详情</button>
-                                    </td>
-                                </tr>
+
                             </table>
                         </div>
                         <!--<p>This is the second generic interior page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ante ante, viverra a ornare sed, convallis sed est. Proin felis sapien, adipiscing quis eleifend vel, sodales vitae sapien. Donec vel lacus leo, eu convallis metus. Cras egestas feugiat tortor, vitae interdum augue aliquam a. Sed nec augue id orci egestas commodo in eget magna. Nunc eleifend diam non odio laoreet placerat gravida nulla bibendum. Phasellus tempus imperdiet suscipit.</p>-->
@@ -285,16 +257,56 @@
 
 <script>
 
-    // todo 检查用户是否登录
     // todo 未登录提示错误信息
+    function user_error() {
+
+    }
+
     // todo 已登录 ajax 查询历史查询表
+    function query_history() {
+        if (getCookie('userOnline')) { // 获取 cookie.userOnline
+            var user = getCookie('userOnline');
+            $.ajax({
+                url: 'http://localhost/project_4/weixin/index/searchHistory/1.json',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    user: user
+                },
+                success: function (data) {
+                    console.log(data.history);
+
+                    for (var i in data.history) {
+
+                        var $row = $('\
+                        <tr>\
+                            <td>' + data.history[i].car_id + '</td>\
+                            <td>' + data.history[i].time + '</td>\
+                            <td>\
+                                <button>查看详情</button>\
+                            </td>\
+                        </tr>\
+                    ');
+
+                        $('#result_form').append($row);
+                    }
 
 
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
 
+        } else {
+            user_error()
+        }
+    }
 
 
     $(function () {
-        user_online();
+        user_online(); //  检查用户是否登录
+        query_history();
 
 
     });
