@@ -143,19 +143,17 @@
         <div class="container">
             <div class="row">
                 <div class="12u">
-
                     <header id="header">
                         <h1><a href="#" id="logo">交通安全综合服务管理平台</a></h1>
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
-                            <a href="onecolumn.html">查询历史</a>
-                            <a href="threecolumn.html">关于</a>
-                            <a href="#" id="user_operation" onclick="user_operate(event)">登录</a>
+                            <a href="#" id="search_history">查询历史</a>
+                            <!--<a href="threecolumn.html">关于</a>-->
+                            <a href="./login/login.html"  id="user_operation" onclick="user_operate(event)">登录</a>
                             <a href="#" id="user_info"></a>
                         </nav>
                     </header>
-
                 </div>
             </div>
         </div>
@@ -283,6 +281,8 @@
 <!--[if lte IE 8]>
 <script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="assets/js/main.js"></script>
+<script src="assets/js/log.js"></script>
+
 <script>
 
     // todo 检查用户是否登录
@@ -294,6 +294,7 @@
 
 
     $(function () {
+        user_online();
 
 
     });
