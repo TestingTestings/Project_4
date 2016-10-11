@@ -109,7 +109,7 @@
                             <!-- <a href="twocolumn1.html">新闻</a> -->
                             <a href="./history.html" id="search_history">查询历史</a>
                             <!--<a href="threecolumn.html">关于</a>-->
-                            <a href="./login/login.html"  id="user_operation" onclick="user_operate(event)">登录</a>
+                            <a href="./login/login.html" id="user_operation" onclick="user_operate(event)">登录</a>
                             <a href="#" id="user_info"></a>
                         </nav>
                     </header>
@@ -174,8 +174,8 @@
                                     <td id="law"></td>
                                 </tr>
                                 <!--<tr>-->
-                                    <!--<th>处罚部门</th>-->
-                                    <!--<td id="punish_division"></td>-->
+                                <!--<th>处罚部门</th>-->
+                                <!--<td id="punish_division"></td>-->
                                 <!--</tr>-->
                                 <tr>
                                     <th>处罚者</th>
@@ -265,7 +265,16 @@
             </div>
         </div>
     </div>
+    <div style="position: fixed;width: 50vmin;height: 50vmin; border: solid 1px black;top:25vmin;left:25vmin;background: white;text-align: center">
+        <img style="width: 80%;height: 80%" src="images/qr.png"/>
+        <br>
+        <span><a href="#" onclick="to_pay()">支付宝账号登陆</a></span>
+        <br>
+        <button style="padding: 2px" onclick="pay_done(event)">已支付</button>
+        <button style="padding: 2px" onclick="pay_cancel(event)">取消</button>
+    </div>
 </div>
+
 
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
@@ -278,9 +287,56 @@
 <script src="assets/js/log.js"></script>
 <script>
 
+    // todo-1 支付界面
+    function to_pay() {
+        window.open("./支付宝%20-%20网上支付%20安全快速！.html");
+    }
+
+    // todo-1 修改状态 已处理
+    function pay_done(evt) {
+        $(evt.target).parent().hide();
+        var case_id = $('#id').text();
+
+        // todo-1 已处理
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/carInfo/1.json',
+            type: 'put',
+            data: {
+                case_id: case_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                localStorage.data = JSON.stringify(data);
+
+                if (data['isConfirm']) {
+//                    跳转至查询结果页
+                    localStorage.data = JSON.stringify(data);
+                    location.href = "./result.html"
+                } else {
+//                     返回主页
+                    localStorage.link = JSON.stringify('../index.html');
+                    localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
+                    location.href = "./login/goto.html";
+                }
+            },
+            error: function (data) {
+                console.log(data);
+                document.body.innerHTML += data.responseText;
+            }
+        })
+
+    }
+
+    // 关闭弹窗
+    function pay_cancel(evt) {
+        $(evt.target).parent().hide();
+    }
+
+
     // 识别无效操作 处理
-    function illegal_operation(){
-        if(!localStorage.case_id){
+    function illegal_operation() {
+        if (!localStorage.case_id) {
             $("#detail_table").children().children().remove();
             $("#detail_table").append('<h1>无效操作 <a href="index.html">返回主页</a></h1>')
         }
@@ -288,7 +344,7 @@
 
     // 读取数据
     function read_data() {
-        if(!localStorage.case_id){
+        if (!localStorage.case_id) {
             return null
         }
         // 读取数据
@@ -309,8 +365,8 @@
 
         // 数据可能需要细微调整
         $("#id").text(case_id);
-        $("#type").text(data.car.type);
-        $("#car_number").text(data.car.id);
+        $("#type").text(result.type);
+        $("#car_number").text(result.car_id);
         $("#detail").text(result.content);
         $("#punish_type").text(result.punishment);
         $("#punish_result").text('罚款' + result.cost + '元');
@@ -326,9 +382,9 @@
     }
 
     // 跳转申诉页面
-    function case_complaint(evt){
+    function case_complaint(evt) {
         localStorage.case_id = $(evt.target).parent().attr('data-case_id');
-        location.href='./complaint.html'
+        location.href = './complaint.html'
     }
 
 
@@ -338,8 +394,8 @@
     // todo-1 显示证据
 
     // 根据处理状态调整申诉按钮
-    function complaint_button(){
-        if($("#state").text()=='申诉'){
+    function complaint_button() {
+        if ($("#state").text() == '申诉') {
             $('#button_com').hide();
         }
     }
