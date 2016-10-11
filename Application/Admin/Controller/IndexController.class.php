@@ -4,40 +4,9 @@ use Think\Controller;
 class IndexController extends Controller {
     //拦截器 拦截非法登录
     public function _initialize(){
-        $url=$_SERVER['REQUEST_URI'];
-        cookie('url',$url);
-//        if(substr($url, -5)!='login')
-//        {
-//            if(session('user')==null)
-//            {
-//                $this->error('请登录');
-//            }
-//        }
-    }
-    //登录界面
-    public function index(){
-
-        $this->display();
-    }
-    //登录判断
-    public function login($username,$psd,$code){
-        $user=M('admin');//查询管理员表
-        $res=$user->where("name='{$username}'")->find();
-        if(check_verify($code))
+        if(session('user')==null)
         {
-            if($res['password']==md5($psd))
-            {
-                session('user',$username);//创建session作为登录凭据
-                session("power",$res['power']);
-                $this->success('登陆成功','welcome',1);
-            }
-            else{
-                $this->error('登陆失败,账号或密码错误');//正确与错误的跳转
-            }
-        }
-        else
-        {
-            $this->error('登陆失败,验证码错误');//正确与错误的跳转
+            $this->error('请先登录！','/project_4/admin/login',3);
         }
     }
     //主界面
@@ -117,8 +86,7 @@ class IndexController extends Controller {
     //登出
     public function loginout(){
         session("user",null);
-        echo U('index');
-        $this->redirect('index', "",0);
+        $this->redirect('/admin/login/index', "",0);
 
     }
     //添加警员
@@ -164,7 +132,7 @@ class IndexController extends Controller {
     }
     //法规
     public function law(){
-        $this->search('law','',20);
+        $this->search('law','',200);
     }
     //案件查询入口
     public function police_case(){
@@ -211,11 +179,11 @@ class IndexController extends Controller {
         session("case_detail",'');//session清空
         $id=$case_detail['id'];
         $evidence=session("evidence");
-        session("evidence",'');//session清空
         //得到案件副表
         $casehandle=M('casehandle');
         $res=$casehandle->where("case_id=$id and state2='未处理'")->select();
         //传入数据
+        $this->assign("evidence",$evidence);
         $this->assign("case_detail",$case_detail);
         $this->assign("content",$res);
         $this->display('case_appeal');
@@ -224,6 +192,7 @@ class IndexController extends Controller {
     public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id){
         $case = M("case");
         $handle=M("casehandle");
+        $evidence=M("evidence");
         $case->startTrans();
         if($appeal=='change') {
             $case->content = $content;
@@ -251,11 +220,7 @@ class IndexController extends Controller {
     }
 
 }
-//验证码生成
-function check_verify($code){
-    $verify = new \Think\Verify();
-    return $verify->check($code);
-}
+
 //搜索函数构造索引数组
 function search_where($sheel,$search){
     if($sheel=='police') {

@@ -6,15 +6,9 @@
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/Css/style.css" />
-    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/jquery2.js"></script>-->
-    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/bootstrap.js"></script>-->
-    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/ckform.js"></script>-->
-    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/common.js"></script>-->
     <script src="__PUBLIC__/Common/js/jquery/jquery-3.1.1.min.js"></script>
-    <!--<script type="text/javascript" src="__PUBLIC__/Admin/Js/jquerypicture.js"></script>-->
     <script type="text/javascript" src="__PUBLIC__/Common/js/jquery/jquery.validate.js"></script>
     <script src="__PUBLIC__/Common/js/jquery/messages_zh.js"></script>
-    
     <style type="text/css">
         body {font-size: 20px;
             padding-bottom: 40px;
@@ -39,6 +33,9 @@
              color: red;
              z-index: 50;
          }
+        .evidence{
+            display: inline-block;
+        }
     </style>
     <script>
         $(function(){
@@ -105,12 +102,24 @@
         <input type="hidden" name="detail_id" value="{$vo.id}">
     </volist>
     <volist name="evidence" id="vo2" key="j">
-        <if condition="$vo2.type eq 'jpg'"><p>现场照片</p><img src="/project_4/{$vo2.url}"><br/>
-            <elseif condition="$vo2.type eq 'mp3'" />
-            <if condition="$vo2.state eq 'normal'"><p>现场录音</p><audio src="/project_4/{$vo2.url}" controls="controls"></audio><br/>
-            <!--<elseif condition="$vo2.state eq 'change'" /> -->
+        <if condition="$vo2.type eq 'jpg'">
+            <if condition="$vo2.state eq 'normal'"><p>现场照片</p>
+                <elseif condition="$vo2.state eq 'change'" /><p style="color: red" class="evidence">现场照片修改前</p><input type="hidden" name="change[]" value="{$vo2.id}" />
+                <elseif condition="$vo2.state eq 'new'" /><p style="color: green" class="evidence">现场照片修改后</p><input type="hidden" name="new[]" value="{$vo2.id}" />
             </if>
-            <elseif condition="$vo2.type eq 'mp4'" /><p>现场视频</p><video src="/project_4/{$vo2.url}" controls="controls"></video><br/>
+            <img src="/project_4/{$vo2.url}" style="width: 400px"><br/>
+        <elseif condition="$vo2.type eq 'mp3'" />
+            <if condition="$vo2.state eq 'normal'"><p>现场录音</p>
+            <elseif condition="$vo2.state eq 'change'" /><p style="color: red" class="evidence">现场录音修改前</p><input type="hidden" name="change[]" value="{$vo2.id}" />
+            <elseif condition="$vo2.state eq 'new'" /><p style="color: green" class="evidence">现场录音修改后</p><input type="hidden" name="new[]" value="{$vo2.id}" />
+            </if>
+            <audio src="/project_4/{$vo2.url}" controls="controls"></audio><br/>
+        <elseif condition="$vo2.type eq 'mp4'" />
+            <if condition="$vo2.state eq 'normal'"><p>现场视频</p>
+                <elseif condition="$vo2.state eq 'change'" /><p style="color: red" class="evidence">现场视频修改前</p><input type="hidden" name="change[]" value="{$vo2.id}" />
+                <elseif condition="$vo2.state eq 'new'" /><p style="color: green" class="evidence">现场视频修改后</p><input type="hidden" name="new[]" value="{$vo2.id}" />
+            </if>
+            <video src="/project_4/{$vo2.url}" controls="controls" style="width: 400px"></video><br/>
         </if>
     </volist>
 
