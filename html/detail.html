@@ -172,8 +172,12 @@
                                     <td id="punish_type"></td>
                                 </tr>
                                 <tr>
-                                    <th>处罚结果</th>
+                                    <th>罚款结果</th>
                                     <td id="punish_result"></td>
+                                </tr>
+                                <tr>
+                                    <th>计分</th>
+                                    <td id="point_result"></td>
                                 </tr>
                                 <!--<tr>-->
                                 <!--<th>记分</th>-->
@@ -442,6 +446,7 @@
         console.log(result);
 
         // 数据可能需要细微调整
+
         $("#id").text(case_id);
         $("#type").text(result.type);
         $("#car_number").text(result.car_id);
@@ -455,6 +460,9 @@
         $("#police_job").text(result.police_job);
         $("#place").text(result.place);
         $("#state").text(result.state);
+        $("#road_number").text(result.drive_card);
+        $("#people").text(result.name);
+        $("#point_result").text(result.score+'分');
 
         $("#deal").attr('data-case_id', case_id);
 
