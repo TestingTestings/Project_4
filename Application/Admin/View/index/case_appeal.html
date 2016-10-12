@@ -103,7 +103,7 @@
     </volist>
     <volist name="evidence" id="vo2" key="j">
         <if condition="$vo2.type eq 'jpg'">
-            <if condition="$vo2.state eq 'normal'"><p>现场照片</p>
+            <if condition="$vo2.state eq 'normal'"><th>现场照片</th>
                 <elseif condition="$vo2.state eq 'change'" /><p style="color: red" class="evidence">现场照片修改前</p><input type="hidden" name="change[]" value="{$vo2.id}" />
                 <elseif condition="$vo2.state eq 'new'" /><p style="color: green" class="evidence">现场照片修改后</p><input type="hidden" name="new[]" value="{$vo2.id}" />
             </if>

@@ -28,7 +28,7 @@ CREATE TABLE `t_evidence` (
   `state` enum('change','normal','new') default 'normal',
   PRIMARY KEY (`id`),
   KEY `case_id` (`case_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=myisam AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_evidence
