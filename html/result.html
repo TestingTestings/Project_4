@@ -144,7 +144,7 @@
             <div class="row">
                 <div class="12u">
                     <header id="header">
-                        <h1><a href="#" id="logo">交通安全综合服务管理平台</a></h1>
+                        <h1><a href="./index.html" id="logo">交通安全综合服务管理平台</a></h1>
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
@@ -171,14 +171,13 @@
                                 <tr>
                                     <!--<th>案件名称</th>-->
                                     <th>案件号</th>
-                                    <th>执法方式</th>
-                                    <th>处理状态</th>
-                                    <!--<th>驾驶人</th>-->
-                                    <th>号牌种类</th>
                                     <th>号牌号码</th>
+                                    <th>执法方式</th>
+                                    <!--<th>驾驶人</th>-->
+                                    <th>处罚原因</th>
                                     <th>处罚方式</th>
-                                    <th>罚款金额</th>
                                     <th>处罚日期</th>
+                                    <th>处理状态</th>
                                     <th>操作</th>
                                 </tr>
                                 <tr>
@@ -205,9 +204,6 @@
                                 </tr>
                             </table>
                         </div>
-                        <!--<p>This is the second generic interior page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ante ante, viverra a ornare sed, convallis sed est. Proin felis sapien, adipiscing quis eleifend vel, sodales vitae sapien. Donec vel lacus leo, eu convallis metus. Cras egestas feugiat tortor, vitae interdum augue aliquam a. Sed nec augue id orci egestas commodo in eget magna. Nunc eleifend diam non odio laoreet placerat gravida nulla bibendum. Phasellus tempus imperdiet suscipit.</p>-->
-                        <!--<p>Mauris risus nulla, pulvinar vitae sagittis a, pharetra nec tellus. Suspendisse varius enim ac felis mattis aliquam. Aenean et justo quis ipsum gravida lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia bibendum cursus. Nullam nec pellentesque lacus. In porta erat in tortor rhoncus quis accumsan magna pretium. Nulla posuere magna eget mauris lacinia in mollis sem fermentum. Donec mollis adipiscing mauris, ut posuere enim rhoncus ut. Nunc commodo vestibulum orci vel placerat. Cras sed risus libero. Donec ac lacus vitae lectus mattis commodo id vitae libero. Etiam lorem odio, volutpat nec pulvinar sit amet, tincidunt ut lacus. Pellentesque consequat arcu vel nisi lobortis in pellentesque orci sollicitudin. Cras gravida lacus turpis, consectetur porttitor lectus. Cras malesuada tortor id neque porta ut semper quam iaculis.</p>-->
-                        <!--<p>Nulla ut tortor quam, a luctus nunc. Nulla condimentum diam porttitor arcu placerat tincidunt. Nunc non augue ipsum. Nulla facilisi. Phasellus feugiat augue in ipsum egestas semper. Suspendisse blandit, nisl ullamcorper blandit sollicitudin, sem leo auctor lectus, et volutpat mauris elit et odio. Ut elementum risus in metus mollis tristique vulputate nulla interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae orci dui, ut facilisis dui.</p>-->
                     </section>
 
                 </div>
@@ -290,7 +286,7 @@
         var $result_form = $("#result_form");
 
         console.log(data.result);
-        console.log(data.car); // todo-2 用 result 内容代替 car
+//        console.log(data.car); // todo-2 用 result 内容代替 car
 
         $result_form.children().children("tr:gt(0)").remove(); // 移除初始数据
 
@@ -299,13 +295,12 @@
             var $row = $('\
                 <tr>\
                     <td>' + data.result[i].id + '</td>\
-                    <td>' + data.result[i].infoway + '</td>\
-                    <td>' + data.result[i].state + '</td>\
-                    <td>' + data.result[i].car_id + '</td>\
                     <td>' + data.result[i]['car_id'] + '</td>\
+                    <td>' + data.result[i].infoway + '</td>\
+                    <td>' + data.result[i].content + '</td>\
                     <td>' + data.result[i]['punishment'] + '</td>\
-                    <td>' + (data.result[i]['cost'] ? data.result[i]['cost'] : 0) + '元</td>\
                     <td>' + data.result[i]['happentime'] + '</td>\
+                    <td>' + data.result[i].state + '</td>\
                     <td>\
                         <button data-case_id="' + data.result[i]['id'] + '"  onclick="case_detail(event)">查看详情</button>\
                     </td>\
