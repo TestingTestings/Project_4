@@ -1,21 +1,4 @@
-﻿/*
-Navicat MySQL Data Transfer
-
-Source Server         : ss
-Source Server Version : 50173
-Source Host           : bdm246562162.my3w.com:3306
-Source Database       : bdm246562162_db
-
-Target Server Type    : MYSQL
-Target Server Version : 50173
-File Encoding         : 65001
-
-Date: 2016-09-24 14:04:44
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
+﻿-- ----------------------------
 -- Table structure for t_car
 -- ----------------------------
 DROP TABLE IF EXISTS `t_car`;
@@ -26,7 +9,7 @@ CREATE TABLE `t_car` (
   `local` char(8),
   `color` enum('白色','黑色','蓝色','绿色','红色'),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_car

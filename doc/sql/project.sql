@@ -3,120 +3,150 @@ create database traffic_police character set 'utf8' collate 'utf8_general_ci';
 use traffic_police;
 
 -- 用户表
-create table t_user(
-	id int(6) auto_increment primary key,
-	name char(8) unique,
-	password char(32),
-	idcard char(18),--  身份证
-	regtime date,--  注册时间
-	phone bigint(11)
+CREATE TABLE `t_user` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `name` char(8) DEFAULT NULL,
+  `password` char(32) DEFAULT NULL,
+  `idcard` char(18) DEFAULT NULL,
+  `regtime` date DEFAULT NULL,
+  `phone` bigint(11) DEFAULT NULL,
+  `drive_card` bigint(12),
+  `score` int(3) default 12,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
 );
 
 -- 车辆表
-create table t_car(
-	id char(6) primary key,
-	type enum('小轿车','客车','货车','三轮车','拖拉机'),--  车辆类型
-	vin char(6),-- 车架号
-	local char(8)--  车辆地区
-);
-
---  车辆查询表
-create table t_searchCar(
-	user_id int(6),
-	car_id char(6),
-	time date,
-	primary key(user_id,car_id),
-  	foreign key(user_id) references t_user(id),
-	foreign key(car_id) references t_car(id)
-);
+CREATE TABLE `t_car` (
+  `id` char(6),
+  `type` enum('小轿车','客车','货车','三轮车','拖拉机'),
+  `vin` char(6),
+  `local` char(8),
+  `color` enum('白色','黑色','蓝色','绿色','红色'),
+  PRIMARY KEY (`id`)
+) ;
 
 --  交警表
-create table t_police(
-	id int(6) primary key,
-	name varchar(7),
-	password char(32),
-	sex enum('男','女'),
-	age int(3),
-	area text,--  片区
-	job enum('协管','警员'),
-	imei bigint(15),--  硬件信息
-	sim bigint(11),
-	state enum('quit','normal')--  警员状态
+CREATE TABLE `t_police` (
+  `id` int(6) NOT NULL,
+  `name` varchar(7) DEFAULT NULL,
+  `password` char(32) DEFAULT NULL,
+  `sex` enum('男','女') DEFAULT NULL,
+  `age` int(3) DEFAULT NULL,
+  `area` text,
+  `job` enum('协管','警员') DEFAULT NULL,
+  `imei` bigint(15) DEFAULT NULL,
+  `sim` bigint(11) DEFAULT NULL,
+  `state` enum('quit','normal') DEFAULT NULL,
+  PRIMARY KEY (`id`)
 );
 
 --  管理员
-create table t_admin(
-	id int(4) primary key,
-	name char(8),
-	password char(32),
-	power enum('super','normal'),--  权限
-	time datetime --  登录时间
+CREATE TABLE `t_admin` (
+  `id` int(4) NOT NULL,
+  `name` char(8) DEFAULT NULL,
+  `password` char(32) DEFAULT NULL,
+  `power` enum('super','normal') DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
 );
 
 --  新闻表
-create table t_news(
-	id int(5) auto_increment primary key,
-	title varchar(30),
-	content text,--  内容
-	time date,
-	valid date,--  有效期
-	url text--  地址
-);
+CREATE TABLE `t_news` (
+  `id` int(5) auto_increment primary key,
+  `title` varchar(30) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `time` date DEFAULT NULL,
+  `valid` date DEFAULT NULL,
+  `url` text DEFAULT NULL
+) ;
 
 --  逃犯表
-create table t_criminal(
-	id int(5) auto_increment primary key,
-	name char(8) unique,
-	action text,--  犯罪详情
-	head text,--  头像
-	state enum('escape','catch')-- 状态
-);
+CREATE TABLE `t_criminal` (
+  `id` int(5) AUTO_INCREMENT,
+  `name` char(8) unique,
+  `action` text DEFAULT NULL,
+  `head` text DEFAULT NULL,
+  `state` enum('escape','catch'),
+  `car_id` varchar(7),
+  `driver_car` bigint(12),
+  PRIMARY KEY (`id`)
+) ;
 
 --  菜单表
-create table t_menu(
-	id int(5) auto_increment primary key,
-	fid int(5),
-	content text,
-	power enum('super','normal')-- 对应权限显示菜单
-);
+CREATE TABLE `t_menu` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `fid` int(5) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `power` enum('super','normal') DEFAULT NULL,
+  `url` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ;
 
 -- 法规
 create table t_law(
 	id int(5) auto_increment primary key,
-	url TEXT ,
-	title text,
-	content text
+	section VARCHAR (15),
+	part VARCHAR (15),
+	strip VARCHAR (15),
+	content text,
+	score int(3),
+	cost int(3)
 );
 
 -- 案件表
-create table t_case(
-	id int(5) auto_increment primary key,
-	place text,-- 地理信息
-	log FLOAT(5),-- 经度
-	lat FLOAT(5),-- 纬度
-	police_id int(6),-- 警员信息
-	happentime datetime,--  违章时间
-	car_id char(6),-- 车辆信息
-	content text,-- 违章内容
-	cost int(3),-- 违章罚款
-	law_id int(5),-- 法规id
-	punishment text,-- 处罚方式拘留等
-	infoway enum('现场执法','非现场执法'),
-	state enum('未处理','已处理','申诉'),
-  	handletime DATETIME,--  处理时间
-  	foreign key(police_id) references t_police(id),
-  	foreign key(car_id) references t_car(id),
-  	foreign key(law_id) references t_law(id)
+CREATE TABLE `t_case` (
+  `id` int(5) auto_increment,
+  `place` text,
+  `log` float(5),
+  `lat` float(5),
+  `police_id` int(6),
+  `happentime` datetime,
+  `car_id` char(6),
+  `drive_card` bigint(12),
+  `content` text,
+  `cost` int(3),
+  `score` int(3),
+  `law_id` int(5),
+  `punishment` text,
+  `infoway` enum('现场执法','非现场执法'),
+  `state` enum('未处理','已处理','申诉','修正','销毁','审核'),
+  `handletime` datetime,
+  foreign key(police_id) references t_police(id),
+  foreign key(car_id) references t_car(id),
+  foreign key(law_id) references t_law(id),
+  PRIMARY KEY (`id`)
 );
 
 -- 证据
-create table t_evidence(
-	id int(5) auto_increment primary key,
-	case_id int(5),-- 案件信息
-	url text,-- 证据地址
-	time datetime,-- 生成时间
-	type enum('photo','video','voice'),
-	foreign key(case_id) references t_case(id)
+CREATE TABLE `t_evidence` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `case_id` int(5) DEFAULT NULL,
+  `url` text,
+  `time` datetime DEFAULT NULL,
+  `type` text,
+  `state` enum('change','normal','new') default 'normal',
+  PRIMARY KEY (`id`),
+  KEY `case_id` (`case_id`)
 );
 
--- 超过10位的int改为bigint 9/24 林
+-- 案件副表
+CREATE TABLE `t_casehandle` (
+  `id` int(5) auto_increment,
+  `case_id` int(5),
+  `content` text,
+  `state` enum('申诉','修正'),
+  `happentime` datetime,
+  `handletime` datetime,
+  `state2` enum('未处理','已处理') default '未处理',
+  foreign key(case_id) references t_case(id),
+  PRIMARY KEY (`id`)
+) ;
+
+-- 搜索记录
+CREATE TABLE `t_history` (
+  `id` int(5) auto_increment PRIMARY key,
+  user bigint(11),
+  car_id CHAR(6),
+  time DATETIME DEFAULT now()
+);

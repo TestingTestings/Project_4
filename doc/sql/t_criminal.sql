@@ -28,14 +28,14 @@ CREATE TABLE `t_criminal` (
   `car_id` varchar(7),
   `driver_car` bigint(12),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_criminal
 -- ----------------------------
-INSERT INTO `t_criminal` VALUES ('1','张三', '杀了人', '../../../../../Public/Admin/images/c1s.png', 'escape','闽A55801','112543525687');
-INSERT INTO `t_criminal` VALUES ('2','李四', '抢劫犯', '../../../../../Public/Admin/images/c2s.png', 'escape','闽A55301','132544325547');
-INSERT INTO `t_criminal` VALUES ('3','王五', '抢劫犯', '../../../../../Public/Admin/images/c3s.png', 'escape','闽A51861','132544325547');
-INSERT INTO `t_criminal` VALUES ('','张六', '撞死人', '../../../../../Public/Admin/images/c4s.png', 'catch','闽A25841','132558954147');
-INSERT INTO `t_criminal` VALUES ('','李器', '肇事逃逸', '../../../../../Public/Admin/images/c5s.png', 'catch','闽Aq5632','115978515517');
-INSERT INTO `t_criminal` VALUES ('','王吧', '偷车', '../../../../../Public/Admin/images/c6s.png', 'escape','闽Ah5801','126987462584');
+INSERT INTO `t_criminal` VALUES ('1','张三', '杀了人', '/project_4/Public/Admin/images/c1s.png', 'escape','闽A55801','112543525687');
+INSERT INTO `t_criminal` VALUES ('2','李四', '抢劫犯', '/project_4/Public/Admin/images/c2s.png', 'escape','闽A55301','132544325547');
+INSERT INTO `t_criminal` VALUES ('3','王五', '抢劫犯', '/project_4/Public/Admin/images/c3s.png', 'escape','闽A51861','132544325547');
+INSERT INTO `t_criminal` VALUES ('','张六', '撞死人', '/project_4/Public/Admin/images/c4s.png', 'catch','闽A25841','132558954147');
+INSERT INTO `t_criminal` VALUES ('','李器', '肇事逃逸', '/project_4/Public/Admin/images/c5s.png', 'catch','闽Aq5632','115978515517');
+INSERT INTO `t_criminal` VALUES ('','王吧', '偷车', '/project_4/Public/Admin/images/c6s.png', 'escape','闽Ah5801','126987462584');

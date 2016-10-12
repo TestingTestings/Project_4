@@ -28,7 +28,7 @@ CREATE TABLE `t_evidence` (
   `state` enum('change','normal','new') default 'normal',
   PRIMARY KEY (`id`),
   KEY `case_id` (`case_id`)
-) ENGINE=myisam AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_evidence
@@ -36,7 +36,7 @@ CREATE TABLE `t_evidence` (
 INSERT INTO `t_evidence` VALUES (null, '1', './Public/App/temp_1476016244329.jpg', '2016-10-09 08:28:02', 'jpg','normal');
 INSERT INTO `t_evidence` VALUES (null, '2', './Public/App/12.mp3', '2016-10-10 12:27:53', 'mp3','normal');
 INSERT INTO `t_evidence` VALUES (null, '2', './Public/App/temp_1476066623207.jpg', '2016-10-10 12:27:55', 'jpg','change');
-INSERT INTO `t_evidence` VALUES (null, '2', './Public/App/temp_1476066623332.jpg', '2016-10-10 12:27:55', 'jpg','change');
+INSERT INTO `t_evidence` VALUES (null, '3', './Public/App/temp_1476066623332.jpg', '2016-10-10 12:27:55', 'jpg','normal');
 INSERT INTO `t_evidence` VALUES (null, '4', './Public/App/4.mp3', '2016-10-10 12:27:55', 'mp3','normal');
 INSERT INTO `t_evidence` VALUES (null, '5', './Public/App/1476030623024.mp4', '2016-10-10 12:27:55', 'mp4','normal');
 INSERT INTO `t_evidence` VALUES (null, '6', './Public/App/1476085712934.mp4', '2016-10-10 12:27:55', 'mp4','normal');
