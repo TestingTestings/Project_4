@@ -10,7 +10,7 @@ class CarController extends Controller {
         $car = M('car'); // 实例化User对象
         $count = $car->count();// 查询满足要求的总记录数
         //         echo $count;
-        $Page = new \Think\Page($count,4);// 实例化分页类 传入总记录数和每页显示的记录数(4)
+        $Page = new \Think\Page($count,7);// 实例化分页类 传入总记录数和每页显示的记录数(4)
         $Page->setConfig('header','$count 记录');
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
@@ -45,7 +45,7 @@ class CarController extends Controller {
         $count = $car->where($sea)->count();// 查询满足要求的总记录数
 //         echo $count;
        
-        $Page = new \Think\Page($count,4);// 实例化分页类 传入总记录数和每页显示的记录数(4)
+        $Page = new \Think\Page($count,7);// 实例化分页类 传入总记录数和每页显示的记录数(4)
         $Page->setConfig('header','$count 记录');
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
@@ -69,7 +69,7 @@ class CarController extends Controller {
         $news = M('news'); // 实例化User对象
         $count = $news->count();// 查询满足要求的总记录数
         //         echo $count;
-        $Page = new \Think\Page($count,4);// 实例化分页类 传入总记录数和每页显示的记录数(4)
+        $Page = new \Think\Page($count,7);// 实例化分页类 传入总记录数和每页显示的记录数(4)
         $Page->setConfig('header','$count 记录');
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
@@ -102,7 +102,7 @@ class CarController extends Controller {
         $count = $news->where($sea)->count();// 查询满足要求的总记录数
 //         echo $count;
          
-        $Page = new \Think\Page($count,4);// 实例化分页类 传入总记录数和每页显示的记录数(4)
+        $Page = new \Think\Page($count,7);// 实例化分页类 传入总记录数和每页显示的记录数(4)
         $Page->setConfig('header','$count 记录');
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
@@ -185,7 +185,7 @@ class CarController extends Controller {
 //         criminallists
         $count = $criminal->count();// 查询满足要求的总记录数
         //         echo $count;
-        $Page = new \Think\Page($count,4);// 实例化分页类 传入总记录数和每页显示的记录数(4)
+        $Page = new \Think\Page($count,7);// 实例化分页类 传入总记录数和每页显示的记录数(4)
         $Page->setConfig('header','$count 记录');
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
@@ -217,7 +217,7 @@ class CarController extends Controller {
         $count = $criminal->where($sea)->count();// 查询满足要求的总记录数
         //         echo $count;
          
-        $Page = new \Think\Page($count,4);// 实例化分页类 传入总记录数和每页显示的记录数(4)
+        $Page = new \Think\Page($count,7);// 实例化分页类 传入总记录数和每页显示的记录数(4)
         $Page->setConfig('header','$count 记录');
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
@@ -240,15 +240,15 @@ class CarController extends Controller {
         $id=$_GET['id'];
         $state=$_GET['state'];
         $criminal=D('criminal');
-        if ($state=='在逃'){
-            $data['state'] = '抓获';
+        if ($state=='escape'){
+            $data['state'] = 'catch';
             if ($criminal->where('id=%d',array($id))->save($data)){
                 $this->success('成功缉拿','criminal'); 
             }else {  
             }
-        }elseif ($state=='抓获'){
+        }elseif ($state=='catch'){
             
-            $data['state'] = '在逃';
+            $data['state'] = 'escape';
             if ($criminal->where('id=%d',array($id))->save($data)){
                 $this->success('逃亡中,请派兵捉拿','criminal');
             }

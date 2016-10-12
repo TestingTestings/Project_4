@@ -45,13 +45,13 @@ body {font-size: 20px;
 <table style="margin-left:10px;margin-top:3px;">
     <tr>
          <td>标题：</td>
-		 <td><input type="text" name="title" value='{$one_news.title}'/></td>
+		 <td><textarea  name="title" >{$one_news.title}</textarea></td>
     </tr>
 	<tr>
          <td>内容：</td>
-		 <td><input type="text" value='{$one_news.content}' name="content" style="height: 
+		 <td><textarea   name="content" style="height: 
 
-100px;wight：200px;"/></td>
+100px;wight：200px;">{$one_news.content}</textarea></td>
     </tr>
 	 <tr>
         <td >发布时间</td>
