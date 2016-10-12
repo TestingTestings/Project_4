@@ -201,7 +201,7 @@
                                     <th>违章处理</th>
                                     <td id="deal">
                                         <button id="button_com" onclick="case_complaint(event)">申诉</button>
-                                        <button>接受处罚</button>
+                                        <button onclick="open_pay()">缴交罚款</button>
                                     </td>
                                 </tr>
                             </table>
@@ -265,7 +265,7 @@
             </div>
         </div>
     </div>
-    <div style="position: fixed;width: 50vmin;height: 50vmin; border: solid 1px black;top:25vmin;left:25vmin;background: white;text-align: center">
+    <div id="payment" style="display: none;position: fixed;width: 50vmin;height: 50vmin; border: solid 1px black;top:25vmin;left:25vmin;background: white;text-align: center">
         <img style="width: 80%;height: 80%" src="images/qr.png"/>
         <br>
         <span><a href="#" onclick="to_pay()">支付宝账号登陆</a></span>
@@ -286,11 +286,16 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/log.js"></script>
 <script>
+    function open_pay(){
+        $('#payment').show();
+    }
+
 
     // todo-1 支付界面
     function to_pay() {
         window.open("./支付宝%20-%20网上支付%20安全快速！.html");
     }
+
 
     // todo-1 修改状态 已处理
     function pay_done(evt) {
@@ -327,6 +332,7 @@
         })
 
     }
+
 
     // 关闭弹窗
     function pay_cancel(evt) {
@@ -386,10 +392,6 @@
         localStorage.case_id = $(evt.target).parent().attr('data-case_id');
         location.href = './complaint.html'
     }
-
-
-    // todo-2 跳转到缴交罚款链接
-    // todo-2 查询历史
 
     // todo-1 显示证据
 

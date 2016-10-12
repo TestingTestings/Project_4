@@ -282,7 +282,7 @@
                             <td>' + data.history[i].vin + '</td>\
                             <td>' + data.history[i].time + '</td>\
                             <td>\
-                                <button  data-vin="' + data.history[i].vin + '" data-car="' + data.history[i].car_id + '" onclick="to_result()">查看详情</button>\
+                                <button  data-vin="' + data.history[i].vin + '" data-car="' + data.history[i].car_id + '" onclick="to_result(event)">查看详情</button>\
                             </td>\
                         </tr>\
                     ');
@@ -301,10 +301,10 @@
     }
 
 
-    function to_result(){
+    function to_result(evt){
         // todo-1 点击查看详情跳转页面
-        var id='闽a0001';
-        var vin;
+        var id=$(evt.target).parent().parent().children('td:eq(0)').text();
+        var vin; // todo-7 用车架号验证
 
         $.ajax({
             url: 'http://localhost/project_4/weixin/index/historyInfo/id/' + id + '/vin/' + vin + '/1.json',
