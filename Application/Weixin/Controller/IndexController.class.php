@@ -152,8 +152,8 @@ class IndexController extends RestController
 
             // 多表查询 警员信息 法律法规
             // todo-5 ->field()
-            $Model = new Model();
-            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title, d.type from t_case as a, t_police as b, t_law as c, t_car as d where d.id=a.car_id and a.state <> '修正' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+            $Model = new Model(); // todo-11 修正和銷毀增加查詢限制
+            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title, d.type from t_case as a, t_police as b, t_law as c, t_car as d where d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
             $response['result'] = $Model->query($sql);
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
@@ -206,10 +206,6 @@ class IndexController extends RestController
             $response['isConfirm'] = 0;
         } elseif ($data['case_id']) {
 
-            // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
-
-
-            // todo-1 t_casehandle 表的 case_id 外键会使次处失效
 
             // 插入申述内容
             $data['case_id'] = I('case_id');
@@ -218,8 +214,16 @@ class IndexController extends RestController
             $data['happentime'] = date('Y-m-d H:i:s', time());
             $Casehandle->data($data)->add();
 
+
+            // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
+            // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
+            // 修改case表状态为申诉
+            $update['state'] ='申诉';
+            $where['id'] = I('case_id');
+            M('case')->where($where)->data($update)->save();
+
 //            $Model = new Model();
-//            $sql="insert into `t_casehandle` (`case_id`,`content`,`state`,`happentime`) values ({$data['case_id']},'{$data['content']}','{$data['state']}','{$data['happentime']}')";
+//            $sql = "update t_case set state='申诉' where id=" . I('case_id');
 //            $Model->query($sql);
 
             $response['isConfirm'] = 1;
@@ -227,7 +231,6 @@ class IndexController extends RestController
             $response['info'] = '未知错误';
             $response['isConfirm'] = 0;
         }
-
 
         $this->response($response, 'json');
     }
@@ -242,7 +245,6 @@ class IndexController extends RestController
 //        $data = [];
 //        $data['user'] = I('user');
 //        $rs['history'] = M('history')->where($data)->select();
-        // todo-1 查詢车架号
 
         $Model = new Model();
         $sql = "select a.*, b.vin from t_history as a, t_car as b where a.user=" . I('user') . " and a.car_id=b.id";
@@ -273,8 +275,23 @@ class IndexController extends RestController
     }
 
 
-//    todo 支付后改变处理状态
-    function payment_put_json(){
+//    todo-2 支付后改变处理状态
+    function payment_put_json()
+    {
+
+    }
+
+
+    // 证据
+    function evidence_get_json()
+    {
+
+        $data['case_id'] = I('case_id');
+        $data['rs'] = M('evidence')->where($data)->select();
+
+
+        $this->response($data, 'json');
+
 
     }
 

@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="12u">
                     <header id="header">
-                        <h1><a href="#" id="logo">交通安全综合服务管理平台</a></h1>
+                        <h1><a href="./index.html" id="logo">交通安全综合服务管理平台</a></h1>
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
@@ -140,6 +140,10 @@
                                     <tr>
                                         <th>发生时间</th>
                                         <td id="happentime"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>车牌号</th>
+                                        <td id="car_id"></td>
                                     </tr>
                                     <tr>
                                         <th>申述内容</th>
@@ -253,13 +257,13 @@
         // todo-5 删除case_id
     }
 
-    // todo-1 读取数据
+    // 读取数据
     function read_data() {
 
 
         var data = JSON.parse(localStorage.data);
         var case_id = JSON.parse(localStorage.case_id);
-        // todo-1 获取case-id
+        // 获取case-id
         // 根据 case_id 寻找对应数据
         for (var i in data.result) {
             if (data.result[i]['id'] == case_id) {
@@ -274,6 +278,7 @@
         $("#id").text(case_id);
         $("#place").text(result.place);
         $("#happentime").text(result.happentime);
+        $("#car_id").text(result.car_id);
 
     }
 
@@ -285,7 +290,6 @@
         if (!case_id) {
             case_id = localStorage.case_id
         }
-        case_id=1;
 
         console.log(case_id);
 
@@ -301,20 +305,46 @@
             success: function (data) {
                 // 跳转页面
                 if (data['isConfirm']) {
-                    console.log(data.info);
+                    console.log(data);
                     localStorage.link = JSON.stringify('../result.html');
                     localStorage.link_info = JSON.stringify('申诉成功'); // 接受服务器发送错误信息
-                    location.href = "./login/goto.html"
+                    update_local(); // 更新本地数据
+
                 } else {
                     localStorage.link = JSON.stringify('../complaint.html');
                     localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
                     location.href = "./login/goto.html"
                 }
+
             },
             error: function (data) {
                 console.log(data);
                 document.body.innerHTML += data.responseText;
 
+            }
+        });
+    }
+
+    // 申诉后更新 localstorage 数据
+    function update_local() {
+
+
+        var id = $('#car_id').text(); // 车牌号
+        var vin; // todo-7 用车架号验证
+
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/historyInfo/id/' + id + '/vin/' + vin + '/1.json',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                localStorage.data = JSON.stringify(data);
+                location.href = "./login/goto.html"
+
+            },
+            error: function (data) {
+                console.log(data);
+                document.body.innerHTML += data.responseText;
             }
         });
     }
