@@ -24,16 +24,18 @@ CREATE TABLE `t_criminal` (
   `name` char(8) unique,
   `action` text DEFAULT NULL,
   `head` text DEFAULT NULL,
-  `state` enum('在逃','抓获'),
+  `state` enum('escape','catch'),
+  `car_id` varchar(7),
+  `driver_car` bigint(12),
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of t_criminal
 -- ----------------------------
-INSERT INTO `t_criminal` VALUES ('1','张三', '杀了人', '/Project_4/Public/Common/head_img/crim1.jpg', '在逃');
-INSERT INTO `t_criminal` VALUES ('2','李四', '抢劫犯', '/Project_4/Public/Common/head_img/crim2.jpg', '在逃');
-INSERT INTO `t_criminal` VALUES ('3','王五', '抢劫犯', '/Project_4/Public/Common/head_img/crim3.jpg', '在逃');
-INSERT INTO `t_criminal` VALUES ('4','张六', '撞死人', '/Project_4/Public/Common/head_img/crim4.jpg', '抓获');
-INSERT INTO `t_criminal` VALUES ('5','李器', '肇事逃逸', '/Project_4/Public/Common/head_img/crim5.jpg', '抓获');
-INSERT INTO `t_criminal` VALUES ('6','王吧', '偷车', '/Project_4/Public/Common/head_img/crim6.jpg', '在逃');
+INSERT INTO `t_criminal` VALUES ('1','张三', '杀了人', '../../../../../Public/Admin/images/c1s.png', 'escape','闽A55801','112543525687');
+INSERT INTO `t_criminal` VALUES ('2','李四', '抢劫犯', '../../../../../Public/Admin/images/c2s.png', 'escape','闽A55301','132544325547');
+INSERT INTO `t_criminal` VALUES ('3','王五', '抢劫犯', '../../../../../Public/Admin/images/c3s.png', 'escape','闽A51861','132544325547');
+INSERT INTO `t_criminal` VALUES ('','张六', '撞死人', '../../../../../Public/Admin/images/c4s.png', 'catch','闽A25841','132558954147');
+INSERT INTO `t_criminal` VALUES ('','李器', '肇事逃逸', '../../../../../Public/Admin/images/c5s.png', 'catch','闽Aq5632','115978515517');
+INSERT INTO `t_criminal` VALUES ('','王吧', '偷车', '../../../../../Public/Admin/images/c6s.png', 'escape','闽Ah5801','126987462584');
