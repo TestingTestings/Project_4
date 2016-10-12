@@ -209,7 +209,7 @@ class IndexController extends RestController
             // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
 
 
-            // todo-1 t_casehandle 表的 case_id 外键会使次处失效
+            // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
 
             // 插入申述内容
             $data['case_id'] = I('case_id');
@@ -218,9 +218,6 @@ class IndexController extends RestController
             $data['happentime'] = date('Y-m-d H:i:s', time());
             $Casehandle->data($data)->add();
 
-//            $Model = new Model();
-//            $sql="insert into `t_casehandle` (`case_id`,`content`,`state`,`happentime`) values ({$data['case_id']},'{$data['content']}','{$data['state']}','{$data['happentime']}')";
-//            $Model->query($sql);
 
             $response['isConfirm'] = 1;
         } else {
@@ -242,7 +239,6 @@ class IndexController extends RestController
 //        $data = [];
 //        $data['user'] = I('user');
 //        $rs['history'] = M('history')->where($data)->select();
-        // todo-1 查詢车架号
 
         $Model = new Model();
         $sql = "select a.*, b.vin from t_history as a, t_car as b where a.user=" . I('user') . " and a.car_id=b.id";
@@ -274,7 +270,22 @@ class IndexController extends RestController
 
 
 //    todo 支付后改变处理状态
-    function payment_put_json(){
+    function payment_put_json()
+    {
+
+    }
+
+
+    // todo-11 证据
+    function evidence_get_json()
+    {
+
+        $data['case_id'] = I('case_id');
+        $data['rs']= M('evidence')->where($data)->select();
+
+
+        $this->response($data, 'json');
+
 
     }
 
