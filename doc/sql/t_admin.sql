@@ -9,7 +9,7 @@ CREATE TABLE `t_admin` (
   `power` enum('super','normal') DEFAULT NULL,
   `time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_admin
