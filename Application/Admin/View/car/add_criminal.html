@@ -31,7 +31,11 @@
         }
     }
 
-
+.change{
+    border:solid 1px ;
+    width:600px;
+    margin:0 auto;
+}
 </style>
 <script type="text/javascript">
     $(function(){
@@ -50,21 +54,30 @@ function preview(file){
 </script>
 </head>
 <h1 style="text-align:center">通缉犯添加</h1>
+<div>
 <form action="add_criminalAction" method="post" style="margin:0 auto" enctype="multipart/form-data">
 <table class="table table-bordered table-hover definewidth m10" style="margin-left:3%;margin-top:2%;width:33%;margin:0 auto">
     <tr>
-        <td width="20%" class="tableleft">姓名</td>
-        <td><input type="text" name="name" style="height: 41px; width: 200px"/></td>
+        <td width="20%;" class="tableleft">姓名</td>
+        <td><input type="text" name="name" style="height:30px; width: 200px"/></td>
      
     </tr>
     <tr>
         <td class="tableleft">罪状</td>
-        <td><input type="text" name="action" style="height: 100px; width: 300px"/></td>
+        <td><textarea type="text" name="action" style="height: 40px; width: 300px"></textarea></td>
+    </tr>
+    <tr>
+        <td class="tableleft">驾驶证号</td>
+        <td><input type="text" name="action" style="height:20px; width: 300px"/></td>
+    </tr>
+    <tr>
+        <td class="tableleft">车牌号</td>
+        <td><input type="text" name="action" style="height:20px; width: 300px"/></td>
     </tr>
     <tr>
         <td class="tableleft">状态</td>
         <td>	
-        	<select  name='state' class="tableleft" style="height: 41px; width: 300px" ">
+        	<select  name='state' class="tableleft" style="height: 31px; width: 300px" ">
 	    	<option><font color="#777777"><strong>escape</strong></font></option>
 	    	<option><font color="#777777"><strong>catch</strong></font></option>
     	</select> 
@@ -73,7 +86,7 @@ function preview(file){
     </tr>  
     <tr>
         <td class="tableleft">人物头像</td>  
-        <td class="tableleft" style="width: 196px; ">
+        <td  style="width: 196px; ">
         	<input type="file" name="head" id="GoodsPicture" onchange="preview(this)" />
         </td>
         
@@ -97,6 +110,7 @@ function preview(file){
     </tr>
 </table>
 </form>
+</div>
 </body>
 </html>
 <script>

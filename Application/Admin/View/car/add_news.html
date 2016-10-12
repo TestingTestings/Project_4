@@ -30,54 +30,70 @@
             padding-right: 5px;
         }
     }
-
+.change{
+    border:solid 1px ;
+    width:600px;
+    margin:0 auto;
+}
 
 </style>
 <script type="text/javascript">
     $(function(){
-    	/*
-		$('#add_button').click(function (){
-			$title=$("input[name='title']").val();
-			$content=$("input[name='content']").val();
-			$time=$("input[name='time']").val();
-			$valid=$("input[name='valid']").val();
-			
-//			$search=$("input[name='search']").val();
-		
-			if($title=='' || $content=='' || $time=='选择时间' || $valid=='选择时间' ){
-				alert('不能为空')
-			}
-		})*/
-		
 		
 	})
+	function preview(file){  
+ 	var prevDiv1 = document.getElementById('preview');  
+	 if (file.files && file.files[0]){  
+	 var reader = new FileReader();  
+	 reader.onload = function(evt){  
+	 	prevDiv1.innerHTML = '<img style="width:100px;height:100px;" src="' + evt.target.result + '" />';  
+		}    
+	 reader.readAsDataURL(file.files[0]);  
+	}    
+}
 </script>
 </head>
 <h1 style="text-align:center">新闻添加</h1>
-<form action="addAction" method="post" style="margin:0 auto">
+<div class="change"> 
+<form action="addAction" method="post" style="margin:0 auto" enctype="multipart/form-data">
 <table class="table table-bordered table-hover definewidth m10" style="margin-left:3%;margin-top:2%;">
     <tr>
-        <td width="10%" class="tableleft">公告标题</td>
-        <td><input type="text" name="title" style="height: 41px; width: 546px"/></td>
+        <td width="20%" class="tableleft">公告标题</td>
+        <td ><textarea type="text" name="title" style="height: 41px; width: 400px"></textarea></td>
      
     </tr>
     <tr>
         <td class="tableleft">内容</td>
-        <td><input type="text" name="content" style="height: 93px; width: 546px"/></td>
+        <td><textarea type="text" name="content" style="height: 93px; width: 400px"></textarea></td>
     </tr> 
     <tr>
         <td class="tableleft">发布时间</td>
-        <td style="height: 46px; "> <div style="margin:0 auto;">
+        <td style="height: 46px; width: 400px"> <div style="margin:0 auto;">
 	             <input type="text" id="time1" name='time' value="" onClick="return Calendar('time1');" class="text_time"/>
              </div> 
         </td>
     </tr> 
     <tr>
         <td class="tableleft">失效时间</td>
-        <td> <div style="margin:0 auto;">
+        <td style=" width: 400px"> <div style="margin:0 auto;">
 	             <input type="text" id="time2" name='valid' value="" onClick="return Calendar('time2');" class="text_time"/>
              </div> 
         </td>
+    </tr> 
+    <tr>
+        <td class="tableleft">新闻图片</td>  
+        <td style="width: 196px; ">
+        	<input type="file" name="url" id="GoodsPicture" onchange="preview(this)" />
+        </td>
+        
+    </tr> 
+    <tr>
+        <td class="tableleft">图片预览</td>
+		<td style="height:100px">
+			<div id="preview">
+				<!--  <img style="width:100px;height:100px;"/>-->
+			</div>
+		</td>
     </tr>  
     <tr>
         <td class="tableleft"></td>
@@ -87,6 +103,7 @@
     </tr>
 </table>
 </form>
+</div>
 </body>
 </html>
 <script>

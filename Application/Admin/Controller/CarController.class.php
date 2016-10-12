@@ -130,13 +130,45 @@ class CarController extends Controller {
     //新闻添加
     public function addAction(){
         $news=D('news');
+        if(!empty($_FILES)){
+            //上传单个图像
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize   =     1*1024*1024 ;// 设置附件上传大小
+            $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath  =      'Public/Common/news_img/'; // 设置附件上传根目录
+            $upload->savePath  =      ''; // 设置附件上传（子）目录
+            $upload->saveName=array('uniqid','news');//上传文件的保存规则
+            $upload->autoSub  = true;//自动使用子目录保存上传文件
+            $upload->subName  = array('date','Ymd');
+            // 上传单个图片
+            $info   =   $upload->upload();
+//             var_dump($info['url']['savepath'].$info['url']['savename']);
+            
+            if(!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }
+        }
         $rule=array(
             array('title','require','标题不能为空'),
             array('content','require','内容不能为空'),
             array('time','require','发布时间不能为空'),
-            array('valid','require','有效时间不能为空')
+            array('valid','require','有效时间不能为空'),
+            array('url','require','图片不能为空')
         );
-        if ($news->validate($rule)->create()){
+        $title=$_POST['title'];
+        $content=$_POST['content'];
+        $time=$_POST['time'];
+        $valid=$_POST['valid'];
+//         $url=$_POST['url'];
+        $img_url='/Project_4/Public/Common/news_img/'.$info['url']['savepath'].$info['url']['savename'];
+        $data['title']=$title;
+        $data['content']=$content;
+        $data['valid']=$valid;
+        $data['time']=$time;
+        $data['url']=$img_url;
+//         var_dump($img_url);
+//         die();
+        if ($news->validate($rule)->create($data)){
             if ($news->add()){
                 $this->success('add success','news');
 //                 $this->display('news');

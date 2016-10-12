@@ -85,17 +85,21 @@ body {font-size: 20px;
     <tr>
         <th>编号</th>
         <th>姓名</th>
-        <th>罪状</th>
+        <th>驾驶证号</th>
+        <th>车牌号</th>
         <th>状态</th>
+        <th>罪状</th>
 		<th>头像</th>
 		<th>操作</th>		
      </tr>
     </thead>
     <volist name='criminallists' id='p'>	
 			<tr>
-				<td>{$p.id}</td>
-				<td style="width:250px">{$p.name|substr=0,27}</td>
-				<td style="width:400px">{$p.action|substr=0,57}</td>
+				<td style="width:60px">{$p.id}</td>
+				<td style="width:100px">{$p.name|substr=0,27}</td>
+				<td >{$p.driver_car}</td>
+				<td >{$p.car_id}</td>
+				<td style="width:300px">{$p.action|substr=0,57}</td>
 				<td class='{$p.state}'>{$p.state}</td>
 				<td><span id='{$p.id}' class='click_head' style="cursor:pointer" data-src="{$p.head}">查看头像</span></td>
 				<td>

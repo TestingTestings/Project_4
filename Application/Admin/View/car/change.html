@@ -32,11 +32,23 @@ body {font-size: 20px;
 }
 .change{
     border:solid 1px ;
-    width:480px;
+    width:600px;
     margin:0 auto;
 }
 
 </style>
+<script type="text/javascript">
+function preview(file){  
+ 	var prevDiv1 = document.getElementById('preview');  
+	 if (file.files && file.files[0]){  
+	 var reader = new FileReader();  
+	 reader.onload = function(evt){  
+	 	prevDiv1.innerHTML = '<img style="width:100px;height:100px;" src="' + evt.target.result + '" />';  
+		}    
+	 reader.readAsDataURL(file.files[0]);  
+	}    
+}
+</script>
 </head>
 <body>
 <h1 style="text-align:center">新闻修改</h1>
@@ -66,7 +78,22 @@ body {font-size: 20px;
 	             <input type="text" id="time2" name='valid' value="{$one_news.valid}" onClick="return Calendar('time2');" class="text_time"/>
              </div> 
         </td>
-    </tr>  
+    </tr>
+    <tr>
+        <td >新闻图片</td>  
+        <td style="width: 196px; ">
+        	<input type="file" name="url" id="GoodsPicture" onchange="preview(this)" />
+        </td>
+        
+    </tr> 
+    <tr>
+        <td >图片预览</td>
+		<td style="height:100px">
+			<div id="preview">
+				<!--  <img style="width:100px;height:100px;"/>-->
+			</div>
+		</td>
+    </tr>    
     <tr >      
        <td >
             <button style="margin-left:5px;"type="submit" class="btn 
@@ -78,7 +105,6 @@ id="backid"> <a href="news.html"> 返回列表</a></button>
 </table>
 </form>
 </div>
-
 </body>
 </html>
 
