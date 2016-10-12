@@ -253,13 +253,13 @@
         // todo-5 删除case_id
     }
 
-    // todo-1 读取数据
+    // 读取数据
     function read_data() {
 
 
         var data = JSON.parse(localStorage.data);
         var case_id = JSON.parse(localStorage.case_id);
-        // todo-1 获取case-id
+        // 获取case-id
         // 根据 case_id 寻找对应数据
         for (var i in data.result) {
             if (data.result[i]['id'] == case_id) {
