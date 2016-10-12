@@ -190,8 +190,8 @@ class WeiController extends Controller{
         
     }
     
-    //测试输出什么乱七八糟的
     
+    //测试输出什么乱七八糟的
     public  function transmitNews($postObj)
          {
              $news=M('news');

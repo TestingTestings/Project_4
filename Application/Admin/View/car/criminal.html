@@ -77,8 +77,8 @@ body {font-size: 20px;
    	   	<option><font color="#777777"><strong>状态</strong></font></option>     	
      </select>  
     <input type="text" name="search" id="menuname"class="abc input-default" placeholder="" value="">&nbsp;&nbsp; 
-    <button type="submit" class="btn btn-primary">查询</button> 
-    <a href='__CONTROLLER__/add_criminal'><button type="button" class="btn btn-primary" id='add_button'>添加</button></a>
+    <button type="submit" class="btn btn-primary"style="width:100px">查询</button> 
+    <a href='__CONTROLLER__/add_criminal'><button type="button" class="btn btn-primary" id='add_button'style="width:100px">添加</button></a>
 </form>
 <table class="table table-bordered table-hover definewidth m10">
     <thead>
@@ -95,7 +95,7 @@ body {font-size: 20px;
 			<tr>
 				<td>{$p.id}</td>
 				<td style="width:250px">{$p.name|substr=0,27}</td>
-				<td style="width:500px">{$p.action|substr=0,57}</td>
+				<td style="width:400px">{$p.action|substr=0,57}</td>
 				<td class='{$p.state}'>{$p.state}</td>
 				<td><span id='{$p.id}' class='click_head' style="cursor:pointer" data-src="{$p.head}">查看头像</span></td>
 				<td>

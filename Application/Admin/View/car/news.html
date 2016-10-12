@@ -72,19 +72,18 @@
 		<th>有效期</th>
 		<th>操作</th>
 		<th>查看详情</th>
-		<th>微信推送</th>
      </tr>
     </thead>
     <volist name='newslists' id='p'>	
 			<tr>
 				<td>{$p.id}</td>
 				<td style="width:250px">{$p.title|substr=0,27}</td>
-				<td style="width:450px">{$p.content|substr=0,57}</td>
+				<td style="width:350px">{$p.content|substr=0,45}</td>
 				<td>{$p.time}</td>
 				<td>{$p.valid}</td>
 				<td><a href='__CONTROLLER__/change?id={$p.id}'>修改</a></td>
 				<td><a href='__CONTROLLER__/newsdetail?id={$p.id}'>新闻预览</a></td>
-				<td><a href='__MODULE__/Wei/weixin_xinwen?id={$p.id}'>微信推送</a></td>	
+				<!--  <td><a href='__MODULE__/Wei/weixin_xinwen?id={$p.id}'>微信推送</a></td>	-->
 			</tr>	
 	</volist>	 
 </table>
