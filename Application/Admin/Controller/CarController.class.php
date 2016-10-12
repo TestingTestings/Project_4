@@ -173,7 +173,8 @@ class CarController extends Controller {
            
     }
     //新闻预览
-    public function newsdetail($id){
+    public function news_traffic($id){
+        $id=$_GET['id'];
         $news=M('news');
         $news=$news->find($id);
         $this->assign('one_news',$news);
