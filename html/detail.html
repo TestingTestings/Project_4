@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="12u">
                     <header id="header">
-                        <h1><a href="#" id="logo">交通安全综合服务管理平台</a></h1>
+                        <h1><a href="./index.html" id="logo">交通安全综合服务管理平台</a></h1>
                         <nav id="nav">
                             <!-- <a href="index.html" class="current-page-item">主页</a> -->
                             <!-- <a href="twocolumn1.html">新闻</a> -->
@@ -153,6 +153,16 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>驾驶人</th>
+                                    <td id="people">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>行驶证号</th>
+                                    <td id="road_number">
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>地点</th>
                                     <td id="place">
                                     </td>
@@ -194,6 +204,10 @@
                                     <td id="punish_date"></td>
                                 </tr>
                                 <tr>
+                                    <th>相关证据</th>
+                                    <td id="evidence"></td>
+                                </tr>
+                                <tr>
                                     <th>处理状态</th>
                                     <td id="state"></td>
                                 </tr>
@@ -201,7 +215,7 @@
                                     <th>违章处理</th>
                                     <td id="deal">
                                         <button id="button_com" onclick="case_complaint(event)">申诉</button>
-                                        <button onclick="open_pay()">缴交罚款</button>
+                                        <button id="button_pay" onclick="open_pay()">缴交罚款</button>
                                     </td>
                                 </tr>
                             </table>
@@ -265,7 +279,8 @@
             </div>
         </div>
     </div>
-    <div id="payment" style="display: none;position: fixed;width: 50vmin;height: 50vmin; border: solid 1px black;top:25vmin;left:25vmin;background: white;text-align: center">
+    <div id="payment"
+         style="display: none;position: fixed;width: 50vmin;height: 50vmin; border: solid 1px black;top:25vmin;left:25vmin;background: white;text-align: center">
         <img style="width: 80%;height: 80%" src="images/qr.png"/>
         <br>
         <span><a href="#" onclick="to_pay()">支付宝账号登陆</a></span>
@@ -286,18 +301,26 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/log.js"></script>
 <script>
-    function open_pay(){
+    function open_pay() {
         $('#payment').show();
     }
 
 
-    // todo-1 支付界面
+    // todo-1 动态支付界面
     function to_pay() {
         window.open("./支付宝%20-%20网上支付%20安全快速！.html");
+        // todo 获取罚款金额
+        // todo 存入local
+
+        // todo 点击已支付
+        // todo 修改为已处理状态
+
+        // todo 点击支付宝跳转页面
+        // todo 在支付页面读取罚款金额
     }
 
 
-    // todo-1 修改状态 已处理
+    // todo-1 支付后修改状态 已处理
     function pay_done(evt) {
         $(evt.target).parent().hide();
         var case_id = $('#id').text();
@@ -348,22 +371,71 @@
         }
     }
 
+
+    // 获取证据
+    function get_evidence(case_id) {
+
+        // 获取证据
+        $.ajax({
+            url: 'http://localhost/project_4/weixin/index/evidence/1.json',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                case_id: case_id
+            },
+            success: function (data) {
+                console.log(data.rs);
+                var result = data.rs;
+                var row;
+
+                for (var i in result) {
+                    console.log(result[i]);
+
+                    if (result[i]['type'] == 'jpg') {
+
+                        $row = "<img style='max-height: 200px;' src='../" + result[i]['url'] + "' / >";
+
+                    } else if (result[i]['type'] == 'mp3') {
+
+                        $row = "<audio  src='../" + result[i]['url'] + "' controls='controls'></audio>";
+
+                    } else if (result[i]['type'] == 'mp4') {
+
+                        $row = "<video style='max-height: 400px;' src='../" + result[i]['url'] + "' controls='controls'></video>";
+
+                    }
+
+                    $('#evidence').append($row).append('<br/>');
+                }
+            },
+            error: function (data) {
+                console.log(data);
+                document.body.innerHTML += data.responseText;
+            }
+        });
+    }
+
     // 读取数据
     function read_data() {
         if (!localStorage.case_id) {
             return null
         }
+
         // 读取数据
         var data = JSON.parse(localStorage.data);
         var case_id = JSON.parse(localStorage.case_id);
         console.log(data);
 
 
+        // 显示证据
+        get_evidence(case_id);
+
+
         // 根据 case_id 寻找对应数据
         for (var i in data.result) {
             if (data.result[i]['id'] == case_id) {
                 var result = data.result[i];
-                localStorage.removeItem('case_id'); // 删除 localstorage.case_id 避免无效操作
+//                localStorage.removeItem('case_id'); // 删除 localstorage.case_id 避免无效操作
                 break;
             }
         }
@@ -385,6 +457,8 @@
         $("#state").text(result.state);
 
         $("#deal").attr('data-case_id', case_id);
+
+
     }
 
     // 跳转申诉页面
@@ -393,19 +467,19 @@
         location.href = './complaint.html'
     }
 
-    // todo-1 显示证据
 
     // 根据处理状态调整申诉按钮
     function complaint_button() {
-        if ($("#state").text() == '申诉') {
+        if ($("#state").text() != '未处理') {
             $('#button_com').hide();
+            $('#button_pay').hide().parent().append('<span>暂无可用操作</span>');
         }
     }
 
     $(function () {
         user_online();
 
-        illegal_operation();
+//        illegal_operation();
         read_data();
         complaint_button();
     })
