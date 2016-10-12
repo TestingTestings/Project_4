@@ -291,7 +291,7 @@
     }
 
 
-    // todo-1 支付界面
+    // todo-1 动态支付界面
     function to_pay() {
         window.open("./支付宝%20-%20网上支付%20安全快速！.html");
     }
@@ -348,6 +348,8 @@
         }
     }
 
+
+    // todo-1 显示证据
     // 读取数据
     function read_data() {
         if (!localStorage.case_id) {
@@ -363,7 +365,7 @@
         for (var i in data.result) {
             if (data.result[i]['id'] == case_id) {
                 var result = data.result[i];
-                localStorage.removeItem('case_id'); // 删除 localstorage.case_id 避免无效操作
+//                localStorage.removeItem('case_id'); // 删除 localstorage.case_id 避免无效操作
                 break;
             }
         }
@@ -385,6 +387,8 @@
         $("#state").text(result.state);
 
         $("#deal").attr('data-case_id', case_id);
+
+
     }
 
     // 跳转申诉页面
@@ -393,7 +397,8 @@
         location.href = './complaint.html'
     }
 
-    // todo-1 显示证据
+
+
 
     // 根据处理状态调整申诉按钮
     function complaint_button() {
@@ -405,7 +410,7 @@
     $(function () {
         user_online();
 
-        illegal_operation();
+//        illegal_operation();
         read_data();
         complaint_button();
     })

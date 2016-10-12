@@ -193,8 +193,9 @@ class IndexController extends RestController
 
         $Casehandle = M('casehandle');
 
+
         $data['case_id'] = I('case_id');
-        $response['state'] = $Casehandle->field('state')->where($data)->select()[0]['state']; // 处理状态查询
+//        $response['state'] = $Casehandle->field('state')->where($data)->select()[0]['state']; // 处理状态查询
 
 //        if ($response['state'] == '申诉') {  // todo-1 重复申诉
         if (0) {  // todo-1 重复申诉
@@ -206,12 +207,20 @@ class IndexController extends RestController
         } elseif ($data['case_id']) {
 
             // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
+
+
+            // todo-1 t_casehandle 表的 case_id 外键会使次处失效
+
             // 插入申述内容
             $data['case_id'] = I('case_id');
             $data['content'] = I('content');
             $data['state'] = '申诉';
             $data['happentime'] = date('Y-m-d H:i:s', time());
             $Casehandle->data($data)->add();
+
+//            $Model = new Model();
+//            $sql="insert into `t_casehandle` (`case_id`,`content`,`state`,`happentime`) values ({$data['case_id']},'{$data['content']}','{$data['state']}','{$data['happentime']}')";
+//            $Model->query($sql);
 
             $response['isConfirm'] = 1;
         } else {
