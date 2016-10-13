@@ -46,6 +46,7 @@
         <th>违章时间</th>
         <th>案件状态</th>
         <th>查看详情</th>
+        <th>案件审核</th>
     </tr>
     </thead>
         <volist name="police" id="vo">
@@ -56,6 +57,9 @@
                 <td>{$vo.happentime}</td>
                 <td>{$vo.state}</td>
                 <td><a href="__CONTROLLER__/case_detail?id={$vo.id}">案件详情</a></td>
+                <if condition="$vo.state eq '审核'"><td><a href="__CONTROLLER__/case_pass?id={$vo.id}">通过</a></td>
+                <else/><td>已审核</td>
+                </if>
             </tr>
         </volist>
 </table>
