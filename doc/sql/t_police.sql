@@ -31,7 +31,7 @@ CREATE TABLE `t_police` (
   `sim` bigint(11) DEFAULT NULL,
   `state` enum('quit','normal') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_police

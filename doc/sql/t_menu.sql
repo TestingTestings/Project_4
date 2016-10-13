@@ -26,7 +26,7 @@ CREATE TABLE `t_menu` (
   `power` enum('super','normal') DEFAULT NULL,
   `url` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_menu
