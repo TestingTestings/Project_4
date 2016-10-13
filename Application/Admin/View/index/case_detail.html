@@ -78,31 +78,16 @@
 			<td width="60%" class="word_grey">{$detail.cost}</td>
 		</tr>
 		<tr>
+			<td width="40%" height="30" align="center">扣分情况：</td>
+			<td width="60%" class="word_grey">{$detail.score}</td>
+		</tr>
+		<tr>
 			<td width="40%" height="30" align="center">执法方式：</td>
 			<td width="60%" class="word_grey">{$detail.infoway}</td>
 		</tr>
 		<tr>
 			<td width="40%" height="30" align="center">处理时间：</td>
 			<td width="60%" class="word_grey">{$detail.handletime}</td>
-		</tr>
-		<tr>
-			<th colspan="2"><h3><strong >车辆信息：</strong></h3></th>
-		</tr>
-		<tr>
-			<td height="28" align="center">车牌号：</td>
-			<td height="28">{$car.id}</td>
-		</tr>
-		<tr>
-			<td height="28" align="center">车架号：</td>
-			<td height="28">{$car.vin}</td>
-		</tr>
-		<tr>
-			<td height="28" align="center">车辆类型：</td>
-			<td height="28">{$car.type}</td>
-		</tr>
-		<tr>
-			<td height="28" align="center">颜色：</td>
-			<td height="28">{$car.color}</td>
 		</tr>
 		<tr>
 			<th colspan="2"><h3><strong >负责交警信息：</strong></h3></th>
@@ -131,6 +116,25 @@
 </div>
 <div class="half">
 	<table class="table table-condensed"  style="margin: 0 auto">
+		<tr>
+			<th colspan="2"><h3><strong >车辆信息：</strong></h3></th>
+		</tr>
+		<tr>
+			<td height="28" align="center">车牌号：</td>
+			<td height="28">{$car.id}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">车架号：</td>
+			<td height="28">{$car.vin}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">车辆类型：</td>
+			<td height="28">{$car.type}</td>
+		</tr>
+		<tr>
+			<td height="28" align="center">颜色：</td>
+			<td height="28">{$car.color}</td>
+		</tr>
 		<tr>
 			<th colspan="2"><h3><strong >违法证据：</strong></h3></th>
 		</tr>

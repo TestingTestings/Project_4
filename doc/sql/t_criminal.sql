@@ -9,7 +9,7 @@ CREATE TABLE `t_criminal` (
   `head` text DEFAULT NULL,
   `state` enum('在逃','抓获'),
   `car_id` varchar(7),
-  `driver_car` bigint(12),
+  `drive_card` bigint(12),
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

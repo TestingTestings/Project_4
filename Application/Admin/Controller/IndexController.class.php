@@ -221,8 +221,14 @@ class IndexController extends Controller {
     //案件审核
     public function case_pass(){
         $case_id=I('get.id');//获得案件id
+        $state=I('get.state');
         $detail=M('case');
-        $detail->state='未处理';
+        if($state=='pass')
+        {
+            $detail->state='未处理';
+        }else{
+            $detail->state='销毁';
+        }
         $one_case=$detail->where("id='{$case_id}'")->save();//新建案件模型
         $this->search("case");
     }
