@@ -309,16 +309,22 @@ class CarController extends Controller {
         $rule=array(
             array('name','require','名字不能为空'),
             array('action','require','罪状不能为空'),
-            array('head','require','头像不能为空')
+            array('head','require','头像不能为空'),
+            array('driver_id','require','驾驶证号不能为空'),
+            array('car_id','require','车牌号不能为空')
         );
         $name=$_POST['name'];
         $action=$_POST['action'];
         $state=$_POST['state'];
+        $driver_id=$_POST['driver_id'];
+        $car_id=$_POST['car_id'];
         $img_url='/Project_4/Public/Common/head_img/'.$info['head']['savepath'].$info['head']['savename'];
         $data['head']=$img_url;
         $data['name']=$name;
         $data['action']=$action;
         $data['state']=$state;
+        $data['car_id']=$car_id;
+        $data['driver_car']=$driver_id;
         if ($criminal->validate($rule)->create($data)){
             if ($criminal->add()){
                 $this->success('add success','criminal');
