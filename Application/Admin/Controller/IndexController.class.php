@@ -50,7 +50,7 @@ class IndexController extends Controller {
         {
             if(!isset($condition))
             {
-                $condition="";
+                $condition['_logic'] = 'and';
             }
             $count=$police->where($condition)->count();//查询条数
             $Page= new \Think\Page($count,$num);//创建分页
@@ -218,7 +218,14 @@ class IndexController extends Controller {
             $this->success('处理失败,数据异常','police_case',3);
         }
     }
-
+    //案件审核
+    public function case_pass(){
+        $case_id=I('get.id');//获得案件id
+        $detail=M('case');
+        $detail->state='未处理';
+        $one_case=$detail->where("id='{$case_id}'")->save();//新建案件模型
+        $this->search("case");
+    }
 }
 
 //搜索函数构造索引数组
