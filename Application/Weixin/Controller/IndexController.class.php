@@ -153,7 +153,7 @@ class IndexController extends RestController
             // 多表查询 警员信息 法律法规
             // todo-5 ->field()
             $Model = new Model(); // todo-11 修正和銷毀增加查詢限制
-            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title, d.type from t_case as a, t_police as b, t_law as c, t_car as d where d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
             $response['result'] = $Model->query($sql);
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
@@ -265,7 +265,7 @@ class IndexController extends RestController
 
         // 多表查询 警员信息 法律法规
         $Model = new Model();
-        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title, d.type from t_case as a, t_police as b, t_law as c, t_car as d where d.id=a.car_id and a.state <> '修正' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
         $response['result'] = $Model->query($sql);
 
         $response['isConfirm'] = 1;
@@ -303,7 +303,7 @@ class IndexController extends RestController
 
 
         $Model = new Model();
-        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.title  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='闽A0001'";
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='闽A0001'";
         $response['result'] = $Model->query($sql);
 
         $this->response($response, 'json');
