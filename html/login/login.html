@@ -44,7 +44,7 @@
                        style="width:55%;display: inline-block"/>
 
                 <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
-                    <img width="100%" src="http://localhost/project_4/weixin/index/captcha_get_png"
+                    <img width="100%" src="http://101.201.233.0/project_4/weixin/index/captcha_get_png"
                          onclick="this.src = this.src +'?'+ Math.random()"/>
                 </div>
                 <!--<img src="http://localhost/project_4/weixin/index/captcha_get_png" style="width:40%;display: inline-block;vertical-align: middle"/>-->
@@ -108,7 +108,7 @@
         if ($form.valid()) {
             $.ajax({
 //                url: "http://localhost/project_4/weixin/index/userLogin/phone/" + phone + ".json",
-                url: "http://localhost/project_4/weixin/index/userLogin_put_json",
+                url: "http://101.201.233.0/project_4/weixin/index/userLogin_put_json",
                 type: 'put',
                 data: {
                     phone: phone,
