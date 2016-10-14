@@ -132,7 +132,7 @@ class IndexController extends Controller {
     }
     //法规
     public function law(){
-        $this->search('law','',200);
+        $this->search('law','',145);
     }
     //案件查询入口
     public function police_case(){
@@ -189,22 +189,48 @@ class IndexController extends Controller {
         $this->display('case_appeal');
     }
     //案件写入
-    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id){
+    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id,$change,$new){
         $case = M("case");
         $handle=M("casehandle");
         $evidence=M("evidence");
+        $data['state']='normal';
         $case->startTrans();
         if($appeal=='change') {
             $case->content = $content;
             $case->punishment = $punishment;
             $case->cost = $cost;
             $case->state='未处理';
+            for($i=0;$i<count($new);$i++)
+            {
+                $evidence->where("id=$new[$i]")->save($data);
+            }
+            for($j=0;$j<count($change);$j++)
+            {
+                $evidence->where("id=$change[$j]")->delete();
+            }
+
         }
         else if($appeal=='no'){
             $case->state='未处理';
+            for($i=0;$i<count($new);$i++)
+            {
+                $evidence->where("id=$new[$i]")->delete();
+            }
+            for($j=0;$j<count($change);$j++)
+            {
+                $evidence->where("id=$change[$j]")->save($data);
+            }
         }
         else if($appeal=='ok'){
             $case->state='销毁';
+            for($i=0;$i<count($new);$i++)
+            {
+                $evidence->where("id=$new[$i]")->save($data);
+            }
+            for($j=0;$j<count($change);$j++)
+            {
+                $evidence->where("id=$change[$j]")->delete();
+            }
         }
         $handle->state2='已处理';
         $handle->handletime=date('Y-m-d  H:i:s',time());
