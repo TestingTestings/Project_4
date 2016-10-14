@@ -273,15 +273,15 @@ class CarController extends Controller {
         $id=$_GET['id'];
         $state=$_GET['state'];
         $criminal=D('criminal');
-        if ($state=='escape'){
-            $data['state'] = 'catch';
+        if ($state=='在逃'){
+            $data['state'] = '抓获';
             if ($criminal->where('id=%d',array($id))->save($data)){
                 $this->success('成功缉拿','criminal'); 
             }else {  
             }
-        }elseif ($state=='catch'){
+        }elseif ($state=='抓获'){
             
-            $data['state'] = 'escape';
+            $data['state'] = '在逃';
             if ($criminal->where('id=%d',array($id))->save($data)){
                 $this->success('逃亡中,请派兵捉拿','criminal');
             }
@@ -355,4 +355,11 @@ class CarController extends Controller {
 //         $criminal->delete($id);
 //         $this->display('criminal');
     }
+    //appcan上的新闻显示
+    public function appcan_news(){
+        $news=M('news');
+        $list = $news->order('id DESC')->select();
+        echo json_encode($list);
+    }
+
 }
