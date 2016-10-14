@@ -42,9 +42,10 @@
         <th>用户id</th>
         <th>用户姓名</th>
         <th>用户身份证号</th>
+        <th>驾照编码</th>
+        <th>剩余分数</th>
         <th>注册时间</th>
         <th>用户电话</th>
-        <th>更多</th>
     </tr>
     </thead>
         <volist name="police" id="vo">
@@ -52,9 +53,10 @@
                 <td>{$vo.id}</td>
                 <td>{$vo.name}</td>
                 <td>{$vo.idcard}</td>
+                <td>{$vo.drive_card}</td>
+                <td>{$vo.score}</td>
                 <td>{$vo.regtime}</td>
                 <td>{$vo.phone}</td>
-                <td><a>123</a></td>
             </tr>
         </volist>
 </table>
