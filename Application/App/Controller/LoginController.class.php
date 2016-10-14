@@ -58,41 +58,49 @@ class LoginController extends Controller
             $data2['drive_card']=I('drivercard');
             $res2=$criminal->where($data2)->select();
             echo json_encode($res2);
-
         }
     }
+    
+    //获得所有的车牌号
+    public function car(){
+        $car=D('car');
+        if(I('carid')){
+            $data1['id']=I('carid');
+            $res=$car->where($data1)->select();
+            echo json_encode($res);
+        }
+   
+    }  
     //新增事件
     public function caseup(){
         //var_dump(I('post.'));
       // $model = new \Think\Model();
        // $model->startTrans();
-   
-        $case=D("case");
-        $flag=true;
-       
-        if(I('post.')){           
-            if($case->create()){
+         $case=D('case');
+  
+             if(I('post.')){           
+                 if($case->create()){
                 $case->handletime=date("Y-m-d H:i:s" ,time());
                 if($case->add()){ 
-                    $caseid = $case->getLastInsID();                  
+                    $caseid = $case->getLastInsID();                    
                     session('caseid',$caseid);
                     echo "success";
                 }
             }else{
-                $flag=false;
+          
                 echo "添加失败，请重试";
                 $errarr= $case->getError();
+               // var_dump( $errarr);
                 return false;
-             
-               
+
             }
         }else{
-            $flag=false;
+        
             echo "没有表单提交";
         }
+    
         
-  
-        if($_FILES){
+  if($_FILES){
             //var_dump($_FILES);
             //echo  $_FILES['file']['name'];
             //file_put_contents('log.txt',print_r($_FILES,1));
@@ -130,7 +138,7 @@ class LoginController extends Controller
             } 
   
             
-        }
+        } 
      
     }
     

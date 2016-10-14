@@ -13,7 +13,7 @@ class CaseModel extends Model
     //自动验证
     protected $_validate = array(
    
-        array('place','require','案件地名需填写'),
+        //array('place','require','案件地名需填写'),
         array('drive_card','require','驾驶证号码需填写'),
         array('log','require','经度需填写！'),
         array('lat','require','纬度需填写'),
@@ -31,7 +31,7 @@ class CaseModel extends Model
     //自动完成
     
     protected $_auto=array(
-        array('handletime',"date",3,'function'),
+      //  array('handletime',"date",3,'function'),
         array('law_id',"1"),
          array('state','审核')
     );
