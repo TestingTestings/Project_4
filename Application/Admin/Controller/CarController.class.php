@@ -355,10 +355,16 @@ class CarController extends Controller {
 //         $criminal->delete($id);
 //         $this->display('criminal');
     }
-    //appcan上的新闻显示
+    //appcan上所有的新闻显示
     public function appcan_news(){
         $news=M('news');
         $list = $news->order('id DESC')->select();
+        echo json_encode($list);
+    }
+    public function appcan_onenew($id){
+        $id=$_GET['id'];
+        $news=M('news');
+        $list=$news->find($id);
         echo json_encode($list);
     }
 
