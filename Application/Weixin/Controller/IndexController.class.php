@@ -129,7 +129,7 @@ class IndexController extends RestController
         $data['id'] = $request['id'];
         $data['vin'] = $request['vin'];
 
-        $response['car'] = M('car')->where($data)->select()[0];
+        $response['car'] = M('car')->where($data)->select();
 
         if (strtoupper($request['captcha']) != session('captcha')) { // 验证码校验
 
@@ -265,7 +265,8 @@ class IndexController extends RestController
 
         // 多表查询 警员信息 法律法规
         $Model = new Model();
-        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.state <> '审核' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
+
         $response['result'] = $Model->query($sql);
 
         $response['isConfirm'] = 1;
@@ -298,6 +299,46 @@ class IndexController extends RestController
     }
 
 
+    // todo-1 通过驾驶证号查询违章
+    function peopleInfo_get_json(){
+
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+
+
+        $data['name'] = I('name');
+        $data['drive_card'] = I('drive_card');
+        $response['user'] = M('user')->where($data)->select();
+
+        if (strtoupper(I('captcha')) != session('captcha')) { // 验证码校验
+
+            $response['isConfirm'] = 0;
+            $response['info'] = '验证码错误';
+
+        } elseif (count($response['user']) == 0) { // 车架号匹配
+
+            $response['isConfirm'] = 0;
+            $response['info'] = '驾驶证信息不匹配';
+
+        } else { // 返回数据
+
+            // 重置验证码
+            session('captcha', 'you_never_guess');
+
+            // 查询相对应的违法记录
+            // 多表查询 警员信息 法律法规
+            // todo-5 ->field()
+            $data['drive_card'] = I('drive_card');
+            $Model = new Model(); // todo-11 修正和銷毀增加查詢限制
+            $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.state <> '审核' and a.police_id=b.id and c.id=a.law_id and a.drive_card=" . $data['drive_card'];
+            $response['result'] = $Model->query($sql);
+            $response['isConfirm'] = 1;
+            $response['info'] = '正在查询';
+        }
+
+        $this->response($response, 'json');
+    }
+
+
     function test()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
@@ -307,6 +348,9 @@ class IndexController extends RestController
         $Model = new Model();
         $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='闽A0001'";
         $response['result'] = $Model->query($sql);
+
+        $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.state <> '审核' and a.police_id=b.id and c.id=a.law_id and a.drive_card=321875568755";
+        $response['result_2'] = $Model->query($sql);
 
         $this->response($response, 'json');
     }

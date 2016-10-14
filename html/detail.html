@@ -285,7 +285,7 @@
     </div>
     <div id="payment"
          style="display: none;position: fixed;width: 50vmin;height: 50vmin; border: solid 1px black;top:25vmin;left:25vmin;background: white;text-align: center">
-        <img style="width: 80%;height: 80%" src="images/qr.png"/>
+        <img style="width: 75%;height: 75%" src="images/qr.png"/>
         <br>
         <span><a href="#" onclick="to_pay()">支付宝账号登陆</a></span>
         <br>
@@ -331,7 +331,7 @@
 
         // todo-1 已处理
         $.ajax({
-            url: 'http://101.201.233.0/project_4/weixin/index/carInfo/1.json',
+            url: 'http://localhost/project_4/weixin/index/carInfo/1.json',
             type: 'put',
             data: {
                 case_id: case_id
@@ -381,7 +381,7 @@
 
         // 获取证据
         $.ajax({
-            url: 'http://101.201.233.0/project_4/weixin/index/evidence/1.json',
+            url: 'http://localhost/project_4/weixin/index/evidence/1.json',
             type: 'get',
             dataType: 'json',
             data: {
