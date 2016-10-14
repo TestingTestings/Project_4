@@ -49,14 +49,14 @@
 <body>
 <h1 style="text-align:center">新闻信息</h1>
 <form class="form-inline definewidth m20" action="__CONTROLLER__/news_search" method="get">
-     <select  name='select'>
+     <select  name='select' style="width:80px;height:30px">
      	<option><font color="#777777"><strong>标题</strong></font></option>
      	<option><font color="#777777"><strong>内容</strong></font></option>
    	   	<option><font color="#777777"><strong>日期</strong></font></option>
      	<option><font color="#777777"><strong>有效期</strong></font></option>
      </select>  
     <input type="text" name="search" id="menuname"class="abc input-default" 
-    placeholder="" value="">&nbsp;&nbsp; 
+    placeholder="" value="" style="width:200px;height:30px">&nbsp;&nbsp; 
     <button type="submit" class="btn btn-primary" style="width:100px">查询</button> 
     <a href='__CONTROLLER__/add_news'><button type="button" 
     class="btn btn-primary" id='add_button' style="width:100px">添加</button></a>

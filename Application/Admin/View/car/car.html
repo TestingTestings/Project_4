@@ -49,24 +49,24 @@
 <body>
 <h1 style="text-align:center">车辆信息</h1>
 <form class="form-inline definewidth m20" action="__CONTROLLER__/car_search" method="get">
-     <select  name='select'>
+     <select  name='select' style="width:80px;height:30px">
      	<option><font color="#777777"><strong>车牌号</strong></font></option>
      	<option><font color="#777777"><strong>类型</strong></font></option>
      	<option><font color="#777777"><strong>识别号</strong></font></option>
      	<option><font color="#777777"><strong>地区</strong></font></option>
      	<option><font color="#777777"><strong>颜色</strong></font></option>
      </select>  
-    <input type="text" name="menuname" id="menuname"class="abc input-default" placeholder="" value="">&nbsp;&nbsp; 
+    <input type="text" name="menuname" id="menuname"class="abc input-default" placeholder="" value="" style="width:200px;height:30px">&nbsp;&nbsp; 
     <button type="submit" class="btn btn-primary" style="width:100px">查询</button> 
 </form>
 <table class="table table-bordered table-hover definewidth m10">
     <thead>
     <tr>
         <th>车牌号</th>
-        <th>type</th>
+        <th>车辆类型</th>
         <th>车辆识别号</th>
-        <th>local</th>
-		<th>color</th>
+        <th>地区</th>
+		<th>颜色</th>
 
      </tr>
     </thead>
