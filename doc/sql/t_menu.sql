@@ -38,8 +38,7 @@ INSERT INTO `t_menu` VALUES
 ('4', '0', '协查通报', 'normal', '/project_4/index.php/Admin/car/criminal'),
 ('5', '0', '用户管理', 'normal', '/project_4/index.php/Admin/Index/user'),
 ('6', '0', '警员管理', 'super', '/project_4/index.php/Admin/Index/police'),
-('7', '0', '违章管理', 'normal', '/project_4/index.php/Admin/Index/peccancy'),
-('8', '3', '法规修正', 'normal', ''),
-('9', '7', '违章查看', 'normal', '/project_4/index.php/Admin/Index/police_case'),
-('10', '7', '申诉处理', 'normal', '/project_4/index.php/Admin/Index/police_appeal'),
-('11', '7', '修正处理', 'normal', '/project_4/index.php/Admin/Index/police_change');
+('7', '0', '违章管理', 'normal', '/project_4/index.php/Admin/Index/police_case'),
+('8', '7', '违章查看', 'normal', '/project_4/index.php/Admin/Index/police_case'),
+('9', '7', '申诉处理', 'normal', '/project_4/index.php/Admin/Index/police_appeal'),
+('10', '7', '修正处理', 'normal', '/project_4/index.php/Admin/Index/police_change');

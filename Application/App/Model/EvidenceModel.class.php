@@ -22,10 +22,7 @@ class EvidenceModel extends Model
     );
     //自动完成
      protected $_auto=array(
-       
-        
-        
-        
+
         array('time',"date",3,'function')
   
     );

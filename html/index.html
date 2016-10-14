@@ -88,11 +88,16 @@
                     <section>
                         <h2>新闻</h2>
                         <ul class="link-list">
-                            <li><a href="./newshtml/news_conternt.html">上海成长途汽车黄牛路边拉客</a><span style="float:right;">2016/08</span></li>
-                            <li><a href="./newshtml/news_ecomic.html">前三季度交通运输经济运行平稳</a><span style="float:right;">2016/09</span></li>
-                            <li><a href="./newshtml/news_traffic.html">校车驾驶资格作废公告</a><span style="float:right;">2016/08</span></li>
-                            <li><a href="http://www.moc.gov.cn/jiaotongyaowen/201610/t20161011_2097818.html">全国车联网产业创新联盟筹建</a><span style="float:right;">2016/10</span></li>
-                            <li><a href="http://www.moc.gov.cn/jiaotongyaowen/201610/t20161011_2097819.html">网约车管理办法开始征求意见</a><span style="float:right;">2016/10</span></li>
+                            <li><a href="./newshtml/news_conternt.html">上海成长途汽车黄牛路边拉客</a><span style="float:right;">2016/08</span>
+                            </li>
+                            <li><a href="./newshtml/news_ecomic.html">前三季度交通运输经济运行平稳</a><span style="float:right;">2016/09</span>
+                            </li>
+                            <li><a href="./newshtml/news_traffic.html">校车驾驶资格作废公告</a><span
+                                    style="float:right;">2016/08</span></li>
+                            <li><a href="http://www.moc.gov.cn/jiaotongyaowen/201610/t20161011_2097818.html">全国车联网产业创新联盟筹建</a><span
+                                    style="float:right;">2016/10</span></li>
+                            <li><a href="http://www.moc.gov.cn/jiaotongyaowen/201610/t20161011_2097819.html">网约车管理办法开始征求意见</a><span
+                                    style="float:right;">2016/10</span></li>
                         </ul>
                     </section>
 
@@ -100,11 +105,19 @@
                 <div class="4u 12u(mobile)">
 
                     <section>
-                        <h2>机动车违法查询</h2>
+                        <h2 id="search_title">机动车违法查询</h2>
 
                         <div>
                             <div class="row">
                                 <div class="12u 12u(mobile)">
+                                    <ul class="link-list">
+                                        <li>
+                                            <button id="drive_button" onclick="drive_button()"  >驾驶证记分查询</button>
+                                            <button id="car_button" onclick="car_button()" >机动车违法查询</button>
+                                        </li>
+                                    </ul>
+
+
                                     <form id="car_form">
                                         <ul class="link-list">
                                             <li>
@@ -129,8 +142,10 @@
                                             <li>
                                                 <input type="text" name="captcha" id="captcha"
                                                        placeholder="输入验证码"/>
+
                                                 <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
-                                                    <img width="100%" src="http://localhost/project_4/weixin/index/captcha_get_png"
+                                                    <img width="100%"
+                                                         src="http://localhost/project_4/weixin/index/captcha_get_png"
                                                          onclick="this.src = this.src +'?'+ Math.random()"/>
                                                 </div>
                                             </li>
@@ -139,6 +154,38 @@
                                             </li>
                                         </ul>
                                     </form>
+
+                                    <form id="people_form" style="display: none">
+                                        <ul class="link-list">
+
+                                            <li>
+                                                <input type="text" name="drive_card" id="drive_card"
+                                                       placeholder="输入驾驶证号"/>
+                                            </li>
+                                            <!--<li>-->
+                                                <!--<input type="text" name="file_number" id="file_number    "-->
+                                                       <!--placeholder="输入驾驶证档案编号"/>-->
+                                            <!--</li>-->
+                                            <li>
+                                                <input type="text" name="people_name" id="people_name"
+                                                       placeholder="输入驾驶人姓名"/>
+                                            </li>
+                                            <li>
+                                                <input type="text" name="captcha" id="captcha_2"
+                                                       placeholder="输入验证码"/>
+
+                                                <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
+                                                    <img width="100%"
+                                                         src="http://localhost/project_4/weixin/index/captcha_get_png"
+                                                         onclick="this.src = this.src +'?'+ Math.random()"/>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <input type="button" onclick="form_submit_new()" value="查询">
+                                            </li>
+                                        </ul>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
@@ -222,7 +269,7 @@
     function form_submit() {
 
         var $form = $("#car_form");
-        var id = $('#id_ahead').val()+$('#id').val();
+        var id = $('#id_ahead').val() + $('#id').val();
         var vin = $('#vin').val();
         var type = $('#type').val();
         var captcha = $('#captcha').val();
@@ -230,7 +277,7 @@
 
         if (getCookie('userOnline')) { // 获取 cookie.userOnline
             user = Number(getCookie('userOnline'));
-        }else{
+        } else {
             user = 0;
         }
 
@@ -285,8 +332,7 @@
                     required: true
                 }
             },
-            messages: {
-            }
+            messages: {}
         })
     }
 
@@ -308,10 +354,69 @@
     // todo-11 增加驾驶证违章查询；
 
 
+    function drive_button(){
+        $('#search_title').text('驾驶证记分查询');
+        $('#car_form').hide();
+        $('#people_form').show();
+    }
+    function car_button(){
+        $('#search_title').text('机动车违法查询');
+        $('#people_form').hide();
+        $('#car_form').show();
+    }
+    function form_submit_new(){
+        var $form = $("#people_form");
+        var captcha = $('#captcha_2').val();
+        var drive_card = $('#drive_card').val();
+//        var file_number = $('#file_number').val();
+        var name = $('#people_name').val();
+
+
+
+//         检查输入不为空
+//         错误提示
+//         跳转结果页面
+//        if ($form.valid()) {
+            $.ajax({
+                url: 'http://localhost/project_4/weixin/index/peopleInfo/1.json',
+                type: 'get',
+                data:{
+                    captcha:captcha,
+                    name:name,
+                    drive_card:drive_card
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    localStorage.data = JSON.stringify(data);
+
+                    if (data['isConfirm']) {
+//                    跳转至查询结果页
+                        localStorage.data = JSON.stringify(data);
+                        location.href = "./result.html"; // todo-11 跳转到驾驶证查询记录
+                    } else {
+//                     返回主页
+                        localStorage.link = JSON.stringify('../index.html');
+                        localStorage.link_info = JSON.stringify(data['info']); // 接受服务器发送错误信息
+                        location.href = "./login/goto.html";
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    document.body.innerHTML += data.responseText;
+                }
+            });
+//        }
+        return false
+    }
+
+    // todo-1 驾驶证的表单验证
+
+
     $(function () {
         user_online();
         form_check();
-//        test();
+        test();
     })
 
 </script>
