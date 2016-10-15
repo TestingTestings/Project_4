@@ -115,7 +115,7 @@
 
         if ($form.valid()) {
             $.ajax({
-                url: "http://localhost/project_4/weixin/index/userData/confirm.json",
+                url: "http://101.201.233.0/project_4/weixin/index/userData/confirm.json",
                 type: 'post',
                 data: {
                     phone: phone,
@@ -170,7 +170,7 @@
                     minlength: 11,
                     maxlength: 11,
                     remote: {
-                        url: "http://localhost/project_4/weixin/index/userExist/phone/" + $("#phone").val() + ".json",
+                        url: "http://101.201.233.0/project_4/weixin/index/userExist/phone/" + $("#phone").val() + ".json",
                         type: "get",
                         dataType: "json",
                         dataFilter: function (data) {
