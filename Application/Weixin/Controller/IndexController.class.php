@@ -361,7 +361,7 @@ class IndexController extends RestController
             // 查询 违章扣分
             $where = [];
             $where['id'] = I('case_id');
-            $result = M('case')->field('score,drive_card')->where($data)->select()[0];
+            $result = M('case')->field('score,drive_card')->where($where)->select()[0];
             $score[0] = $result['score'];
 
             // 查询用户驾驶证计分
