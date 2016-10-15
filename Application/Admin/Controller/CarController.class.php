@@ -361,11 +361,12 @@ class CarController extends Controller {
         $list = $news->order('id DESC')->select();
         echo json_encode($list);
     }
-    public function appcan_onenew($id){
-        $id=$_GET['id'];
-        $news=M('news');
-        $list=$news->find($id);
-        echo json_encode($list);
+    //appcan单条新闻具体
+    public function appcan_onenew(){
+//         $id=$_GET['id'];
+//         $news=M('news');
+//         $list=$news->find($id);
+        echo json_encode([1,2,3]);
     }
 
 }
