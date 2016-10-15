@@ -45,11 +45,11 @@
             <div class="field">
                 <input type="text" name="id_number" id="id_number" placeholder="请输入身份证号"/>
             </div>
-            <!--<div class="field">-->
-                <!--<input type="text" name="id_number" id="drive_number" placeholder="请输入驾驶证号"/>-->
-            <!--</div>-->
             <div class="field">
-                <input type="text"  placeholder="请输入真实姓名"/>
+                <input type="text" name="drive_number" id="drive_number" placeholder="请输入驾驶证号"/>
+            </div>
+            <div class="field">
+                <input type="text" name="real_number" id="real_name" placeholder="请输入真实姓名"/>
             </div>
             <div class="field">
                 <input type="text" name="captcha" id="captcha" placeholder="请输入验证码"
@@ -110,17 +110,21 @@
         var password2 = $("#password2").val();
         var id_number = $("#id_number").val();
         var captcha = $("#captcha").val();
+        var real_name = $("#real_name").val();
+        var drive_number = $("#drive_number").val();
 
         if ($form.valid()) {
             $.ajax({
-                url: "http://localhost/project_4/weixin/index/userData/confirm.json",
+                url: "http://101.201.233.0/project_4/weixin/index/userData/confirm.json",
                 type: 'post',
                 data: {
                     phone: phone,
                     password1: password1,
                     password2: password2,
                     id_number: id_number,
-                    captcha: captcha
+                    captcha: captcha,
+                    real_name:real_name,
+                    drive_number:drive_number
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -166,7 +170,7 @@
                     minlength: 11,
                     maxlength: 11,
                     remote: {
-                        url: "http://localhost/project_4/weixin/index/userExist/phone/" + $("#phone").val() + ".json",
+                        url: "http://101.201.233.0/project_4/weixin/index/userExist/phone/" + $("#phone").val() + ".json",
                         type: "get",
                         dataType: "json",
                         dataFilter: function (data) {
@@ -189,6 +193,12 @@
                     required: true,
                     minlength: 18,
                     maxlength: 18
+                },
+                real_name:{
+                    required:true
+                },
+                drive_number:{
+                    required:true
                 }
             },
             messages: {

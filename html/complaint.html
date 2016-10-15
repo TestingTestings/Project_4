@@ -54,11 +54,12 @@
         button {
             border: none;
             /* background: #c0392b; */
-            background: #5c5fdc;
+            background: #007b9d;
             color: #fff;
             cursor: pointer;
             display: inline-block;
             margin: 3px 2px;
+            padding: 2px;
             border-radius: 2px;
         }
 
@@ -295,7 +296,7 @@
 
 
         $.ajax({
-            url: 'http://localhost/project_4/weixin/index/complaint/1.json',
+            url: 'http://101.201.233.0/project_4/weixin/index/complaint/1.json',
             type: 'post',
             dataType: 'json',
             data: {
@@ -333,7 +334,7 @@
         var vin; // todo-7 用车架号验证
 
         $.ajax({
-            url: 'http://localhost/project_4/weixin/index/historyInfo/id/' + id + '/vin/' + vin + '/1.json',
+            url: 'http://101.201.233.0/project_4/weixin/index/historyInfo/id/' + id + '/vin/' + vin + '/1.json',
             type: 'get',
             dataType: 'json',
             success: function (data) {
