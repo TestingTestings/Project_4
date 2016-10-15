@@ -363,10 +363,10 @@ class CarController extends Controller {
     }
     //appcan单条新闻具体
     public function appcan_onenew(){
-//         $id=$_GET['id'];
-//         $news=M('news');
-//         $list=$news->find($id);
-        echo json_encode([1,2,3]);
+        $id=$_GET['id'];
+        $news=M('news');
+        $list=$news->find($id);
+        echo json_encode($list);
     }
 
 }
