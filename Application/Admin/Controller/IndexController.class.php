@@ -189,12 +189,7 @@ class IndexController extends Controller {
         $this->display('case_appeal');
     }
     //案件写入
-    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id,$change,$new){
-        if(!isset($change)||!isset($new))
-        {
-            $change=null;
-            $new=null;
-        }
+    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id,$change=null,$new=null){
         $case = M("case");
         $handle=M("casehandle");
         $evidence=M("evidence");
