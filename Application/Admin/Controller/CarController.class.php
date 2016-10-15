@@ -366,8 +366,7 @@ class CarController extends Controller {
         $id=$_GET['id'];
         $news=M('news');
         $list=$news->find($id);
-        var_dump($list);
-//         echo json_encode($list);
+        echo json_encode($list);
     }
 
 }
