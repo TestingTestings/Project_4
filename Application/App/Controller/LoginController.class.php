@@ -84,19 +84,23 @@ class LoginController extends Controller
                 if($case->add()){ 
                     $caseid = $case->getLastInsID();                    
                     session('caseid',$caseid);
-                    echo "success";
+                    $jsonres=['state'=>'success','caseid'=>$caseid];
+                    echo json_encode($jsonres);
                 }
             }else{
           
-                echo "添加失败，请重试";
+          
                 $errarr= $case->getError();
                // var_dump( $errarr);
+                $jsonres=['state'=>'addfail','caseid'=>'$errarr'];
+                echo json_encode($jsonres);
                 return false;
 
             }
         }else{
-        
-            echo "没有表单提交";
+            $jsonres=['state'=>'fail','caseid'=>'表单失败'];
+            echo json_encode($jsonres);
+          
         }
     
         
