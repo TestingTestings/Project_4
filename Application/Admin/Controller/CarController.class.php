@@ -327,7 +327,7 @@ class CarController extends Controller {
         $data['drive_card']=$driver_id;
         if ($criminal->validate($rule)->create($data)){
             if ($criminal->add()){
-                $this->success('add success','criminal');
+                $this->success('添加成功','criminal');
                 //                 $this->display('news');
             }else {
                 $this->error($criminal->getError());
@@ -347,7 +347,7 @@ class CarController extends Controller {
         $criminal=M('criminal');
         //         $student->create();
         if ($criminal->delete($id)){
-            $this->success('del success','criminal');
+            $this->success('删除成功','criminal');
             //                 $this->display('news');
         }else {
             $this->error($criminal->getError());
