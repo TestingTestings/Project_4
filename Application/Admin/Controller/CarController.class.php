@@ -170,7 +170,7 @@ class CarController extends Controller {
 //         die();
         if ($news->validate($rule)->create($data)){
             if ($news->add()){
-                $this->success('add success','news');
+                $this->success('添加成功。。。','news');
 //                 $this->display('news');
             }else {
                 $this->error($news->getError());
@@ -316,7 +316,7 @@ class CarController extends Controller {
         $name=$_POST['name'];
         $action=$_POST['action'];
         $state=$_POST['state'];
-        $driver_id=$_POST['driver_id'];
+        $driver_id=$_POST['drive_id'];
         $car_id=$_POST['car_id'];
         $img_url='/Project_4/Public/Common/head_img/'.$info['head']['savepath'].$info['head']['savename'];
         $data['head']=$img_url;
@@ -324,10 +324,10 @@ class CarController extends Controller {
         $data['action']=$action;
         $data['state']=$state;
         $data['car_id']=$car_id;
-        $data['driver_car']=$driver_id;
+        $data['drive_card']=$driver_id;
         if ($criminal->validate($rule)->create($data)){
             if ($criminal->add()){
-                $this->success('add success','criminal');
+                $this->success('添加成功','criminal');
                 //                 $this->display('news');
             }else {
                 $this->error($criminal->getError());
@@ -347,7 +347,7 @@ class CarController extends Controller {
         $criminal=M('criminal');
         //         $student->create();
         if ($criminal->delete($id)){
-            $this->success('del success','criminal');
+            $this->success('删除成功','criminal');
             //                 $this->display('news');
         }else {
             $this->error($criminal->getError());
@@ -361,11 +361,13 @@ class CarController extends Controller {
         $list = $news->order('id DESC')->select();
         echo json_encode($list);
     }
-    public function appcan_onenew($id){
+    //appcan单条新闻具体
+    public function appcan_onenew(){
         $id=$_GET['id'];
         $news=M('news');
         $list=$news->find($id);
-        echo json_encode($list);
+        var_dump($list);
+//         echo json_encode($list);
     }
 
 }

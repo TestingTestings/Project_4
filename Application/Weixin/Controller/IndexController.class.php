@@ -26,9 +26,13 @@ class IndexController extends RestController
         $data = $User->where($request)->select();
 
         if (count($data) > 0) {
+
             $this->response(['isExist' => 1], 'json');
+
         } else {
+
             $this->response(['isExist' => 0], 'json');
+
         }
     }
 
@@ -44,6 +48,8 @@ class IndexController extends RestController
         $data['password'] = md5(I('post.password2'));
         $data['idcard'] = I('post.id_number');
         $data['regtime'] = date('Y-m-d');
+        $data['name'] = I('post.real_name');
+        $data['drive_card'] = I('post.drive_number');
 //
         $User = M('user');
         $User->data($data)->add();
@@ -59,17 +65,7 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-//          TP 验证码
-//        $config = [
-//            'fontSize' => 50,
-//            'length' => 4,
-//            'useNoise' => true
-//        ];
-//        $Verify = new \Think\Verify($config);
-//        $Verify->entry();
-
 //        PR 验证码
-
         $captcha = new Captcha();
         $captcha->create();
         session('captcha', $captcha->__tostring());
@@ -91,26 +87,32 @@ class IndexController extends RestController
         $response['isConfirm'] = 0;
 
         if (strtoupper(I('captcha')) != session('captcha')) { // 验证码校验
+
             $response['info'] = '验证码错误';
+
         } elseif (!$data['password']) { // 考虑账号不存在的情况
+
             $response['info'] = '账号不存在';
+
         } elseif ($request['password'] != $data['password']) {
+
             $response['info'] = '密码错误';
+
         } elseif ($request['password'] == $data['password']) { // 登录成功
+
             $response['info'] = '登录成功';
             $response['isConfirm'] = 1;
             cookie('userOnline', $request['phone'], 3600 * 5);
+
         } else {
+
             $response['info'] = '未知错误';
+
         }
 
         // 重置验证码 session 值 避免返回重复利用 用随机值覆盖
         session('captcha', 'you_never_guess');
 
-
-//        $response['password2'] = md5(I('password'));
-//        $response['password'] = $data['password'];
-//        $response['captcha'] = I('captcha');
 
         $this->response($response, 'json');
     }
@@ -163,7 +165,11 @@ class IndexController extends RestController
             if (I('user') != 0) {
                 // 新建查询历史表
 
+                $data = [];
+                $data['user'] = cookie('userOnline');
+                $data['car_id'] = $request['id'];
                 if (count(M('history')->where($data)->select()) == 0) {
+
                     $data = [];
                     $data['car_id'] = $request['id'];
                     $data['user'] = I('user');
@@ -177,6 +183,7 @@ class IndexController extends RestController
                     $update = [];
                     $update['time'] = date('Y-m-d H:i:s', time());
                     M('history')->where($data)->data($update)->save();
+
                 }
             }
         }
@@ -199,11 +206,15 @@ class IndexController extends RestController
 
 //        if ($response['state'] == '申诉') {  // todo-1 重复申诉
         if (0) {  // todo-1 重复申诉
+
             $response['info'] = '不能对已申诉案件重复申诉';
             $response['isConfirm'] = 0;
+
         } elseif (!I('content')) { // 内容不为空
+
             $response['info'] = '申诉内容不能为空';
             $response['isConfirm'] = 0;
+
         } elseif ($data['case_id']) {
 
 
@@ -217,17 +228,15 @@ class IndexController extends RestController
 
             // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
             // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
-            // 修改case表状态为申诉
-            $update['state'] ='申诉';
+            $update['state'] = '申诉';
             $where['id'] = I('case_id');
             M('case')->where($where)->data($update)->save();
 
-//            $Model = new Model();
-//            $sql = "update t_case set state='申诉' where id=" . I('case_id');
-//            $Model->query($sql);
 
             $response['isConfirm'] = 1;
+
         } else {
+
             $response['info'] = '未知错误';
             $response['isConfirm'] = 0;
         }
@@ -255,7 +264,7 @@ class IndexController extends RestController
     }
 
 
-//    用户查询历史跳转结果页面
+//    用户查询历史跳转查询结果
     function historyInfo_get_json()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
@@ -276,13 +285,6 @@ class IndexController extends RestController
     }
 
 
-//    todo-2 支付后改变处理状态
-    function payment_put_json()
-    {
-
-    }
-
-
     // 证据
     function evidence_get_json()
     {
@@ -299,8 +301,9 @@ class IndexController extends RestController
     }
 
 
-    // todo-1 通过驾驶证号查询违章
-    function peopleInfo_get_json(){
+    // 通过驾驶证号查询违章
+    function peopleInfo_get_json()
+    {
 
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
@@ -339,10 +342,42 @@ class IndexController extends RestController
     }
 
 
+    // todo 用户支付罚款
+    function payDone_put_json()
+    {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域访问
+        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
+
+
+        $data['case_id'] = I('case_id');
+
+        if ($data['case_id']) {
+
+            // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
+            // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
+            // 修改case表状态为申诉
+            $update['state'] = '已处理';
+            $where['id'] = I('case_id');
+            M('case')->where($where)->data($update)->save();
+
+
+            $response['isConfirm'] = 1;
+
+        } else {
+
+            $response['info'] = '未知错误';
+            $response['isConfirm'] = 0;
+
+        }
+
+        $this->response($response, 'json');
+
+    }
+
+
     function test()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
-//        $response['captcha'] = session('captcha');
 
 
         $Model = new Model();
@@ -356,31 +391,5 @@ class IndexController extends RestController
     }
 
 
-//    验证码校验
-    private function check_verify($code, $id = '')
-    {
-        $verify = new \Think\Verify();
-        return $verify->check($code, $id);
-    }
-
-
-    /*
-    ！微信接入类 WeiXin TP 自带
-          查询 TP 文档
-    ！生成微信菜单
-        信息
-
-    数据库初始化
-
-    登陆 / 注册
-      短信接口
-    违章处理
-    违章处理 缴费 / 处理 / 申述
-    个人信息
-    *新闻读取
-    *法规查询
-
-    验证码校验
-    */
 
 }

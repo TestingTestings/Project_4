@@ -63,7 +63,7 @@
                                 href="http://html5up.net"></a><strong> 互联网交通安全综合服务管理平台 </strong>采用网页、语音、短信、移动终端APP四种方式，为广大交通参与者提供交管动态、安全宣传、警示教育，以及交通管理信息查询、告知、业务预约/受理/办理、道路通行等便民利民服务。
                         </p>
                         <footer class="controls">
-                            <a href="http://html5up.net" class="button">更多内容...</a>
+                            <a href="#" class="button">更多内容...</a>
                         </footer>
                     </section>
 
@@ -145,7 +145,7 @@
 
                                                 <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
                                                     <img width="100%"
-                                                         src="http://localhost/project_4/weixin/index/captcha_get_png"
+                                                         src="http://101.201.233.0/project_4/weixin/index/captcha_get_png"
                                                          onclick="this.src = this.src +'?'+ Math.random()"/>
                                                 </div>
                                             </li>
@@ -176,7 +176,7 @@
 
                                                 <div style="width:40%;display: inline-block;vertical-align: middle;padding: 0;margin: 0;">
                                                     <img width="100%"
-                                                         src="http://localhost/project_4/weixin/index/captcha_get_png"
+                                                         src="http://101.201.233.0/project_4/weixin/index/captcha_get_png"
                                                          onclick="this.src = this.src +'?'+ Math.random()"/>
                                                 </div>
                                             </li>
@@ -286,7 +286,7 @@
 //         跳转结果页面
         if ($form.valid()) {
             $.ajax({
-                url: 'http://localhost/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/user/' + user + '/1.json',
+                url: 'http://101.201.233.0/project_4/weixin/index/carInfo/id/' + id + '/vin/' + vin + '/type/' + type + '/captcha/' + captcha + '/user/' + user + '/1.json',
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
@@ -339,7 +339,7 @@
     // 测试
     function test() {
         $.ajax({
-            url: 'http://localhost/project_4/weixin/index/test',
+            url: 'http://101.201.233.0/project_4/weixin/index/test',
             type: 'get',
             dataType: 'json',
             success: function (data) {
@@ -378,7 +378,7 @@
 //         跳转结果页面
 //        if ($form.valid()) {
             $.ajax({
-                url: 'http://localhost/project_4/weixin/index/peopleInfo/1.json',
+                url: 'http://101.201.233.0/project_4/weixin/index/peopleInfo/1.json',
                 type: 'get',
                 data:{
                     captcha:captcha,
