@@ -189,7 +189,7 @@ class IndexController extends Controller {
         $this->display('case_appeal');
     }
     //案件写入
-    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id,$change,$new){
+    public function case_deal($id,$content,$punishment,$cost,$appeal,$detail_id,$change=null,$new=null){
         $case = M("case");
         $handle=M("casehandle");
         $evidence=M("evidence");
@@ -264,6 +264,7 @@ class IndexController extends Controller {
 function search_where($sheel,$search){
     if($sheel=='police') {
         $where['id'] = array('like', '%' . $search . '%');
+        $where['sex'] = array('like', '%' . $search . '%');
         $where['name'] = array('like', '%' . $search . '%');
         $where['age'] = array('like', '%' . $search . '%');
         $where['area'] = array('like', '%' . $search . '%');
