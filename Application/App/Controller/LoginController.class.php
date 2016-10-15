@@ -203,9 +203,10 @@ class LoginController extends Controller
     public function delcase(){
         $percase=D("case");
         $casehandle=D("casehandle");
-        $model = new \Think\Model();
-        $model->startTrans();
-        
+
+        $percase->startTrans();
+        $result1=false;
+        $result2=false;
         if(I('post.caseid')){
             //对case表格进行修改
             $data['state'] = '修正';
@@ -222,17 +223,18 @@ class LoginController extends Controller
             $data2['case_id'] =I('post.caseid');
             $data2['happentime'] =date("Y-m-d h:i:s",time());
             $result2=$casehandle->add($data2);
+            if($result2&&$result1){
+                $percase->commit();
+                echo "success";
+            }else{
+                $percase->rollback();
+                echo "fail";
+            }
         }else{
             return false;
         }
         
-        if($result2&&$result1){
-            $model->commit();
-            echo "success";
-        }else{
-            $model->rollback();
-            echo "fail";
-        }
+
     }
     //修改案件
     public function modifycase(){
