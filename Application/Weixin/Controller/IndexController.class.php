@@ -353,15 +353,52 @@ class IndexController extends RestController
 
         if ($data['case_id']) {
 
-            // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
-            // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
-            // 修改case表状态为申诉
-            $update['state'] = '已处理';
+            // todo 查询剩余分数
+            // todo 分数足够 扣分
+            // todo 分数不够 分数不够无法完成操作
+
+
+            // 查询 违章扣分
+            $where = [];
             $where['id'] = I('case_id');
-            M('case')->where($where)->data($update)->save();
+            $result = M('case')->field('score,drive_card')->where($data)->select()[0];
+            $score[0] = $result['score'];
+
+            // 查询用户驾驶证计分
+            $where = [];
+            $where['drive_card'] = $result['drive_card'];
+            $score[1] = M('user')->field('score')->where($where)->select()[0]['score'];
 
 
-            $response['isConfirm'] = 1;
+            if ($score[1] - $score[0] > 0) {
+
+                // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
+                // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
+                // 修改case表状态为申诉
+                $update = [];
+                $where = [];
+                $update['state'] = '已处理';
+                $where['id'] = I('case_id');
+                M('case')->where($where)->data($update)->save();
+
+
+                // 用户驾驶证扣分
+                $update = [];
+                $where = [];
+                $update['score'] = $score[1] - $score[0];
+                $where['drive_card'] = $result['drive_card'];
+                M('user')->where($where)->data($update)->save();
+
+
+                $response['isConfirm'] = 1;
+
+            } elseif ($score[1] - $score[0] <= 0) {
+                $response['info'] = '缴费失败，驾驶证计分到达上限';
+                $response['isConfirm'] = 0;
+            }else{
+                $response['info'] = '未知错误';
+                $response['isConfirm'] = 0;
+            }
 
         } else {
 
@@ -389,7 +426,6 @@ class IndexController extends RestController
 
         $this->response($response, 'json');
     }
-
 
 
 }
