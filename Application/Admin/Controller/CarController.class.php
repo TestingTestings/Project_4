@@ -192,17 +192,73 @@ class CarController extends Controller {
     public function changeAction(){
         $id=$_GET['id'];
         $news=D('news');
-        if ($news->create()){
-            if ($news->where('id=%d',array($id))->save()){
-                $this->success('修改成功','news');
-            }else {
+        if(!empty($_FILES)){
+            //上传单个图像
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize   =     1*1024*1024 ;// 设置附件上传大小
+            $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath  =      'Public/Common/news_img/'; // 设置附件上传根目录
+            $upload->savePath  =      ''; // 设置附件上传（子）目录
+            $upload->saveName=array('uniqid','news');//上传文件的保存规则
+            $upload->autoSub  = true;//自动使用子目录保存上传文件
+            $upload->subName  = array('date','Ymd');
+            // 上传单个图片
+            $info   =   $upload->upload();
+            //             var_dump($info['url']['savepath'].$info['url']['savename']);
+        
+            if(!$info) {// 上传错误提示错误信息
+//                 $this->error($upload->getError());
+            }    
+        }
+        $title=$_POST['title'];
+        $content=$_POST['content'];
+        $time=$_POST['time'];
+        $valid=$_POST['valid'];
+        //         $url=$_POST['url'];
+        $img_url='/Project_4/Public/Common/news_img/'.$info['url']['savepath'].$info['url']['savename'];
+        $data['title']=$title;
+        $data['content']=$content;
+        $data['valid']=$valid;
+        $data['time']=$time;      
+//         var_dump($info['url']['savepath'].$info['url']['savename']);
+        $url_value=$info['url']['savepath'];
+        if(empty($url_value)){
+            $rule=array(
+                array('title','require','标题不能为空'),
+                array('content','require','内容不能为空'),
+                array('time','require','发布时间不能为空'),
+                array('valid','require','有效时间不能为空')
+            );
+            if ($news->validate($rule)->create()){
+                if ($news->where('id=%d',array($id))->save($data)){
+                    $this->success('修改成功','news');
+                }else {
+                    $this->error($news->getError());
+                }
+            }
+            else {
                 $this->error($news->getError());
             }
         }
         else {
-            $this->error($news->getError());
-        }
-           
+            $rule=array(
+                array('title','require','标题不能为空'),
+                array('content','require','内容不能为空'),
+                array('time','require','发布时间不能为空'),
+                array('valid','require','有效时间不能为空')
+            ); 
+            $data['url']=$img_url;
+            if ($news->validate($rule)->create()){
+                if ($news->validate($rule)->where('id=%d',array($id))->save($data)){
+                    $this->success('修改成功','news');
+                }else {
+                    $this->error($news->getError());
+                }
+            }
+            else {
+                $this->error($news->getError());
+            }
+        }       
     }
     //新闻预览
     public function news_traffic($id){

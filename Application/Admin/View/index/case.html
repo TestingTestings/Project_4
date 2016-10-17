@@ -29,6 +29,7 @@
                 padding-right: 5px;
             }
         }
+
     </style>
 </head>
 <body >
@@ -37,18 +38,21 @@
     <input type="text" name="search" id="menuname" class="abc input-default" placeholder="输入要查询的案件信息" value="{$search}">&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary">查询</button>
 </form>
-<table class="table table-bordered table-hover definewidth m10">
-    <thead>
-    <tr>
-        <th>案件编号</th>
-        <th>违章内容</th>
-        <th>发生地点</th>
-        <th>违章时间</th>
-        <th>案件状态</th>
-        <th>查看详情</th>
-        <th>案件审核</th>
-    </tr>
-    </thead>
+<if condition="$empty eq 0">
+    <p style="text-align: center;margin-top: 30px" >没有符合条件的结果</p>
+<else/>
+    <table class="table table-bordered table-hover definewidth m10">
+        <thead>
+        <tr>
+            <th>案件编号</th>
+            <th>违章内容</th>
+            <th>发生地点</th>
+            <th>违章时间</th>
+            <th>案件状态</th>
+            <th>查看详情</th>
+            <th>案件审核</th>
+        </tr>
+        </thead>
         <volist name="police" id="vo">
             <tr>
                 <td>{$vo.id}</td>
@@ -58,13 +62,14 @@
                 <td>{$vo.state}</td>
                 <td><a href="__CONTROLLER__/case_detail?id={$vo.id}">案件详情</a></td>
                 <if condition="$vo.state eq '审核'"><td><a href="__CONTROLLER__/case_pass?id={$vo.id}&state=pass">通过</a> <a href="__CONTROLLER__/case_pass?id={$vo.id}&state=refused">驳回</a></td>
-                <elseif condition="$vo.state eq '修正'" /><td>等待处理</td>
+                    <elseif condition="$vo.state eq '修正'" /><td>等待处理</td>
                     <else/><td>已审核</td>
                 </if>
             </tr>
         </volist>
-</table>
-{$page}
+    </table>
+    {$page}
+</if>
 </body>
 </html>
 <script>
