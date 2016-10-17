@@ -62,6 +62,12 @@ class IndexController extends Controller {
         $Page->setConfig('theme','%HEADER%%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%');
         $Page->setConfig('header','<p style="display: inline">共<b>%TOTAL_ROW%</b>条记录&nbsp;</p>');
         $show=$Page->show();
+        if(count($res)==0) {
+            $this->assign("empty", 0);
+        }
+        else{
+            $this->assign("empty", 1);
+        }
         $this->assign("police",$res);
         $this->assign("page",$show);
         $this->assign("search",$search);
