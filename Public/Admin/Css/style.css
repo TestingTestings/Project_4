@@ -109,7 +109,12 @@ form{
 	padding-top:50px;
 }
 
-
+a.num{
+    margin-left: 5px;
+}
+span.current{
+    margin-left: 5px;
+}
 
 
 
