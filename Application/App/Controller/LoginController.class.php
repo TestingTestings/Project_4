@@ -30,6 +30,7 @@ class LoginController extends Controller
                     echo json_encode($result);
                 }
             }else{
+                
                $result=['result'=>'err','state'=>"账号或密码错误"];
                echo json_encode($result);
             }
@@ -165,7 +166,12 @@ class LoginController extends Controller
             $data['car_id'] = array('like','%'.$sou.'%');            
             $data['_logic'] = 'or';
             $data2['_complex']=$data;
-            $data2['state']  = array('in',array('未处理','修正','申诉','审核'));
+            if(I('get.caseaction')==0){
+                $data2['state']  = array('in',array('未处理','修正','申诉','审核'));
+            }else if(I('get.caseaction')==1){
+                $data2['state']  = '审核';
+            }
+           
             $result=$casequery->where($data2)->select();
             //$result7=$casequery->where($data2)->select(false);
             //echo $result7;
@@ -173,7 +179,12 @@ class LoginController extends Controller
             echo $result;
             return false;
         }else{
-            $data['state'] = array('in',array('未处理','修正','申诉','审核'));
+            if(I('get.caseaction')==0){
+                $data['state']  = array('in',array('未处理','修正','申诉','审核'));
+            }else if(I('get.caseaction')==1){
+                $data['state']  = '审核';
+            }             
+           
             $result=$casequery->where($data)->order('id desc')->select();
             // echo gettype($result);
             $result=json_encode($result);
