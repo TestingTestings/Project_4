@@ -46,6 +46,13 @@ class LoginController extends Controller {
         $res=$crim->where("state='在逃'")->select();
         echo json_encode($res);
     }
+    //罪犯详情
+    public function info(){
+        $id=I("post.crininalid");
+        $crim=M('criminal');
+        $res=$crim->where("id=$id")->select();
+        echo json_encode($res);
+    }
 
 }
 //验证码生成
