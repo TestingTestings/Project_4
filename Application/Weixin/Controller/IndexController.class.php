@@ -50,7 +50,7 @@ class IndexController extends RestController
         $data['regtime'] = date('Y-m-d');
         $data['name'] = I('post.real_name');
         $data['drive_card'] = I('post.drive_number');
-//
+
         $User = M('user');
         $User->data($data)->add();
 
@@ -77,7 +77,7 @@ class IndexController extends RestController
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
-//
+
         $request['phone'] = I('phone');
         $request['password'] = md5(I('password'));
 
@@ -87,25 +87,20 @@ class IndexController extends RestController
         $response['isConfirm'] = 0;
 
         if (strtoupper(I('captcha')) != session('captcha')) { // 验证码校验
-
             $response['info'] = '验证码错误';
 
         } elseif (!$data['password']) { // 考虑账号不存在的情况
-
             $response['info'] = '账号不存在';
 
         } elseif ($request['password'] != $data['password']) {
-
             $response['info'] = '密码错误';
 
         } elseif ($request['password'] == $data['password']) { // 登录成功
-
             $response['info'] = '登录成功';
             $response['isConfirm'] = 1;
             cookie('userOnline', $request['phone'], 3600 * 5);
 
         } else {
-
             $response['info'] = '未知错误';
 
         }
@@ -130,7 +125,6 @@ class IndexController extends RestController
 
         $data['id'] = $request['id'];
         $data['vin'] = $request['vin'];
-
         $response['car'] = M('car')->where($data)->select();
 
         if (strtoupper($request['captcha']) != session('captcha')) { // 验证码校验
@@ -153,8 +147,7 @@ class IndexController extends RestController
             $data['car_id'] = $request['id'];
 
             // 多表查询 警员信息 法律法规
-            // todo-5 ->field()
-            $Model = new Model(); // todo-11 修正和銷毀增加查詢限制
+            $Model = new Model(); 
             $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.state <> '审核' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
             $response['result'] = $Model->query($sql);
             $response['isConfirm'] = 1;
@@ -163,27 +156,23 @@ class IndexController extends RestController
             // 添加到查询历史
             // todo-5 拆分成方法
             if (I('user') != 0) {
-                // 新建查询历史表
-
                 $data = [];
                 $data['user'] = cookie('userOnline');
                 $data['car_id'] = $request['id'];
-                if (count(M('history')->where($data)->select()) == 0) {
 
+                if (count(M('history')->where($data)->select()) == 0) {
                     $data = [];
                     $data['car_id'] = $request['id'];
                     $data['user'] = I('user');
                     M('history')->data($data)->add();
 
                 } else { // 已有查询时只更新查询时间
-
                     $data = [];
                     $data['car_id'] = $request['id'];
                     $data['user'] = I('user');
                     $update = [];
                     $update['time'] = date('Y-m-d H:i:s', time());
                     M('history')->where($data)->data($update)->save();
-
                 }
             }
         }
@@ -199,12 +188,11 @@ class IndexController extends RestController
         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
 
         $Casehandle = M('casehandle');
-
-
         $data['case_id'] = I('case_id');
-//        $response['state'] = $Casehandle->field('state')->where($data)->select()[0]['state']; // 处理状态查询
 
+//        $response['state'] = $Casehandle->field('state')->where($data)->select()[0]['state']; // 处理状态查询
 //        if ($response['state'] == '申诉') {  // todo-1 重复申诉
+
         if (0) {  // todo-1 重复申诉
 
             $response['info'] = '不能对已申诉案件重复申诉';
@@ -217,7 +205,6 @@ class IndexController extends RestController
 
         } elseif ($data['case_id']) {
 
-
             // 插入申述内容
             $data['case_id'] = I('case_id');
             $data['content'] = I('content');
@@ -225,13 +212,11 @@ class IndexController extends RestController
             $data['happentime'] = date('Y-m-d H:i:s', time());
             $Casehandle->data($data)->add();
 
-
             // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
             // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
             $update['state'] = '申诉';
             $where['id'] = I('case_id');
             M('case')->where($where)->data($update)->save();
-
 
             $response['isConfirm'] = 1;
 
@@ -251,14 +236,9 @@ class IndexController extends RestController
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
 
-//        $data = [];
-//        $data['user'] = I('user');
-//        $rs['history'] = M('history')->where($data)->select();
-
         $Model = new Model();
         $sql = "select a.*, b.vin from t_history as a, t_car as b where a.user=" . I('user') . " and a.car_id=b.id";
         $rs['history'] = $Model->query($sql);
-
 
         $this->response($rs, 'json');
     }
@@ -277,7 +257,6 @@ class IndexController extends RestController
         $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.state <> '审核' and a.police_id=b.id and c.id=a.law_id and a.car_id='" . $data['car_id'] . "'";
 
         $response['result'] = $Model->query($sql);
-
         $response['isConfirm'] = 1;
         $response['info'] = '正在查询';
 
@@ -294,10 +273,7 @@ class IndexController extends RestController
         $data['case_id'] = I('case_id');
         $data['rs'] = M('evidence')->where($data)->select();
 
-
         $this->response($data, 'json');
-
-
     }
 
 
@@ -307,18 +283,15 @@ class IndexController extends RestController
 
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
 
-
         $data['name'] = I('name');
         $data['drive_card'] = I('drive_card');
         $response['user'] = M('user')->where($data)->select();
 
         if (strtoupper(I('captcha')) != session('captcha')) { // 验证码校验
-
             $response['isConfirm'] = 0;
             $response['info'] = '验证码错误';
 
         } elseif (count($response['user']) == 0) { // 车架号匹配
-
             $response['isConfirm'] = 0;
             $response['info'] = '驾驶证信息不匹配';
 
@@ -333,11 +306,11 @@ class IndexController extends RestController
             $data['drive_card'] = I('drive_card');
             $Model = new Model(); // todo-11 修正和銷毀增加查詢限制
             $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title, d.type, e.name from t_case as a, t_police as b, t_law as c, t_car as d, t_user as e where e.drive_card=a.drive_card and d.id=a.car_id and a.state <> '修正' and a.state <> '销毁' and a.state <> '审核' and a.police_id=b.id and c.id=a.law_id and a.drive_card=" . $data['drive_card'];
+
             $response['result'] = $Model->query($sql);
             $response['isConfirm'] = 1;
             $response['info'] = '正在查询';
         }
-
         $this->response($response, 'json');
     }
 
@@ -348,15 +321,9 @@ class IndexController extends RestController
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
         header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE"); // 允许的跨域请求方式
 
-
         $data['case_id'] = I('case_id');
 
         if ($data['case_id']) {
-
-            // todo 查询剩余分数
-            // todo 分数足够 扣分
-            // todo 分数不够 分数不够无法完成操作
-
 
             // 查询 违章扣分
             $where = [];
@@ -369,18 +336,15 @@ class IndexController extends RestController
             $where['drive_card'] = $result['drive_card'];
             $score[1] = M('user')->field('score')->where($where)->select()[0]['score'];
 
-
             if ($score[1] - $score[0] > 0) {
 
                 // t_casehandle 表的 case_id 外键会使次处失效 原因：表引擎不同 myisam innordb
-                // 修改正表的状态 使用触发器 todo-6 在phpstorm 中执行 DDL
                 // 修改case表状态为申诉
                 $update = [];
                 $where = [];
                 $update['state'] = '已处理';
                 $where['id'] = I('case_id');
                 M('case')->where($where)->data($update)->save();
-
 
                 // 用户驾驶证扣分
                 $update = [];
@@ -389,33 +353,29 @@ class IndexController extends RestController
                 $where['drive_card'] = $result['drive_card'];
                 M('user')->where($where)->data($update)->save();
 
-
                 $response['isConfirm'] = 1;
 
             } elseif ($score[1] - $score[0] <= 0) {
                 $response['info'] = '缴费失败，驾驶证计分到达上限';
                 $response['isConfirm'] = 0;
+
             }else{
                 $response['info'] = '未知错误';
                 $response['isConfirm'] = 0;
             }
-
+            
         } else {
-
             $response['info'] = '未知错误';
             $response['isConfirm'] = 0;
 
         }
-
         $this->response($response, 'json');
-
     }
 
 
     function test()
     {
         header("Access-Control-Allow-Origin: *"); // 允许跨域访问
-
 
         $Model = new Model();
         $sql = "select a.*, b.name as police_name, b.job as police_job, b.area, c.content  as law_content, c.strip  as law_title from t_case as a, t_police as b, t_law as c where a.police_id=b.id and c.id=a.law_id and a.car_id='闽A0001'";
@@ -426,6 +386,4 @@ class IndexController extends RestController
 
         $this->response($response, 'json');
     }
-
-
 }
