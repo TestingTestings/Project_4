@@ -265,11 +265,7 @@ class IndexController extends Controller {
         $this->search("case");
     }
     //协查通报
-    public function criminal(){
-        $crim=M('criminal');
-        $res=$crim->where("state='在逃'")->select();
-        echo json_encode($res);
-    }
+
 }
 
 //搜索函数构造索引数组
