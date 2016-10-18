@@ -59,6 +59,7 @@ class LoginController extends Controller {
         $crim=M('criminal');
         $crim->state='抓获';
         $res=$crim->where("id='$id'")->save();
+      //  echo $crim->getLastSql();
         if($res)
         {echo 0;}
         else
