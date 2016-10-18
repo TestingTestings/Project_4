@@ -50,9 +50,22 @@ class LoginController extends Controller {
     public function info(){
         $id=I("post.crininalid");
         $crim=M('criminal');
-        $res=$crim->where("id=$id")->select();
+        $res=$crim->where("id='$id'")->select();
         echo json_encode($res);
     }
+    //抓获
+    public function catch_criminal(){
+        $id=I("post.crininalid");
+        $crim=M('criminal');
+        $crim->state='抓获';
+        $res=$crim->where("id='$id'")->save();
+      //  echo $crim->getLastSql();
+        if($res)
+        {echo 0;}
+        else
+        {echo 1;}
+    }
+
 
 }
 //验证码生成
