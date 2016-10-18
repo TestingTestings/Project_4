@@ -142,7 +142,7 @@ class WeiController extends Controller{
         
         file_put_contents('log.txt','count:'.$time.$count.PHP_EOL,FILE_APPEND);
         $news=$news->limit(0,5)->order('id DESC')->select();
-        file_put_contents('log.txt','news:'.$time.$news.PHP_EOL,FILE_APPEND);
+        file_put_contents('log.txt','news:'.$time.$news[0].PHP_EOL,FILE_APPEND);
         
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
