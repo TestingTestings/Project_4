@@ -48,14 +48,14 @@ class LoginController extends Controller {
     }
     //罪犯详情
     public function info(){
-        $id=I("post.crininalid");
+        $id=I("post.criminalid");
         $crim=M('criminal');
         $res=$crim->where("id='$id'")->select();
         echo json_encode($res);
     }
     //抓获
     public function catch_criminal(){
-        $id=I("post.crininalid");
+        $id=I("post.criminalid");
         $crim=M('criminal');
         $crim->state='抓获';
         $res=$crim->where("id='$id'")->save();

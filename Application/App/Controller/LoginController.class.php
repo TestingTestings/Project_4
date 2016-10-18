@@ -42,7 +42,7 @@ class LoginController extends Controller
     //获得法律法规等消息
     public function lawinfo(){
         $law=D('law');
-        $result=$law->query('select * from t_law limit 6 offset 146 ');
+        $result=$law->query('select * from t_law limit 16 offset 146 ');
         echo json_encode($result);
         //echo $result;
         
