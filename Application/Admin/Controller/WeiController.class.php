@@ -42,8 +42,6 @@ class WeiController extends Controller{
             
             if( strtolower($postObj->Event == 'subscribe') ){
                 //图文消息个数，只能10个以内
-//                 $WxCompile = new WxCompile($postObj);
-//                 $WxCompile -> TextArr($postObj);
                 //回复函数  	
                 $this->testsend($postObj);
             }
@@ -138,52 +136,55 @@ class WeiController extends Controller{
     
     //单挑新闻内容
     public function one_news($postObj){
+        $time=date('Y-m-d H:i:s',time());
         $news=M('news');
-        $news=$news->select();
-//         $one=$news[0]['title'];
-//                 var_dump($one) ;
-        //         $one=$news->where($id)->select();
-//         echo $news['title'];
+        $count=M('news')->count();
+        
+        file_put_contents('log.txt','count:'.$time.$count.PHP_EOL,FILE_APPEND);
+        $news=$news->limit(0,5)->order('id DESC')->select();
+        file_put_contents('log.txt','news:'.$time.$news.PHP_EOL,FILE_APPEND);
+        
         $toUser = $postObj->FromUserName;
         $fromUser = $postObj->ToUserName;
         // 图文消息个数，只能10个以内 
-  
-            foreach ($news as $key=>$val){
-                $arr = array(
-                    array(
+                foreach ($news as $key=>$val){
+//                     var_dump($news)
+                    $arr[]= array(
+                         
                         'title' => $val['title'],
                         'description' => $val['content'],
                         'picUrl' => 'http://pic.qiantucdn.com/58pic/16/60/80/58b58PICTEi_1024.jpg',
                         'url' => 'http://www.minqg.cc/newshtml/news_conternt.html'
-                    )
-                );
-            }
-            $template = "<xml>
+                
+                    );
+//                     file_put_contents('log.txt','arr[]:'.$time.$arr.PHP_EOL,FILE_APPEND);
+                }
+                $template = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
                         <FromUserName><![CDATA[%s]]></FromUserName>
                         <CreateTime>%s</CreateTime>
                         <MsgType><![CDATA[%s]]></MsgType>
                         <ArticleCount>" . count($arr) . "</ArticleCount>
                         <Articles>";
-            foreach ($arr as $k => $v) {
-                $template .= "<item>
+                foreach ($arr as $k => $v) {
+                    $template .= "<item>
                         <Title><![CDATA[" . $v['title'] . "]]></Title>
                         <Description><![CDATA[" . $v['description'] . "]]></Description>
                         <PicUrl><![CDATA[" . $v['picUrl'] . "]]></PicUrl>
                         <Url><![CDATA[" . $v['url'] . "]]></Url>
                         </item>";
-            }
-            $template .= "</Articles>
+                }
+                $template .= "</Articles>
                         </xml>";
-            $result= sprintf($template, $toUser, $fromUser, time(), 'news');
-            $time=date('Y-m-d H:i:s',time());
-            $type=$postObj->MsgType;
-            file_put_contents('log.txt','fromUsername:'.$time.$toUser.PHP_EOL,FILE_APPEND);
-            file_put_contents('log.txt','toUserName:'.$time.$fromUser.PHP_EOL,FILE_APPEND);
-            file_put_contents('log.txt','result:'.$time.$result.PHP_EOL,FILE_APPEND);
-            file_put_contents('log.txt','postObj:'.$time.$type.PHP_EOL,FILE_APPEND);
-            echo $result;
-    }
+                $result= sprintf($template, $toUser, $fromUser, time(), 'news');
+                $time=date('Y-m-d H:i:s',time());
+                $type=$postObj->MsgType;
+                file_put_contents('log.txt','fromUsername:'.$time.$toUser.PHP_EOL,FILE_APPEND);
+                file_put_contents('log.txt','toUserName:'.$time.$fromUser.PHP_EOL,FILE_APPEND);
+                file_put_contents('log.txt','result:'.$time.$result.PHP_EOL,FILE_APPEND);
+                file_put_contents('log.txt','postObj:'.$time.$type.PHP_EOL,FILE_APPEND);
+                echo $result;
+            }
     
     //纯文本消息
     public function text_send(){
