@@ -89,10 +89,10 @@ class WeiController extends Controller{
         // 图文消息个数，只能10个以内
         $arr = array(
             array(
-                'title' => '交警',
-                'description' => '交警详情',
+                'title' => '上海一路口成长途汽车站点 “黄牛”在路边拉客',
+                'description' => '新闻详情',
                 'picUrl' => 'http://pic.qiantucdn.com/58pic/16/60/80/58b58PICTEi_1024.jpg',
-                'url' => 'http://101.201.233.41/forth/Project_4/index.php/Admin/car'
+                'url' => 'http://www.minqg.cc/project_4/html/newshtml/news_conternt.html'
             ),
             array(
                 'title' => '交警',
@@ -154,7 +154,7 @@ class WeiController extends Controller{
                         'title' => $val['title'],
                         'description' => $val['content'],
                         'picUrl' => 'http://pic.qiantucdn.com/58pic/16/60/80/58b58PICTEi_1024.jpg',
-                        'url' => 'http://www.minqg.cc/newshtml/news_conternt.html'
+                        'url' => 'http://www.minqg.cc/project_4/html/newshtml/news_conternt.html'
                 
                     );
 //                     file_put_contents('log.txt','arr[]:'.$time.$arr.PHP_EOL,FILE_APPEND);
@@ -190,54 +190,4 @@ class WeiController extends Controller{
     public function text_send(){
         
     }
-    
-    
-    //测试输出什么乱七八糟的
-    public  function transmitNews($postObj)
-         {
-             $news=M('news');
-             $news=$news->select();
-
-             $toUser = $postObj->FromUserName;
-             $fromUser = $postObj->ToUserName;
-         foreach ($news as $key=>$val){
-                $arr = array(
-                    array(
-                        'title' => $val['title'],
-                        'description' => 'sbsbbsbsbs',
-                        'picUrl' => 'http://pic.qiantucdn.com/58pic/16/60/80/58b58PICTEi_1024.jpg',
-                        'url' => 'http://www.minqg.cc/forth/Project_4/html/index.html'
-                    )
-                );
-            }
-
-
-                         $itemTpl = "<xml>
-                    <ToUserName><![CDATA[%s]]></ToUserName>
-                     <FromUserName><![CDATA[%s]]></FromUserName>
-                     <CreateTime>%s</CreateTime>
-                     <MsgType><![CDATA[news]]></MsgType>
-                     <ArticleCount>%s</ArticleCount>
-                     <Articles>";
-                     
-          foreach ($arr as $k => $v) {
-                $itemTpl .= "<item>
-                        <Title><![CDATA[" . $v['title'] . "]]></Title>
-                        <Description><![CDATA[" . $v['description'] . "]]></Description>
-                        <PicUrl><![CDATA[" . $v['picUrl'] . "]]></PicUrl>
-                        <Url><![CDATA[" . $v['url'] . "]]></Url>
-                        </item>";
-            }
-                $itemTpl .=" </Articles>
-                 </xml>";
-                
-                         $result=  sprintf($itemTpl, $toUser, $fromUser, time(), 'news');
-                         $time=date('Y-m-d H:i:s',time());
-                         file_put_contents('log.txt','fromUsername:'.$time.$toUser.PHP_EOL,FILE_APPEND);
-                         file_put_contents('log.txt','toUserName:'.$time.$fromUser.PHP_EOL,FILE_APPEND);
-                         file_put_contents('log.txt','result:'.$time.$result.PHP_EOL,FILE_APPEND);
-                         file_put_contents('log.txt','postObj:'.$time.$postObj.PHP_EOL,FILE_APPEND);
-                         echo $result;
-//                          return $result;
-                     }
 }
