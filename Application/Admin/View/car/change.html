@@ -54,53 +54,50 @@ function preview(file){
 <h1 style="text-align:center">新闻修改</h1>
 <div class="change">
 <form action="changeAction?id={$one_news.id}" method="post" class="definewidth m20"  id="Form" enctype="multipart/form-data">
-<table style="margin-left:10px;margin-top:3px;">
+<table class="table table-bordered table-hover definewidth m10" style="margin-left:3%;margin-top:2%;">
     <tr>
-         <td>标题：</td>
-		 <td><textarea  name="title" >{$one_news.title}</textarea></td>
+         <td width="20%" class="tableleft">标题：</td>
+		 <td><textarea  name="title" style="height: 41px;width:400px;">{$one_news.title}</textarea></td>
     </tr>
 	<tr>
-         <td>内容：</td>
-		 <td><textarea   name="content" style="height: 
-
-100px;wight：200px;">{$one_news.content}</textarea></td>
+         <td class="tableleft">内容：</td>
+		 <td><textarea   name="content" style="height: 100px;width:400px;">{$one_news.content}</textarea></td>
     </tr>
 	 <tr>
-        <td >发布时间</td>
-        <td style="height: 46px; "> <div style="margin:0 auto;">
+        <td class="tableleft">发布时间</td>
+        <td style="height: 46px; width: 400px"> <div style="margin:0 auto;">
 	             <input type="text"  id="time1" name='time' value="{$one_news.time}" onClick="return Calendar('time1');" class="text_time"/>
              </div> 
         </td>
     </tr> 
     <tr>
-        <td >失效时间</td>
+        <td class="tableleft">失效时间</td>
         <td> <div style="margin:0 auto;">
 	             <input type="text" id="time2" name='valid' value="{$one_news.valid}" onClick="return Calendar('time2');" class="text_time"/>
              </div> 
         </td>
     </tr>
     <tr>
-        <td >新闻图片</td>  
+        <td class="tableleft">新闻图片</td>  
         <td style="width: 196px; ">
         	<input type="file" name="url" id="GoodsPicture" onchange="preview(this)" />
         </td>
         
     </tr> 
     <tr>
-        <td >图片预览</td>
+        <td class="tableleft">图片预览</td>
 		<td style="height:100px">
 			<div id="preview">
 				<!--  <img style="width:100px;height:100px;"/>-->
 			</div>
 		</td>
     </tr>    
-    <tr >      
-       <td >
-            <button style="margin-left:5px;"type="submit" class="btn 
-btn-primary"   >修&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp改</button> 
-&nbsp;&nbsp;<button  type="button" class="btn btn-success" name="backid" 
-id="backid"> <a href="news.html"> 返回列表</a></button>
-        </td>
+    <tr >    
+    	<td class="tableleft"></td>  
+       	<td >
+            <button style="margin-left:5px;"type="submit" class="btn btn-primary"   >修&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp改</button> &nbsp;&nbsp;
+            <button  type="button" class="btn btn-success" name="backid" id="backid"> <a href="news.html"> 返回列表</a></button>
+       	</td>
     </tr>
 </table>
 </form>
