@@ -24,9 +24,11 @@ class WeiController extends Controller{
         if( $str  == $signature && $echostr ){
             //第一次接入weixin api接口的时候
             echo  $echostr;
+            file_put_contents('log.txt','true:',FILE_APPEND);
             exit;
         }else{
             $this->reponseMsg();
+            file_put_contents('log.txt','false:',FILE_APPEND);
         }
     }//API接口END
 	
@@ -142,8 +144,8 @@ class WeiController extends Controller{
         $num=$count-4;
         file_put_contents('log.txt','count:'.$time.$count.PHP_EOL,FILE_APPEND);
         file_put_contents('log.txt','num:'.$time.$num.PHP_EOL,FILE_APPEND);
-//         $news=$news->order('id DESC')->limit(1,1)->select();
-        $news=$news->where('id=19')->select();
+        $news=$news->order('id DESC')->limit(0,1)->select();
+//         $news=$news->where('id=18')->select();
         file_put_contents('log.txt','news:'.$time.$news[0].PHP_EOL,FILE_APPEND);
         
         $toUser = $postObj->FromUserName;
