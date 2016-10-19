@@ -139,9 +139,11 @@ class WeiController extends Controller{
         $time=date('Y-m-d H:i:s',time());
         $news=M('news');
         $count=M('news')->count();
-        
+        $num=$count-4;
         file_put_contents('log.txt','count:'.$time.$count.PHP_EOL,FILE_APPEND);
-        $news=$news->limit(0,5)->order('id DESC')->select();
+        file_put_contents('log.txt','num:'.$time.$num.PHP_EOL,FILE_APPEND);
+//         $news=$news->order('id DESC')->limit(1,1)->select();
+        $news=$news->where('id=19')->select();
         file_put_contents('log.txt','news:'.$time.$news[0].PHP_EOL,FILE_APPEND);
         
         $toUser = $postObj->FromUserName;
@@ -189,5 +191,18 @@ class WeiController extends Controller{
     //纯文本消息
     public function text_send(){
         
+    }
+    //测试用的
+    public function testclick(){
+        $time=date('Y-m-d H:i:s',time());
+        $news=M('news');
+        $count=M('news')->count();
+        $num=$count-4;
+        file_put_contents('log.txt','count:'.$time.$count.PHP_EOL,FILE_APPEND);
+        file_put_contents('log.txt','num:'.$time.$num.PHP_EOL,FILE_APPEND);
+        $news=$news->limit(0,5)->order('id DESC')->select();
+        echo $count;
+        echo $num;
+        var_dump($news);
     }
 }
